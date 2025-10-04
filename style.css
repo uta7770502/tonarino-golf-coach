@@ -50,6 +50,18 @@ body {
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  .map {
+  position: relative;
+  flex-grow: 1;
+  background: linear-gradient(160deg, #d0f0e0, #a0e0d0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+  /* ← ここを追加 */
+  height: 100vh; /* 画面全体の高さを確保 */
+}
 }
 .pin {
   position: absolute;
