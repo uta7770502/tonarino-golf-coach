@@ -1,42 +1,21 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>隣のゴルフコーチ</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
-  <header class="site-header">
-    <h1>🏌️‍♂️ 隣のゴルフコーチ</h1>
-  </header>
+  <h1>🏌️‍♂️ 隣のゴルフコーチ</h1>
+  <div id="map"></div>
 
-  <section class="map-wrap">
-    <div id="map"></div>
-  </section>
-
-  <section class="grid-wrap">
+  <section class="coach-section">
     <h2>コーチ一覧（20名）</h2>
-    <div id="coachGrid" class="coach-grid"></div>
+    <div class="coach-grid" id="coach-list"></div>
   </section>
-
-  <!-- 詳細モーダル -->
-  <div id="coachDetailModal" class="modal" aria-hidden="true">
-    <div class="modal-content" role="dialog" aria-modal="true">
-      <button class="close-btn" id="closeModal" aria-label="閉じる">×</button>
-      <div class="modal-row">
-        <img id="coachImg" alt="コーチ写真" />
-        <div class="modal-text">
-          <h3 id="coachName"></h3>
-          <p id="coachSkill"></p>
-          <p id="coachPrice"></p>
-          <button class="reserve-btn">このコーチを予約する</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <script src="script.js"></script>
 </body>
