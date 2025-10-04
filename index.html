@@ -1,39 +1,53 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>隣のゴルフコーチ | マップ＋20名グリッド</title>
+  <title>隣のゴルフコーチ｜日本地図デモ</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 </head>
 <body>
-  <header class="site-header">
-    <h1>🏌️‍♂️ 隣のゴルフコーチ</h1>
-  </header>
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <h2>🏌️‍♂️ コーチ一覧</h2>
+      <div class="coach-card" data-id="1">
+        <div class="coach-info">
+          <img src="https://randomuser.me/api/portraits/men/33.jpg" alt="佐藤一郎">
+          <div class="coach-details">
+            <h3>佐藤 一郎</h3>
+            <p>得意：ドライバー／アプローチ</p>
+            <p>料金：60分 ¥3,000〜</p>
+          </div>
+        </div>
+      </div>
+      <div class="coach-card" data-id="2">
+        <div class="coach-info">
+          <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="高橋次郎">
+          <div class="coach-details">
+            <h3>高橋 次郎</h3>
+            <p>得意：パター／初心者指導</p>
+            <p>料金：60分 ¥4,000〜</p>
+          </div>
+        </div>
+      </div>
+    </aside>
 
-  <section class="map-wrap">
-    <div id="map"></div>
-  </section>
-
-  <section class="grid-wrap">
-    <h2>コーチ一覧（20名）</h2>
-    <div id="coachGrid" class="coach-grid"></div>
-  </section>
-
-  <!-- 詳細モーダル -->
-  <div id="coachDetailModal" class="modal">
-    <div class="modal-content">
-      <button class="close-btn" id="closeModal">×</button>
-      <img id="coachImg" src="" alt="コーチ写真" />
-      <h3 id="coachName"></h3>
-      <p id="coachSkill"></p>
-      <p id="coachPrice"></p>
-      <button class="reserve-btn">このコーチを予約する</button>
-    </div>
+    <main class="main">
+      <div id="map"></div>
+      <section class="detail-panel" id="detailPanel">
+        <button class="close-btn" id="closeDetail">×</button>
+        <img id="detailImg" src="" alt="coach-photo" />
+        <h2 id="detailName"></h2>
+        <p id="detailSkill"></p>
+        <p id="detailPrice"></p>
+        <p id="detailIntro"></p>
+        <button class="reserve-btn">予約する</button>
+      </section>
+    </main>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>
