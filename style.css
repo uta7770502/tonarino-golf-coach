@@ -43,11 +43,12 @@ body {
 
 /* 右：マップ */
 /* 右：マップ */
+/* 右：マップ（日本地図バージョン） */
 .map {
   position: relative;
   flex-grow: 1;
   height: 100vh;
-  background-image: url("https://tile.openstreetmap.org/3/4/2.png");
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Japan_blank_map_%28with_prefectures%29.svg/1200px-Japan_blank_map_%28with_prefectures%29.svg.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
