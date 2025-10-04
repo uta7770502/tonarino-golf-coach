@@ -1,83 +1,67 @@
-body {
-  margin: 0;
-  font-family: "Helvetica Neue", sans-serif;
-  display: flex;
-  height: 100vh;
-  overflow: hidden;
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+  background:#FFFDF7;
+  color:#004D40;
+}
+.site-header{padding:10px 16px}
+.site-header h1{margin:0;font-size:20px}
+
+.map-wrap{width:100%;}
+#map{width:100%;height:48vh;border-top:2px solid #e8e8e8;border-bottom:2px solid #e8e8e8}
+
+.grid-wrap{padding:16px}
+.grid-wrap h2{margin:8px 0 16px}
+
+.coach-grid{
+  display:grid;
+  grid-template-columns:repeat(5, minmax(140px,1fr));
+  gap:12px;
+}
+@media (max-width:1024px){
+  .coach-grid{grid-template-columns:repeat(3, minmax(140px,1fr));}
+}
+@media (max-width:640px){
+  .coach-grid{grid-template-columns:repeat(2, minmax(140px,1fr));}
 }
 
-.sidebar {
-  width: 35%;
-  padding: 20px;
-  background: #fffdf7;
-  border-right: 2px solid #e0e0e0;
-  overflow-y: auto;
+.card{
+  background:#fff;
+  border-radius:12px;
+  padding:12px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+  transition:transform .15s, box-shadow .15s;
+  cursor:pointer;
 }
+.card:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(0,0,0,.12);}
+.card .row{display:flex;gap:10px;align-items:center;margin-bottom:6px}
+.card img{
+  width:52px;height:52px;border-radius:50%;object-fit:cover;flex:0 0 52px;
+}
+.card h4{margin:0;font-size:15px}
+.card p{margin:2px 0;font-size:12px;color:#355}
 
-#map {
-  flex-grow: 1;
+.reserve-btn{
+  width:100%;padding:12px;border:none;border-radius:10px;background:#FFD95A;font-weight:700;cursor:pointer;margin-top:10px;
 }
+.reserve-btn:hover{background:#ffca2a}
 
-.coach-card {
-  background: #fff;
-  border-radius: 10px;
-  padding: 15px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+/* 吹き出し（LINE風） */
+.leaflet-popup-content{margin:10px}
+.popup-bubble{
+  position:relative;background:#fff;border-radius:10px;padding:6px 10px;
+  box-shadow:0 2px 6px rgba(0,0,0,.2);text-align:center;cursor:pointer;width:130px;
 }
+.popup-inner{display:flex;flex-direction:column;align-items:center}
+.popup-inner img{width:46px;height:46px;border-radius:50%;object-fit:cover;margin-bottom:6px}
+.popup-text{font-size:13px;color:#004D40;font-weight:700}
+.popup-arrow{position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:8px solid #fff}
 
-.coach-card img {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-right: 10px;
-}
-
-.popup-bubble {
-  position: relative;
-  background: #fff;
-  border-radius: 10px;
-  padding: 6px 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  text-align: center;
-  cursor: pointer;
-  width: 120px;
-  transition: transform 0.2s;
-}
-
-.popup-bubble:hover {
-  transform: scale(1.05);
-}
-
-.popup-inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.popup-inner img {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 5px;
-}
-
-.popup-text {
-  font-size: 13px;
-  color: #004D40;
-  font-weight: bold;
-}
-
-.popup-arrow {
-  position: absolute;
-  bottom: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-top: 8px solid #fff;
-}
+/* モーダル */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);justify-content:center;align-items:center;z-index:9999}
+.modal-content{background:#fff;border-radius:16px;padding:16px;width:min(420px,92vw);position:relative;box-shadow:0 10px 30px rgba(0,0,0,.2)}
+.modal-content img{width:100%;border-radius:12px;margin-bottom:8px;background:#f3f3f3}
+.modal-content h3{margin:6px 0}
+.close-btn{position:absolute;right:12px;top:10px;border:none;background:#18C3B3;color:#fff;border-radius:50%;width:28px;height:28px;font-weight:700;cursor:pointer}
+.close-btn:hover{background:#14a99e}
