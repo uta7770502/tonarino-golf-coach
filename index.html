@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>隣のゴルフコーチ｜デモ</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- 左：コーチ一覧 -->
+  <div class="sidebar">
+    <h2>🏌️‍♂️ コーチ一覧</h2>
+    <div class="coach-card" data-id="1">
+      <div class="coach-info">
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="coach" />
+        <div class="coach-details">
+          <h3>佐藤 一郎</h3>
+          <p>得意：ドライバー／アプローチ</p>
+          <p>料金：60分 ¥3,000〜</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="coach-card" data-id="2">
+      <div class="coach-info">
+        <img src="https://randomuser.me/api/portraits/men/41.jpg" alt="coach" />
+        <div class="coach-details">
+          <h3>高橋 次郎</h3>
+          <p>得意：パター／初心者指導</p>
+          <p>料金：60分 ¥4,000〜</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 右：マップ -->
+  <div class="map" id="mapArea">
+    <div class="pin" data-id="1" style="top:40%; left:45%;" data-name="佐藤 一郎"></div>
+    <div class="pin" data-id="2" style="top:55%; left:60%;" data-name="高橋 次郎"></div>
+
+    <!-- 詳細パネル -->
+    <div class="detail-panel" id="detailPanel">
+      <button class="close-btn" id="closeDetail">×</button>
+      <img id="detailImg" src="" />
+      <h2 id="detailName"></h2>
+      <p id="detailSkill"></p>
+      <p id="detailPrice"></p>
+      <p id="detailIntro"></p>
+      <button class="reserve-btn">予約する</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
