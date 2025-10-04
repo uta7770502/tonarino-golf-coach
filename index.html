@@ -4,56 +4,36 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>隣のゴルフコーチ</title>
-  <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="site-header">
-    <h1>🏌️‍♂️ 隣のゴルフコーチ</h1>
+    <div class="logo">🏌️‍♂️ 隣のゴルフコーチ</div>
   </header>
 
   <main>
-    <section class="map-wrap">
+    <section id="mapSection">
       <div id="map"></div>
     </section>
 
-    <section class="grid-wrap">
-      <h2>コーチ一覧（20名）</h2>
-      <div id="coachGrid" class="coach-grid"></div>
+    <section id="listSection">
+      <h2>コーチ一覧（<span id="coachCount">0</span>名）</h2>
+      <div class="coach-grid" id="coachGrid"></div>
     </section>
   </main>
 
-  <!-- モーダル -->
-  <div id="coachModal" class="modal" aria-hidden="true">
-    <div class="modal-content" role="dialog" aria-modal="true">
-      <button class="close-btn" id="modalClose" aria-label="閉じる">×</button>
-      <div class="modal-head">
-        <img id="mPhoto" alt="コーチ写真" />
-        <div class="m-title">
-          <h3 id="mName"></h3>
-          <div class="m-rating">⭐ <span id="mStar">4.5</span></div>
-        </div>
-      </div>
-
-      <div class="m-body">
-        <p id="mSkill" class="m-skill"></p>
-        <div class="m-prices">
-          <div class="price">60分 <span id="mPrice60"></span></div>
-          <div class="price">90分 <span id="mPrice90"></span></div>
-        </div>
-
-        <div class="m-video">
-          <iframe id="mYoutube" src="" title="YouTube video" frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
-
-        <button class="reserve-btn">このコーチを予約する</button>
+  <!-- モーダル（詳細） -->
+  <div class="modal" id="detailModal" aria-hidden="true">
+    <div class="modal__content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal__close" id="modalClose" aria-label="閉じる">×</button>
+      <div class="modal__body" id="modalBody">
+        <!-- 動的に挿入 -->
       </div>
     </div>
   </div>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="coaches.js"></script>
   <script src="script.js"></script>
 </body>

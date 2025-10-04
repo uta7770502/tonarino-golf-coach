@@ -1,30 +1,56 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>コーチ詳細</title>
-  <script src="script.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>コーチ詳細 | 隣のゴルフコーチ</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
-    body { font-family: "Noto Sans JP", sans-serif; background-color: #b6eee6; margin: 0; padding: 0; display: flex; justify-content: center; }
-    .coach-card { background: #fffdf7; border-radius: 25px; padding: 25px; max-width: 380px; margin: 40px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-    .coach-card img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; display: block; margin: 0 auto 10px; }
-    .coach-name { text-align: center; font-weight: bold; font-size: 22px; color: #034c3c; }
-    .rating { text-align: center; color: #ffcc00; font-size: 18px; }
-    .description { text-align: center; font-size: 15px; color: #333; margin-bottom: 20px; }
-    .plan { background: #ffe25b; border-radius: 15px; padding: 12px; text-align: center; margin-bottom: 25px; }
-    .plan p { margin: 6px 0; font-size: 17px; font-weight: bold; }
-    .review h3 { margin-bottom: 10px; color: #034c3c; }
-    .review img { width: 100%; border-radius: 12px; margin-top: 10px; }
-    .reserve-btn { background: #ffe25b; border: none; padding: 12px; width: 100%; border-radius: 15px; font-weight: bold; font-size: 17px; color: #034c3c; cursor: pointer; margin-top: 20px; }
-    .back-link { display: block; text-align: center; margin-top: 15px; color: #034c3c; text-decoration: none; }
+    .detail-wrap { max-width: 980px; margin: 20px auto; background:#fff; border:1px solid #e6f2ef; border-radius:16px; overflow:hidden; }
+    .detail-header { background:#0b6b62; color:#fff; padding:14px 16px; font-weight:800; }
+    .detail-body { display:grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    @media (max-width: 760px){ .detail-body{ grid-template-columns:1fr; } }
+    .detail-media, .detail-info { padding: 18px; }
+    .detail-media img { width:100%; border-radius:12px; margin-bottom:12px; }
+    .back { display:inline-block; margin: 16px; color:#0b6b62; text-decoration:none; font-weight:700; }
   </style>
 </head>
 <body>
-  <div class="coach-card" id="coachDetail"></div>
+  <a class="back" href="index.html">← コーチ一覧にもどる</a>
+  <div class="detail-wrap">
+    <div class="detail-header" id="coachTitle">コーチ詳細</div>
+    <div class="detail-body">
+      <div class="detail-media" id="mediaBox">
+        <!-- photo + youtube -->
+      </div>
+      <div class="detail-info" id="infoBox">
+        <!-- texts -->
+      </div>
+    </div>
+  </div>
+
+  <script src="coaches.js"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", () => { renderCoachDetail(); });
+    (function(){
+      const params = new URLSearchParams(location.search);
+      const id = Number(params.get('id'));
+      const c = (window.COACHES || []).find(x => x.id === id) || window.COACHES[0];
+      document.getElementById('coachTitle').textContent = c.name;
+      document.title = c.name + ' | 隣のゴルフコーチ';
+      document.getElementById('mediaBox').innerHTML = `
+        <img src="${c.img}" alt="${c.name}">
+        <iframe width="100%" height="300" src="${c.yt}" title="YouTube video player"
+          frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      `;
+      document.getElementById('infoBox').innerHTML = `
+        <h2 style="margin-top:0">${c.name}</h2>
+        <p>⭐ ${c.rating.toFixed(1)} ／ 得意：${c.skill}</p>
+        <p>レッスン料金：<b>60分 ¥${c.price.toLocaleString()}</b> ／ <b>90分 ¥${(c.price*1.6|0).toLocaleString()}</b></p>
+        <p>このコーチは主に〇〇練習場で活動しています。</p>
+        <button class="btn-primary" onclick="alert('デモ：予約フローへ')">このコーチを予約する</button>
+      `;
+    })();
   </script>
 </body>
 </html>
