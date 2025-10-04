@@ -1,36 +1,60 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>隣のゴルフコーチ</title>
+  <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="script.js"></script>
-  <style>
-    body { font-family: "Noto Sans JP", sans-serif; margin: 0; background: #fafaf6; color: #004b3f; }
-    header { background: #fff; padding: 10px 20px; border-bottom: 2px solid #e7efe9; font-weight: bold; font-size: 1.3em; }
-    #map { height: 45vh; width: 100%; }
-    .coach-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; padding: 20px; }
-    .card { background: #fff; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 12px; text-align: center; transition: 0.2s; cursor: pointer; }
-    .card:hover { transform: translateY(-3px); box-shadow: 0 8px 16px rgba(0,0,0,0.15); }
-    .card img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; }
-    .card h4 { margin: 8px 0 4px; font-size: 16px; color: #036857; }
-    .card p { margin: 2px 0; font-size: 13px; }
-  </style>
 </head>
 <body>
-  <header>🏌️‍♂️ 隣のゴルフコーチ</header>
-  <div id="map"></div>
-  <section>
-    <div class="coach-grid" id="coachGrid"></div>
-  </section>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      initMap();
-      renderCoachList();
-    });
-  </script>
+  <header class="site-header">
+    <h1>🏌️‍♂️ 隣のゴルフコーチ</h1>
+  </header>
+
+  <main>
+    <section class="map-wrap">
+      <div id="map"></div>
+    </section>
+
+    <section class="grid-wrap">
+      <h2>コーチ一覧（20名）</h2>
+      <div id="coachGrid" class="coach-grid"></div>
+    </section>
+  </main>
+
+  <!-- モーダル -->
+  <div id="coachModal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true">
+      <button class="close-btn" id="modalClose" aria-label="閉じる">×</button>
+      <div class="modal-head">
+        <img id="mPhoto" alt="コーチ写真" />
+        <div class="m-title">
+          <h3 id="mName"></h3>
+          <div class="m-rating">⭐ <span id="mStar">4.5</span></div>
+        </div>
+      </div>
+
+      <div class="m-body">
+        <p id="mSkill" class="m-skill"></p>
+        <div class="m-prices">
+          <div class="price">60分 <span id="mPrice60"></span></div>
+          <div class="price">90分 <span id="mPrice90"></span></div>
+        </div>
+
+        <div class="m-video">
+          <iframe id="mYoutube" src="" title="YouTube video" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+
+        <button class="reserve-btn">このコーチを予約する</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="coaches.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

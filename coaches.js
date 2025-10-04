@@ -1,0 +1,23 @@
+const YT = "https://www.youtube.com/embed/dQw4w9WgXcQ";
+const coaches = [
+  {id:1,  name:"佐藤 一郎", skill:"ドライバー／アプローチ", price60:"¥3,000", price90:"¥5,000", lat:35.68, lng:139.76, img:"https://randomuser.me/api/portraits/men/31.jpg", rating:4.6, yt:YT},
+  {id:2,  name:"高橋 次郎", skill:"パター／初心者指導",     price60:"¥3,800", price90:"¥5,800", lat:34.69, lng:135.50, img:"https://randomuser.me/api/portraits/men/32.jpg", rating:4.5, yt:YT},
+  {id:3,  name:"鈴木 太郎", skill:"アイアン精度",           price60:"¥3,500", price90:"¥5,200", lat:35.17, lng:136.91, img:"https://randomuser.me/api/portraits/men/33.jpg", rating:4.4, yt:YT},
+  {id:4,  name:"田中 花子", skill:"飛距離アップ",           price60:"¥4,200", price90:"¥6,200", lat:43.06, lng:141.35, img:"https://randomuser.me/api/portraits/women/44.jpg", rating:4.7, yt:YT},
+  {id:5,  name:"伊藤 健",   skill:"バンカー／ラフ対策",     price60:"¥3,600", price90:"¥5,400", lat:33.59, lng:130.40, img:"https://randomuser.me/api/portraits/men/34.jpg", rating:4.3, yt:YT},
+  {id:6,  name:"渡辺 真",   skill:"方向安定",               price60:"¥3,600", price90:"¥5,400", lat:35.02, lng:135.75, img:"https://randomuser.me/api/portraits/men/35.jpg", rating:4.6, yt:YT},
+  {id:7,  name:"山本 美咲", skill:"スイング矯正",           price60:"¥3,700", price90:"¥5,500", lat:34.70, lng:135.50, img:"https://randomuser.me/api/portraits/women/45.jpg", rating:4.5, yt:YT},
+  {id:8,  name:"中村 亮",   skill:"ラウンド戦略",           price60:"¥3,900", price90:"¥5,900", lat:35.45, lng:139.63, img:"https://randomuser.me/api/portraits/men/36.jpg", rating:4.4, yt:YT},
+  {id:9,  name:"小林 涼",   skill:"初心者対応",             price60:"¥3,300", price90:"¥5,000", lat:35.61, lng:140.12, img:"https://randomuser.me/api/portraits/men/37.jpg", rating:4.5, yt:YT},
+  {id:10, name:"加藤 由美", skill:"トラブルショット",       price60:"¥3,900", price90:"¥5,900", lat:35.39, lng:139.44, img:"https://randomuser.me/api/portraits/women/46.jpg", rating:4.6, yt:YT},
+  {id:11, name:"岡田 剛",   skill:"アプローチ特訓",         price60:"¥3,800", price90:"¥5,800", lat:34.69, lng:135.18, img:"https://randomuser.me/api/portraits/men/38.jpg", rating:4.5, yt:YT},
+  {id:12, name:"清水 彩",   skill:"スコア管理",             price60:"¥3,900", price90:"¥5,900", lat:34.69, lng:135.60, img:"https://randomuser.me/api/portraits/women/47.jpg", rating:4.6, yt:YT},
+  {id:13, name:"松本 茜",   skill:"フォーム分析",           price60:"¥3,600", price90:"¥5,400", lat:38.27, lng:140.87, img:"https://randomuser.me/api/portraits/women/23.jpg", rating:4.4, yt:YT},
+  {id:14, name:"斎藤 翔",   skill:"リズム改善",             price60:"¥3,700", price90:"¥5,700", lat:34.69, lng:135.19, img:"https://randomuser.me/api/portraits/men/24.jpg", rating:4.5, yt:YT},
+  {id:15, name:"山田 涼介", skill:"メンタル強化",           price60:"¥4,100", price90:"¥6,100", lat:35.68, lng:139.76, img:"https://randomuser.me/api/portraits/men/25.jpg", rating:4.7, yt:YT},
+  {id:16, name:"佐々木 優奈", skill:"女性向け指導",        price60:"¥3,800", price90:"¥5,800", lat:35.02, lng:135.76, img:"https://randomuser.me/api/portraits/women/26.jpg", rating:4.6, yt:YT},
+  {id:17, name:"原 健太",   skill:"飛距離アップ",           price60:"¥3,500", price90:"¥5,300", lat:34.70, lng:135.50, img:"https://randomuser.me/api/portraits/men/27.jpg", rating:4.3, yt:YT},
+  {id:18, name:"石井 未来", skill:"安定スイング",           price60:"¥3,900", price90:"¥5,900", lat:35.31, lng:139.55, img:"https://randomuser.me/api/portraits/women/28.jpg", rating:4.5, yt:YT},
+  {id:19, name:"岡本 翔",   skill:"コース攻略",             price60:"¥3,700", price90:"¥5,700", lat:34.39, lng:132.46, img:"https://randomuser.me/api/portraits/men/29.jpg", rating:4.4, yt:YT},
+  {id:20, name:"森田 麻衣", skill:"実践ラウンド",           price60:"¥3,600", price90:"¥5,600", lat:26.21, lng:127.68, img:"https://randomuser.me/api/portraits/women/30.jpg", rating:4.5, yt:YT},
+];
