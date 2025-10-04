@@ -1,130 +1,74 @@
+
+* { box-sizing: border-box; }
 body {
   margin: 0;
-  font-family: "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
   background-color: #FFFDF7;
   color: #004D40;
-  display: flex;
-  height: 100vh;
-  overflow: hidden;
 }
 
-/* 左：一覧 */
+.layout { display: flex; min-height: 100vh; }
+
 .sidebar {
-  width: 35%;
+  width: 36%;
+  max-width: 520px;
+  min-width: 300px;
   padding: 20px;
-  overflow-y: auto;
   border-right: 2px solid #e0e0e0;
+  overflow-y: auto;
+  background: #fff;
 }
+.sidebar h2 { margin-top: 4px; margin-bottom: 16px; }
+
 .coach-card {
   background: #fff;
-  border-radius: 10px;
-  padding: 15px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  transition: all 0.25s ease;
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  transition: all .2s;
   cursor: pointer;
+  border-left: 6px solid transparent;
 }
 .coach-card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 6px 10px rgba(0,0,0,0.15);
-  border-left: 6px solid #18C3B3;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.10);
+  border-left-color: #18C3B3;
 }
+.coach-info { display: flex; gap: 12px; align-items: center; }
 .coach-card img {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-right: 10px;
+  width: 60px; height: 60px; border-radius: 50%; object-fit: cover;
 }
-.coach-info { display: flex; align-items: center; }
-.coach-details { flex-grow: 1; }
-.coach-details h3 { margin: 0; font-size: 18px; }
-.coach-details p { margin: 2px 0; font-size: 13px; }
+.coach-details h3 { margin: 0 0 4px; font-size: 18px; }
+.coach-details p { margin: 2px 0; font-size: 13px; color: #23524e; }
 
-/* 右：マップ */
-/* 右：マップ */
-/* 右：マップ（日本地図バージョン） */
-.map {
-  position: relative;
-  flex-grow: 1;
-  height: 100vh;
-  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Japan_blank_map_%28with_prefectures%29.svg/1200px-Japan_blank_map_%28with_prefectures%29.svg.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  border-left: 2px solid #e0e0e0;
-}
-  position: relative;
-  flex-grow: 1;
-  background: linear-gradient(160deg, #d0f0e0, #a0e0d0);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
+.main { position: relative; flex: 1; }
+#map { width: 100%; height: 100vh; border-left: 2px solid #e0e0e0; }
 
-  /* ← ここを追加 */
-  height: 100vh; /* 画面全体の高さを確保 */
-}
-}
-.pin {
-  position: absolute;
-  width: 22px;
-  height: 22px;
-  background-color: #18C3B3;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-.pin:hover {
-  transform: scale(1.4);
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-}
-.pin:hover::after {
-  content: attr(data-name);
-  position: absolute;
-  top: -45px;
-  left: -30px;
-  padding: 5px 10px;
-  background: #fff;
-  color: #004D40;
-  border-radius: 8px;
-  font-size: 12px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-  white-space: nowrap;
-}
-.pin.active {
-  background-color: #FFD95A;
-  transform: scale(1.5);
-}
-
-/* 詳細パネル */
 .detail-panel {
   position: absolute;
-  right: -400px;
+  right: -420px;
   top: 0;
   width: 380px;
   height: 100%;
   background: #ffffff;
-  box-shadow: -4px 0 10px rgba(0,0,0,0.2);
+  box-shadow: -4px 0 16px rgba(0,0,0,0.16);
   padding: 20px;
-  transition: right 0.4s ease;
+  transition: right .35s ease;
   overflow-y: auto;
-  z-index: 10;
+  z-index: 1000;
 }
 .detail-panel.active { right: 0; }
 .detail-panel img {
   width: 100%;
-  border-radius: 10px;
-  margin-bottom: 15px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  background: #f3f3f3;
 }
 .close-btn {
   position: absolute;
-  right: 15px;
-  top: 10px;
+  right: 16px;
+  top: 12px;
   background: #18C3B3;
   color: #fff;
   border: none;
@@ -135,15 +79,44 @@ body {
   cursor: pointer;
 }
 .close-btn:hover { background: #14a99e; }
-.detail-panel h2 { margin: 0 0 5px 0; }
-.detail-panel p { margin: 5px 0; font-size: 14px; }
+.detail-panel h2 { margin: 0 0 6px 0; }
+.detail-panel p { margin: 6px 0; font-size: 14px; color: #234; }
 .reserve-btn {
   background: #FFD95A;
   border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
+  padding: 12px 16px;
+  border-radius: 10px;
   cursor: pointer;
   width: 100%;
-  margin-top: 20px;
+  margin-top: 14px;
+  font-weight: 600;
 }
 .reserve-btn:hover { background: #FFCA28; }
+
+@media (max-width: 900px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    width: 100%;
+    max-width: none;
+    border-right: none;
+    border-bottom: 2px solid #e0e0e0;
+  }
+  #map {
+    height: 70vh;
+    border-left: none;
+  }
+  .detail-panel {
+    width: 100%;
+    height: auto;
+    min-height: 40vh;
+    right: 0;
+    left: 0;
+    bottom: -50vh;
+    top: auto;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    box-shadow: 0 -8px 16px rgba(0,0,0,0.16);
+    transition: bottom .35s ease;
+  }
+  .detail-panel.active { bottom: 0; }
+}
