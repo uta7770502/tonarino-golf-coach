@@ -5,49 +5,31 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>隣のゴルフコーチ</title>
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-  />
-  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="script.js"></script>
   <style>
-    body { font-family: "Hiragino Sans", sans-serif; background: #fafaf6; margin: 0; }
-    header { padding: 10px 20px; font-size: 1.4em; font-weight: bold; color: #006c54; }
-    #map { height: 60vh; width: 100%; }
+    body { font-family: "Noto Sans JP", sans-serif; margin: 0; background: #fafaf6; color: #004b3f; }
+    header { background: #fff; padding: 10px 20px; border-bottom: 2px solid #e7efe9; font-weight: bold; font-size: 1.3em; }
+    #map { height: 45vh; width: 100%; }
+    .coach-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; padding: 20px; }
+    .card { background: #fff; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 12px; text-align: center; transition: 0.2s; cursor: pointer; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 8px 16px rgba(0,0,0,0.15); }
+    .card img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; }
+    .card h4 { margin: 8px 0 4px; font-size: 16px; color: #036857; }
+    .card p { margin: 2px 0; font-size: 13px; }
   </style>
 </head>
 <body>
   <header>🏌️‍♂️ 隣のゴルフコーチ</header>
   <div id="map"></div>
-
+  <section>
+    <div class="coach-grid" id="coachGrid"></div>
+  </section>
   <script>
-    const map = L.map("map").setView([35.6895, 139.6917], 6);
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-
-    const coach = {
-      name: "佐藤 一郎",
-      lat: 35.6895,
-      lng: 139.6917,
-      photo: "images/sato.jpg",
-    };
-
-    const popupHTML = `
-      <div style="text-align:center;">
-        <img src="${coach.photo}" style="width:60px; height:60px; border-radius:50%; object-fit:cover;"/><br>
-        <strong>${coach.name}</strong>
-      </div>
-    `;
-
-    const marker = L.marker([coach.lat, coach.lng]).addTo(map);
-    marker.bindPopup(popupHTML);
-
-    marker.on("popupopen", function() {
-      const popupEl = document.querySelector(".leaflet-popup-content");
-      popupEl.addEventListener("click", () => {
-        window.location.href = "coach.html";
-      });
+    document.addEventListener("DOMContentLoaded", () => {
+      initMap();
+      renderCoachList();
     });
   </script>
 </body>

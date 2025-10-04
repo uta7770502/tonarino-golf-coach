@@ -4,90 +4,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>佐藤一郎コーチ詳細</title>
+  <title>コーチ詳細</title>
+  <script src="script.js"></script>
   <style>
-    body {
-      font-family: "Hiragino Sans", sans-serif;
-      background-color: #4ecdc4;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    .card {
-      background-color: #fffdf5;
-      border-radius: 20px;
-      padding: 20px;
-      width: 320px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-    .card img {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-    h2 {
-      margin: 10px 0 0 0;
-      color: #004b3f;
-    }
-    .rating {
-      color: #ffcc00;
-      font-size: 1.2em;
-      margin-bottom: 10px;
-    }
-    .price-box {
-      background-color: #ffd447;
-      border-radius: 20px;
-      padding: 10px;
-      text-align: center;
-      margin: 10px 0;
-    }
-    .price-box p {
-      margin: 5px 0;
-      font-weight: bold;
-    }
-    .review {
-      font-size: 0.9em;
-      margin: 10px 0;
-    }
-    button {
-      background-color: #ffd447;
-      border: none;
-      border-radius: 20px;
-      padding: 12px;
-      width: 100%;
-      font-weight: bold;
-      color: #004b3f;
-      cursor: pointer;
-      margin-top: 15px;
-    }
+    body { font-family: "Noto Sans JP", sans-serif; background-color: #b6eee6; margin: 0; padding: 0; display: flex; justify-content: center; }
+    .coach-card { background: #fffdf7; border-radius: 25px; padding: 25px; max-width: 380px; margin: 40px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+    .coach-card img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; display: block; margin: 0 auto 10px; }
+    .coach-name { text-align: center; font-weight: bold; font-size: 22px; color: #034c3c; }
+    .rating { text-align: center; color: #ffcc00; font-size: 18px; }
+    .description { text-align: center; font-size: 15px; color: #333; margin-bottom: 20px; }
+    .plan { background: #ffe25b; border-radius: 15px; padding: 12px; text-align: center; margin-bottom: 25px; }
+    .plan p { margin: 6px 0; font-size: 17px; font-weight: bold; }
+    .review h3 { margin-bottom: 10px; color: #034c3c; }
+    .review img { width: 100%; border-radius: 12px; margin-top: 10px; }
+    .reserve-btn { background: #ffe25b; border: none; padding: 12px; width: 100%; border-radius: 15px; font-weight: bold; font-size: 17px; color: #034c3c; cursor: pointer; margin-top: 20px; }
+    .back-link { display: block; text-align: center; margin-top: 15px; color: #034c3c; text-decoration: none; }
   </style>
 </head>
 <body>
-  <div class="card">
-    <div style="text-align:center;">
-      <img src="images/sato.jpg" alt="佐藤一郎">
-      <h2>佐藤 一郎</h2>
-      <div class="rating">⭐⭐⭐⭐☆ 4.7</div>
-      <p>ドライバーと飛距離アップが得意です</p>
-    </div>
-
-    <div class="price-box">
-      <p>60分　¥3,000</p>
-      <p>90分　¥5,000</p>
-    </div>
-
-    <div class="review">
-      <strong>レビュー</strong><br>
-      Keiko ⭐⭐⭐⭐⭐<br>
-      Takahashi ⭐⭐⭐⭐☆<br>
-      <p>分かりやすいレッスンです。</p>
-    </div>
-
-    <p><strong>このコーチは主に○○練習場で活動しています</strong></p>
-    <button>このコーチを予約する</button>
-  </div>
+  <div class="coach-card" id="coachDetail"></div>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => { renderCoachDetail(); });
+  </script>
 </body>
 </html>
