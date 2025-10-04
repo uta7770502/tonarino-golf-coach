@@ -42,15 +42,20 @@ body {
 .coach-details p { margin: 2px 0; font-size: 13px; }
 
 /* 右：マップ */
+/* 右：マップ */
 .map {
   position: relative;
   flex-grow: 1;
   height: 100vh;
-  background: url("https://tile.openstreetmap.org/0/0/0.png") center/cover no-repeat;
+  background-image: url("https://tile.openstreetmap.org/3/4/2.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  border-left: 2px solid #e0e0e0;
 }
   position: relative;
   flex-grow: 1;
