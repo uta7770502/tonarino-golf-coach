@@ -1,43 +1,54 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>隣のゴルフコーチ</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+  />
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+  <style>
+    body { font-family: "Hiragino Sans", sans-serif; background: #fafaf6; margin: 0; }
+    header { padding: 10px 20px; font-size: 1.4em; font-weight: bold; color: #006c54; }
+    #map { height: 60vh; width: 100%; }
+  </style>
 </head>
 <body>
-  <header class="site-header">
-    <h1>🏌️‍♂️ 隣のゴルフコーチ</h1>
-  </header>
+  <header>🏌️‍♂️ 隣のゴルフコーチ</header>
+  <div id="map"></div>
 
-  <section class="map-wrap">
-    <div id="map"></div>
-  </section>
+  <script>
+    const map = L.map("map").setView([35.6895, 139.6917], 6);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
 
-  <section class="grid-wrap">
-    <h2>コーチ一覧（20名）</h2>
-    <div id="coachGrid" class="coach-grid"></div>
-  </section>
+    const coach = {
+      name: "佐藤 一郎",
+      lat: 35.6895,
+      lng: 139.6917,
+      photo: "images/sato.jpg",
+    };
 
-  <!-- 詳細モーダル -->
-  <div id="coachDetailModal" class="modal" aria-hidden="true">
-    <div class="modal-content" role="dialog" aria-modal="true">
-      <button class="close-btn" id="closeModal" aria-label="閉じる">×</button>
-      <div class="modal-row">
-        <img id="coachImg" alt="コーチ写真" />
-        <div class="modal-text">
-          <h3 id="coachName"></h3>
-          <p id="coachSkill"></p>
-          <p id="coachPrice"></p>
-          <button class="reserve-btn">このコーチを予約する</button>
-        </div>
+    const popupHTML = `
+      <div style="text-align:center;">
+        <img src="${coach.photo}" style="width:60px; height:60px; border-radius:50%; object-fit:cover;"/><br>
+        <strong>${coach.name}</strong>
       </div>
-    </div>
-  </div>
+    `;
 
-  <script src="script.js"></script>
+    const marker = L.marker([coach.lat, coach.lng]).addTo(map);
+    marker.bindPopup(popupHTML);
+
+    marker.on("popupopen", function() {
+      const popupEl = document.querySelector(".leaflet-popup-content");
+      popupEl.addEventListener("click", () => {
+        window.location.href = "coach.html";
+      });
+    });
+  </script>
 </body>
 </html>
