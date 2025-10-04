@@ -18,9 +18,11 @@ const coaches = {
 const panel = document.getElementById("detailPanel");
 const pins = document.querySelectorAll(".pin");
 const cards = document.querySelectorAll(".coach-card");
+const closeBtn = document.getElementById("closeDetail");
 
 function showDetail(id) {
   const c = coaches[id];
+  if (!c) return;
   document.getElementById("detailImg").src = c.img;
   document.getElementById("detailName").textContent = c.name;
   document.getElementById("detailSkill").textContent = "得意分野：" + c.skill;
@@ -36,6 +38,12 @@ cards.forEach((card) => {
 pins.forEach((pin) => {
   pin.addEventListener("click", () => showDetail(pin.dataset.id));
 });
+
+if (closeBtn) {
+  closeBtn.addEventListener("click", () => {
+    panel.classList.remove("active");
+  });
+}
 
 document.getElementById("closeDetail").addEventListener("click", () => {
   panel.classList.remove("active");
