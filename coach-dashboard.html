@@ -25,6 +25,19 @@
       padding: 10px 16px;
       font-size: 20px;
       font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header button {
+      background: var(--accent);
+      border: none;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-weight: bold;
+      cursor: pointer;
+      color: var(--main);
     }
 
     main {
@@ -75,30 +88,6 @@
       margin-top: 0;
     }
 
-    .studio-days {
-      display: flex;
-      justify-content: space-around;
-      font-weight: bold;
-      font-size: 16px;
-      margin-top: 8px;
-    }
-
-    .day {
-      text-align: center;
-    }
-
-    .day span {
-      display: block;
-      background: var(--accent);
-      color: var(--main);
-      border-radius: 50%;
-      width: 32px;
-      height: 32px;
-      line-height: 32px;
-      margin: 4px auto 0;
-      font-weight: bold;
-    }
-
     .pill-prices {
       display: flex;
       justify-content: center;
@@ -115,9 +104,26 @@
       font-size: 16px;
     }
 
-    .earnings {
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      font-size: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+
+    .save-btn {
+      display: block;
+      width: 100%;
+      background: var(--accent);
+      border: none;
+      border-radius: 8px;
+      padding: 10px;
       font-size: 16px;
-      line-height: 1.6;
+      font-weight: bold;
+      cursor: pointer;
+      color: var(--main);
     }
 
     footer {
@@ -146,46 +152,41 @@
 </head>
 <body>
 
-  <header>🏌️‍♂️ コーチ管理</header>
+  <header>
+    🏌️‍♂️ コーチ管理
+    <button id="editBtn">編集</button>
+  </header>
 
   <main>
-    <div class="profile">
-      <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="コーチ写真">
-      <h2>佐藤 コーチ</h2>
-      <p>ドライバー・飛距離アップが得意です！</p>
-      <div class="tags">
-        <div class="tag">#ドライバー</div>
-        <div class="tag">#アプローチ</div>
+    <div id="viewMode">
+      <div class="profile">
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="コーチ写真">
+        <h2 id="coachName">佐藤 コーチ</h2>
+        <p id="coachDesc">ドライバー・飛距離アップが得意です！</p>
+        <div class="tags" id="coachTags">
+          <div class="tag">#ドライバー</div>
+          <div class="tag">#アプローチ</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>料金</h3>
+        <div class="pill-prices">
+          <div class="pill">60分 ¥<span id="price60">3000</span>〜</div>
+          <div class="pill">90分 ¥<span id="price90">5000</span>〜</div>
+        </div>
       </div>
     </div>
 
-    <div class="section">
-      <h3>スタジオ管理</h3>
-      <div class="studio-days">
-        <div class="day">月<span>可</span></div>
-        <div class="day">火<span>可</span></div>
-        <div class="day">水<span>可</span></div>
-        <div class="day">木<span>可</span></div>
-        <div class="day">金<span>×</span></div>
-        <div class="day">土<span>可</span></div>
-        <div class="day">日<span>S</span></div>
-      </div>
-    </div>
-
-    <div class="section">
-      <h3>料金</h3>
-      <div class="pill-prices">
-        <div class="pill">60分 ¥3,000〜</div>
-        <div class="pill">90分 ¥5,000〜</div>
-      </div>
-    </div>
-
-    <div class="section">
-      <h3>今月の売上・入金予定</h3>
-      <div class="earnings">
-        今月の売上：<b>¥12,000</b><br>
-        入金予定日：<b>10月30日</b>
-      </div>
+    <!-- 編集モード -->
+    <div id="editMode" style="display:none;">
+      <h3>プロフィール編集</h3>
+      <input type="text" id="editName" placeholder="コーチ名">
+      <textarea id="editDesc" placeholder="自己紹介"></textarea>
+      <input type="text" id="editTags" placeholder="タグ（カンマ区切り #ドライバー,#パター）">
+      <input type="number" id="editPrice60" placeholder="60分の料金（例：3000）">
+      <input type="number" id="editPrice90" placeholder="90分の料金（例：5000）">
+      <button class="save-btn" id="saveBtn">保存する</button>
     </div>
   </main>
 
@@ -195,6 +196,43 @@
     <a href="#">💰 売上</a>
     <a href="#">👤 管理</a>
   </footer>
+
+  <script>
+    const editBtn = document.getElementById('editBtn');
+    const saveBtn = document.getElementById('saveBtn');
+    const viewMode = document.getElementById('viewMode');
+    const editMode = document.getElementById('editMode');
+
+    const nameEl = document.getElementById('coachName');
+    const descEl = document.getElementById('coachDesc');
+    const tagsEl = document.getElementById('coachTags');
+    const price60El = document.getElementById('price60');
+    const price90El = document.getElementById('price90');
+
+    editBtn.addEventListener('click', () => {
+      viewMode.style.display = 'none';
+      editMode.style.display = 'block';
+
+      document.getElementById('editName').value = nameEl.textContent;
+      document.getElementById('editDesc').value = descEl.textContent;
+      document.getElementById('editTags').value = Array.from(tagsEl.querySelectorAll('.tag')).map(t => t.textContent).join(',');
+      document.getElementById('editPrice60').value = price60El.textContent;
+      document.getElementById('editPrice90').value = price90El.textContent;
+    });
+
+    saveBtn.addEventListener('click', () => {
+      nameEl.textContent = document.getElementById('editName').value;
+      descEl.textContent = document.getElementById('editDesc').value;
+      price60El.textContent = document.getElementById('editPrice60').value;
+      price90El.textContent = document.getElementById('editPrice90').value;
+
+      const tagList = document.getElementById('editTags').value.split(',').map(t => t.trim());
+      tagsEl.innerHTML = tagList.map(tag => `<div class="tag">${tag}</div>`).join('');
+
+      viewMode.style.display = 'block';
+      editMode.style.display = 'none';
+    });
+  </script>
 
 </body>
 </html>
