@@ -135,3 +135,26 @@ header.site-header {
   margin-bottom: 0 !important;
   padding-bottom: 0 !important;
 }
+/* ===== 最終調整：全体の余白を完全にリセット ===== */
+html, body, main, h1, h2, header {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.detail main,
+.detail .coach-page,
+.detail h2,
+header.site-header {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.coach-page {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+.detail main > section:first-of-type {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
