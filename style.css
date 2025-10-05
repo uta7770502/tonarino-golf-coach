@@ -1,85 +1,55 @@
-body {
-  font-family: 'Hiragino Sans', 'Noto Sans JP', sans-serif;
-  background-color: #fefcf6;
-  margin: 0;
-  padding: 0;
-  color: #003322;
-  text-align: center;
+*{box-sizing:border-box}
+:root{
+  --bg:#b2f1eb;
+  --card:#fffdf7;
+  --ink:#0b5b4c;
+  --accent:#ffd53d;
 }
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:var(--bg);color:var(--ink)}
+.site-header{background:#fff;padding:10px 16px;border-bottom:2px solid #e6efe9;position:sticky;top:0;z-index:10}
+.site-header h1{margin:0;font-size:20px}
 
-h1 {
-  background: #fff;
-  margin: 0;
-  padding: 10px;
-  font-size: 1.4em;
-  color: #004b3e;
-  border-bottom: 3px solid #dfeeea;
-}
+.map-wrap{width:100%}
+#map{width:100%;height:48vh;border-bottom:2px solid #e8e8e8}
 
-#map {
-  height: 50vh;
-  width: 100%;
+.grid-wrap{padding:16px}
+.grid-wrap h2{margin:8px 0 16px}
+.coach-grid{
+  display:grid;
+  grid-template-columns:repeat(5, minmax(200px,1fr)); /* 5列 */
+  gap:14px;
 }
+@media (max-width:1160px){ .coach-grid{grid-template-columns:repeat(4,minmax(200px,1fr));} }
+@media (max-width:920px){ .coach-grid{grid-template-columns:repeat(3,minmax(180px,1fr));} }
+@media (max-width:640px){ .coach-grid{grid-template-columns:repeat(2,minmax(160px,1fr));} }
 
-.coach-section {
-  padding: 20px;
+.card{
+  background:var(--card);border-radius:14px;padding:12px;box-shadow:0 6px 18px rgba(0,0,0,.08);
+  cursor:pointer;transition:transform .15s, box-shadow .15s;
 }
+.card:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(0,0,0,.12)}
+.card .row{display:flex;gap:12px;align-items:center}
+.card img{width:58px;height:58px;border-radius:50%;object-fit:cover}
+.card h4{margin:0 0 4px 0;font-size:16px;color:var(--ink)}
+.card p{margin:2px 0;font-size:12px;color:#365}
+.card .price{font-weight:800;color:#0a6b58}
 
-.coach-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 15px;
-  justify-items: center;
-}
+/* Leaflet popup（顔＋名前のシンプル表示） */
+.leaflet-popup-content-wrapper{border-radius:12px}
+.popup-card{display:flex;align-items:center;gap:10px}
+.popup-card img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:3px solid #f6fbfa}
+.popup-name{font-weight:800}
 
-.coach-card {
-  background: #fff;
-  border-radius: 12px;
-  padding: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  width: 150px;
-  text-align: center;
-  transition: transform 0.2s ease;
-}
+/* Modal */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);justify-content:center;align-items:center;z-index:9999;padding:16px}
+.modal-content{background:var(--card);border-radius:16px;padding:16px;width:min(560px,96vw);box-shadow:0 10px 30px rgba(0,0,0,.25);position:relative}
+.close-btn{position:absolute;right:12px;top:10px;border:none;background:#18c3b3;color:#fff;border-radius:50%;width:32px;height:32px;font-weight:800;cursor:pointer}
+.close-btn:hover{background:#14a99e}
 
-.coach-card:hover {
-  transform: translateY(-4px);
-}
-
-.coach-card img {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 6px;
-}
-
-.coach-card h3 {
-  font-size: 1em;
-  margin: 4px 0;
-  color: #005b47;
-}
-
-.popup-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: #fff;
-  border-radius: 10px;
-  padding: 10px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-  text-align: center;
-}
-
-.popup-card img {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  margin-bottom: 6px;
-}
-
-.popup-card h4 {
-  margin: 0;
-  color: #00755e;
-  font-size: 0.95em;
-}
+.modal-head{display:flex;gap:14px;align-items:center;margin-bottom:8px}
+.modal-head img{width:88px;height:88px;border-radius:14px;object-fit:cover;background:#eee}
+.m-body{padding:6px 2px}
+.m-club{margin:4px 0 6px 0}
+.m-price{margin:0 0 10px 0;font-weight:800}
+.interest-btn{background:var(--accent);border:none;padding:12px 16px;border-radius:12px;font-weight:800;width:100%;cursor:pointer}
+.interest-btn:hover{filter:brightness(0.95)}
