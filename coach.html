@@ -104,7 +104,30 @@
       font-size: 16px;
     }
 
-    /* ==== レビュー ==== */
+    /* 編集フォーム */
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    .save-btn {
+      width: 100%;
+      background: var(--accent);
+      color: var(--main);
+      border: none;
+      border-radius: 8px;
+      padding: 10px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    /* レビュー */
     .review-list {
       display: flex;
       flex-direction: column;
@@ -167,10 +190,11 @@
 
   <header>
     🏌️‍♂️ コーチ管理
-    <button id="editBtn">編集</button>
+    <button id="editBtn">✏️ 編集</button>
   </header>
 
   <main>
+    <!-- 表示モード -->
     <div id="viewMode">
       <div class="profile">
         <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="コーチ写真">
@@ -211,6 +235,17 @@
         </div>
       </div>
     </div>
+
+    <!-- 編集モード -->
+    <div id="editMode" style="display:none;">
+      <h3>プロフィール編集</h3>
+      <input type="text" id="editName" placeholder="コーチ名">
+      <textarea id="editDesc" placeholder="自己紹介"></textarea>
+      <input type="text" id="editTags" placeholder="タグ（カンマ区切り #ドライバー,#パター）">
+      <input type="number" id="editPrice60" placeholder="60分の料金（例：3000）">
+      <input type="number" id="editPrice90" placeholder="90分の料金（例：5000）">
+      <button class="save-btn" id="saveBtn">💾 保存する</button>
+    </div>
   </main>
 
   <footer>
@@ -220,8 +255,42 @@
 
   <script>
     const editBtn = document.getElementById('editBtn');
+    const saveBtn = document.getElementById('saveBtn');
+    const viewMode = document.getElementById('viewMode');
+    const editMode = document.getElementById('editMode');
+
+    const nameEl = document.getElementById('coachName');
+    const descEl = document.getElementById('coachDesc');
+    const tagsEl = document.getElementById('coachTags');
+    const price60El = document.getElementById('price60');
+    const price90El = document.getElementById('price90');
+
     editBtn.addEventListener('click', () => {
-      alert("ここから編集モードを追加予定です！");
+      // 編集フォームを開く
+      viewMode.style.display = 'none';
+      editMode.style.display = 'block';
+
+      // 現在の値をフォームにセット
+      document.getElementById('editName').value = nameEl.textContent;
+      document.getElementById('editDesc').value = descEl.textContent;
+      document.getElementById('editTags').value = Array.from(tagsEl.querySelectorAll('.tag')).map(t => t.textContent).join(',');
+      document.getElementById('editPrice60').value = price60El.textContent;
+      document.getElementById('editPrice90').value = price90El.textContent;
+    });
+
+    saveBtn.addEventListener('click', () => {
+      // フォームの内容を反映
+      nameEl.textContent = document.getElementById('editName').value;
+      descEl.textContent = document.getElementById('editDesc').value;
+      price60El.textContent = document.getElementById('editPrice60').value;
+      price90El.textContent = document.getElementById('editPrice90').value;
+
+      const tagList = document.getElementById('editTags').value.split(',').map(t => t.trim());
+      tagsEl.innerHTML = tagList.map(tag => `<div class="tag">${tag}</div>`).join('');
+
+      // 表示モードへ戻る
+      viewMode.style.display = 'block';
+      editMode.style.display = 'none';
     });
   </script>
 
