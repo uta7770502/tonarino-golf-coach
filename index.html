@@ -13,31 +13,32 @@
   </header>
 
   <main>
-    <section class="map-wrap">
-      <div id="map"></div>
-    </section>
+  <section>
+    <h2>🏌️‍♂️ 隣のゴルフコーチ</h2>
+    <div id="map" style="height:400px;"></div>
+  </section>
 
-    <section class="grid-wrap">
-      <h2>コーチ一覧（20名）</h2>
-      <div id="coachGrid" class="coach-grid"></div>
-    </section>
-  </main>
+  <section class="grid-wrap">
+    <h2>コーチ一覧（20名）</h2>
+    <div id="coachGrid" class="coach-grid"></div>
+  </section>
+</main>
 
-  <!-- モーダル（得意クラブ＋金額のみ） -->
-  <div id="coachModal" class="modal" aria-hidden="true">
-    <div class="modal-content" role="dialog" aria-modal="true">
-      <button class="close-btn" id="modalClose" aria-label="閉じる">×</button>
-      <div class="modal-head">
-        <img id="mPhoto" alt="コーチ写真" />
-        <div><h3 id="mName"></h3></div>
-      </div>
-      <div class="m-body">
-        <p id="mClub" class="m-club"></p>
-        <p id="mPrice" class="m-price"></p>
-        <button id="moreBtn" class="interest-btn">このコーチが気になる</button>
-      </div>
+<!-- モーダル -->
+<div id="coachModal" class="modal" aria-hidden="true">
+  <div class="modal-content" role="dialog">
+    <button class="close-btn" id="modalClose">&times;</button>
+    <div class="modal-head">
+      <img id="mPhoto" alt="コーチ写真" />
+      <div><h3 id="mName"></h3></div>
+    </div>
+    <div class="m-body">
+      <p id="mClub" class="m-club"></p>
+      <p id="mPrice" class="m-price"></p>
+      <button id="moreBtn" class="interest-btn">このコーチが気になる</button>
     </div>
   </div>
+</div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <!-- 1️⃣ まずコーチデータ -->
