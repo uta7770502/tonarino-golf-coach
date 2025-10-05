@@ -2,29 +2,9 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>コーチ詳細 | 隣のゴルフコーチ</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-    /* ページ固有の最小追加（style.css末尾にも入れてありますが、単体でも動くように重複定義） */
-    .coach-page{max-width:960px;margin:24px auto;padding:16px}
-    .coach-hero{display:flex;gap:16px;align-items:center;background:#fff;border-radius:18px;padding:18px;box-shadow:0 6px 20px rgba(0,0,0,.08)}
-    .coach-hero img{width:92px;height:92px;border-radius:50%;object-fit:cover}
-    .coach-name{font-size:28px;font-weight:800;color:#0b6657;letter-spacing:.04em}
-    .stars{display:inline-flex;gap:2px;vertical-align:middle;margin-left:6px}
-    .star{font-size:18px;color:#FFD95A}
-    .subline{color:#0b6657c0;margin-top:6px}
-    .pill-prices{display:flex;gap:14px;margin:18px 0 8px}
-    .pill{background:#FFD95A;border-radius:14px;padding:12px 18px;font-weight:700}
-    .section-card{background:#fff;border-radius:18px;padding:18px;margin-top:18px;box-shadow:0 6px 20px rgba(0,0,0,.06)}
-    .video-wrap{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden}
-    .video-wrap iframe{position:absolute;inset:0;width:100%;height:100%}
-    .book-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .book-grid input,.book-grid select{width:100%;padding:12px 14px;border:1px solid #e7ecee;border-radius:12px;font-size:16px}
-    .btn-primary{display:block;width:100%;text-align:center;background:#FFD95A;border:none;border-radius:14px;padding:16px 18px;font-weight:800;color:#0b6657;margin-top:14px}
-    .back-link{display:inline-block;margin:10px 0 0;color:#0b6657;text-decoration:underline}
-    @media (max-width:720px){.coach-hero{flex-direction:column;align-items:flex-start}}
-  </style>
 </head>
 <body class="detail">
   <header class="site-header">
@@ -32,75 +12,75 @@
   </header>
 
   <main class="coach-page">
-    <a class="back-link" href="./">← 一覧に戻る</a>
+    <a href="index.html" class="back-link">← 一覧に戻る</a>
 
-    <!-- ヒーロー -->
-<section class="coach-hero">
-  <img id="pPhoto" alt="コーチ写真" />
-  <div class="hero-info">
-    <div class="coach-name" id="pName">コーチ名</div>
-    <div class="subline">
-      <span id="pTagline">得意クラブ：—</span>
-      <span class="stars" id="pStars"></span>
-    </div>
-    <div class="pill-prices">
-      <div class="pill">60分 <span id="p60">—</span></div>
-      <div class="pill">90分 <span id="p90">—</span></div>
-    </div>
-  </div>
+    <section class="section-card coach-hero">
+      <div class="hero-left">
+        <img id="coachPhoto" src="" alt="コーチ写真">
+        <div>
+          <h2 id="coachName" class="coach-name">コーチ名</h2>
+          <p id="coachClub" class="subline">得意クラブ：</p>
+          <div class="stars">
+            <span class="star">★</span><span class="star">★</span>
+            <span class="star">★</span><span class="star">★</span><span class="star">☆</span>
+            <span id="coachRate">4.7</span>
+          </div>
+        </div>
+      </div>
 
-  <!-- 👇ここを追加（YouTube埋め込み用） -->
-  <div class="hero-video" id="heroVideo" style="display:none;">
-    <iframe id="pVideo" src="" title="YouTube video" frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      allowfullscreen></iframe>
-  </div>
-</section>
-    
-    <!-- 動画 -->
-    <section class="section-card" id="videoSection" style="display:none;">
+      <!-- ✅ ここがYouTube埋め込み -->
       <div class="video-wrap">
-        <iframe id="pVideo" src="" title="YouTube video" frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen></iframe>
+        <iframe id="coachVideo"
+          src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+          title="YouTube video player"
+          allowfullscreen>
+        </iframe>
       </div>
     </section>
 
-    <!-- レビュー（ダミーでも表示） -->
     <section class="section-card">
-      <h3 style="margin:0 0 8px;">レビュー</h3>
-      <div id="pReviews">
-        <p>「分かりやすいレッスンでした」 — Keiko</p>
-        <p>「飛距離が伸びました！」 — Takahashi</p>
+      <div class="pill-prices">
+        <div class="pill" id="price60">60分 ¥3,000〜</div>
+        <div class="pill" id="price90">90分 ¥5,000〜</div>
       </div>
     </section>
 
-    <!-- 予約（ダミー） -->
     <section class="section-card">
-      <h3 style="margin:0 0 8px;">予約</h3>
+      <h3>レビュー</h3>
+      <p>「分かりやすいレッスンでした」 — Keiko</p>
+      <p>「飛距離が伸びました！」 — Takahashi</p>
+    </section>
+
+    <section class="section-card">
+      <h3>予約</h3>
       <div class="book-grid">
-        <input type="date" id="pDate">
-        <select id="pTime">
-          <option value="14:00-15:00">14:00 - 15:00</option>
-          <option value="16:00-17:00">16:00 - 17:00</option>
-          <option value="18:00-19:00">18:00 - 19:00</option>
-        </select>
-        <select id="pDuration">
-          <option value="60">60分</option>
-          <option value="90">90分</option>
-        </select>
-        <select id="pPay">
-          <option>VISA</option>
-          <option>Mastercard</option>
-          <option>PayPay</option>
+        <input type="date" />
+        <select>
+          <option>14:00 - 15:00</option>
+          <option>15:00 - 16:00</option>
+          <option>16:00 - 17:00</option>
         </select>
       </div>
-      <button class="btn-primary" id="pBook">予約を確定する</button>
-      <p style="margin:10px 0 0;color:#6b7f85;font-size:14px;">※練習場利用料は別途現地払いとなります</p>
+      <button class="btn-primary">このコーチを予約する</button>
     </section>
   </main>
 
-  <script src="./coaches.js"></script>
-  <script src="./coach.js"></script>
+  <script>
+    // coach.html?id=◯ からコーチ情報を反映
+    const params = new URLSearchParams(window.location.search);
+    const id = Number(params.get("id"));
+    const coach = window.COACHES?.find(c => c.id === id);
+    if (coach) {
+      document.getElementById("coachPhoto").src = coach.img;
+      document.getElementById("coachName").textContent = coach.name;
+      document.getElementById("coachClub").textContent = "得意クラブ：" + coach.club;
+      document.getElementById("price60").textContent = "60分 " + coach.price;
+      document.getElementById("price90").textContent = "90分 " + (coach.price90 || "¥5,000〜");
+      if (coach.video) {
+        document.getElementById("coachVideo").src = coach.video;
+      }
+    }
+  </script>
+  <script src="coaches.js"></script>
 </body>
 </html>
