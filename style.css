@@ -105,3 +105,13 @@ header.site-header {
   margin-top: 0 !important;
   padding-top: 0 !important;
 }
+/* 余白完全除去 */
+.detail main {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+.detail h2 {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
