@@ -72,3 +72,22 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic
 .btn-primary{display:block;width:100%;text-align:center;background:#FFD95A;border:none;border-radius:14px;padding:16px 18px;font-weight:800;color:#0b6657;margin-top:14px}
 .back-link{display:inline-block;margin:10px 0 0;color:#0b6657;text-decoration:underline}
 @media (max-width:720px){.coach-hero{flex-direction:column;align-items:flex-start}}
+/* ====== coach.html の余白調整 ====== */
+
+/* 見出し上の余白を削除 */
+.coach-page h2 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+/* 不要な上部スペースを消す */
+.coach-page {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* 全体の余白調整 */
+.detail main {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
