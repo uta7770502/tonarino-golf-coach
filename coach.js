@@ -47,23 +47,21 @@ function derive90(price60Text) {
   return `¥${v.toLocaleString()}〜`;
 }
 
+// --- 省略 ---
+
 document.addEventListener("DOMContentLoaded", () => {
   const id = getId();
   const c = (window.COACHES || []).find(v => v.id === id) || window.COACHES?.[0];
 
-  // 要素
   const pPhoto = document.getElementById("pPhoto");
   const pName  = document.getElementById("pName");
   const pTag   = document.getElementById("pTagline");
   const pStars = document.getElementById("pStars");
   const p60    = document.getElementById("p60");
   const p90    = document.getElementById("p90");
-  const videoSec = document.getElementById("videoSection");
+  const heroVideo = document.getElementById("heroVideo");
   const pVideo = document.getElementById("pVideo");
-  const pBook  = document.getElementById("pBook");
-  const pDate  = document.getElementById("pDate");
 
-  // 表示
   pPhoto.src = c?.img || "";
   pName.textContent = c?.name || "コーチ";
   pTag.textContent  = c?.tagline || (c?.club ? `得意クラブ：${c.club}` : "得意：—");
@@ -71,6 +69,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const price60 = c?.price || "¥3,000〜";
   p60.textContent = price60;
   p90.textContent = c?.price90 || derive90(price60);
+
+  // 👇ここ変更 — コーチに video がある場合のみ表示
+  if (c?.video) {
+    pVideo.src = `https://www.youtube.com/embed/${c.video}`;
+    heroVideo.style.display = "block";
+  }
+
+  // 予約UIそのまま…
+});
 
   // YouTube
   if (c?.video) {
