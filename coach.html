@@ -35,21 +35,28 @@
     <a class="back-link" href="./">← 一覧に戻る</a>
 
     <!-- ヒーロー -->
-    <section class="coach-hero">
-      <img id="pPhoto" alt="コーチ写真" />
-      <div>
-        <div class="coach-name" id="pName">コーチ名</div>
-        <div class="subline">
-          <span id="pTagline">得意クラブ：—</span>
-          <span class="stars" id="pStars"></span>
-        </div>
-        <div class="pill-prices">
-          <div class="pill">60分 <span id="p60">—</span></div>
-          <div class="pill">90分 <span id="p90">—</span></div>
-        </div>
-      </div>
-    </section>
+<section class="coach-hero">
+  <img id="pPhoto" alt="コーチ写真" />
+  <div class="hero-info">
+    <div class="coach-name" id="pName">コーチ名</div>
+    <div class="subline">
+      <span id="pTagline">得意クラブ：—</span>
+      <span class="stars" id="pStars"></span>
+    </div>
+    <div class="pill-prices">
+      <div class="pill">60分 <span id="p60">—</span></div>
+      <div class="pill">90分 <span id="p90">—</span></div>
+    </div>
+  </div>
 
+  <!-- 👇ここを追加（YouTube埋め込み用） -->
+  <div class="hero-video" id="heroVideo" style="display:none;">
+    <iframe id="pVideo" src="" title="YouTube video" frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen></iframe>
+  </div>
+</section>
+    
     <!-- 動画 -->
     <section class="section-card" id="videoSection" style="display:none;">
       <div class="video-wrap">
