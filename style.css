@@ -115,3 +115,23 @@ header.site-header {
   margin-top: 0 !important;
   padding-top: 0 !important;
 }
+/* ===== 仕上げ調整：上余白を完全に削除 ===== */
+.detail .coach-page {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+.detail main {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+.detail h2 {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+header.site-header {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
