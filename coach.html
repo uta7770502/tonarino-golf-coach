@@ -2,85 +2,51 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>コーチ詳細 | 隣のゴルフコーチ</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .detail-wrap { max-width: 980px; margin: 20px auto; background:#fff; border:1px solid #e6f2ef; border-radius:16px; overflow:hidden; }
+    .detail-header { background:#0b6b62; color:#fff; padding:14px 16px; font-weight:800; }
+    .detail-body { display:grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    @media (max-width: 760px){ .detail-body{ grid-template-columns:1fr; } }
+    .detail-media, .detail-info { padding: 18px; }
+    .detail-media img { width:100%; border-radius:12px; margin-bottom:12px; }
+    .back { display:inline-block; margin: 16px; color:#0b6b62; text-decoration:none; font-weight:700; }
+  </style>
 </head>
-<body class="detail">
-  <header class="site-header">
-    <h1>🏌️‍♂️ 隣のゴルフコーチ</h1>
-  </header>
+<body>
+  <a class="back" href="index.html">← 一覧にもどる</a>
+  <div class="detail-wrap">
+    <div class="detail-header" id="coachTitle">コーチ詳細</div>
+    <div class="detail-body">
+      <div class="detail-media" id="mediaBox"></div>
+      <div class="detail-info" id="infoBox"></div>
+    </div>
+  </div>
 
-  <main class="coach-page">
-    <a href="index.html" class="back-link">← 一覧に戻る</a>
-
-    <section class="section-card coach-hero">
-      <div class="hero-left">
-        <img id="coachPhoto" src="" alt="コーチ写真">
-        <div>
-          <h2 id="coachName" class="coach-name">コーチ名</h2>
-          <p id="coachClub" class="subline">得意クラブ：</p>
-          <div class="stars">
-            <span class="star">★</span><span class="star">★</span>
-            <span class="star">★</span><span class="star">★</span><span class="star">☆</span>
-            <span id="coachRate">4.7</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- ✅ ここがYouTube埋め込み -->
-      <div class="video-wrap">
-        <iframe id="coachVideo"
-          src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-          title="YouTube video player"
-          allowfullscreen>
-        </iframe>
-      </div>
-    </section>
-
-    <section class="section-card">
-      <div class="pill-prices">
-        <div class="pill" id="price60">60分 ¥3,000〜</div>
-        <div class="pill" id="price90">90分 ¥5,000〜</div>
-      </div>
-    </section>
-
-    <section class="section-card">
-      <h3>レビュー</h3>
-      <p>「分かりやすいレッスンでした」 — Keiko</p>
-      <p>「飛距離が伸びました！」 — Takahashi</p>
-    </section>
-
-    <section class="section-card">
-      <h3>予約</h3>
-      <div class="book-grid">
-        <input type="date" />
-        <select>
-          <option>14:00 - 15:00</option>
-          <option>15:00 - 16:00</option>
-          <option>16:00 - 17:00</option>
-        </select>
-      </div>
-      <button class="btn-primary">このコーチを予約する</button>
-    </section>
-  </main>
-
-  <script>
-    // coach.html?id=◯ からコーチ情報を反映
-    const params = new URLSearchParams(window.location.search);
-    const id = Number(params.get("id"));
-    const coach = window.COACHES?.find(c => c.id === id);
-    if (coach) {
-      document.getElementById("coachPhoto").src = coach.img;
-      document.getElementById("coachName").textContent = coach.name;
-      document.getElementById("coachClub").textContent = "得意クラブ：" + coach.club;
-      document.getElementById("price60").textContent = "60分 " + coach.price;
-      document.getElementById("price90").textContent = "90分 " + (coach.price90 || "¥5,000〜");
-      if (coach.video) {
-        document.getElementById("coachVideo").src = coach.video;
-      }
-    }
-  </script>
   <script src="coaches.js"></script>
+  <script>
+    (function(){
+      const params = new URLSearchParams(location.search);
+      const id = Number(params.get('id'));
+      const c = (window.COACHES || []).find(x => x.id === id) || window.COACHES[0];
+      document.getElementById('coachTitle').textContent = c.name;
+      document.title = c.name + ' | 隣のゴルフコーチ';
+      document.getElementById('mediaBox').innerHTML = `
+        <img src="${c.img}" alt="${c.name}" />
+        <iframe width="100%" height="300" src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+          title="YouTube video player" frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      `;
+      document.getElementById('infoBox').innerHTML = `
+        <h2 style="margin-top:0">${c.name}</h2>
+        <p>得意クラブ：${c.club}</p>
+        <p>レッスン料金：<b>60分 ${c.price}</b></p>
+        <button class="interest-btn" onclick="alert('デモ：予約フォームへ')">このコーチを予約する</button>
+      `;
+    })();
+  </script>
 </body>
 </html>
