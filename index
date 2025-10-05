@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>隣のゴルフコーチ</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <h1>🏌️‍♂️ 隣のゴルフコーチ</h1>
+  </header>
+
+  <main>
+    <section class="map-wrap">
+      <div id="map"></div>
+    </section>
+
+    <section class="grid-wrap">
+      <h2>コーチ一覧（20名）</h2>
+      <div id="coachGrid" class="coach-grid"></div>
+    </section>
+  </main>
+
+  <!-- モーダル（得意クラブ＋金額のみ） -->
+  <div id="coachModal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true">
+      <button class="close-btn" id="modalClose" aria-label="閉じる">×</button>
+      <div class="modal-head">
+        <img id="mPhoto" alt="コーチ写真" />
+        <div>
+          <h3 id="mName"></h3>
+        </div>
+      </div>
+      <div class="m-body">
+        <p id="mClub" class="m-club"></p>
+        <p id="mPrice" class="m-price"></p>
+        <button id="moreBtn" class="interest-btn">このコーチが気になる</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="coaches.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
