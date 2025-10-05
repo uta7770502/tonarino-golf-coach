@@ -8,6 +8,11 @@
   --ink: #0b5b4c;
   --accent: #ffd53d;
 }
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
+
+body {
+  font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Hiragino Kaku Gothic ProN", "メイリオ", sans-serif;
+}
 
 body {
   margin: 0;
