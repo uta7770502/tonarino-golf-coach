@@ -1,103 +1,229 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>コーチ詳細 | コーチの詳細</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>コーチ管理 | 隣のゴルフコーチ</title>
+  <link rel="stylesheet" href="style.css">
   <style>
-    /* ページ固有の最小追加（style.css末尾にも入れてありますが、単体でも動くように重複定義） */
-    .coach-page{max-width:960px;margin:24px auto;padding:16px}
-    .coach-hero{display:flex;gap:16px;align-items:center;background:#fff;border-radius:18px;padding:18px;box-shadow:0 6px 20px rgba(0,0,0,.08)}
-    .coach-hero img{width:92px;height:92px;border-radius:50%;object-fit:cover}
-    .coach-name{font-size:28px;font-weight:800;color:#0b6657;letter-spacing:.04em}
-    .stars{display:inline-flex;gap:2px;vertical-align:middle;margin-left:6px}
-    .star{font-size:18px;color:#FFD95A}
-    .subline{color:#0b6657c0;margin-top:6px}
-    .pill-prices{display:flex;gap:14px;margin:18px 0 8px}
-    .pill{background:#FFD95A;border-radius:14px;padding:12px 18px;font-weight:700}
-    .section-card{background:#fff;border-radius:18px;padding:18px;margin-top:18px;box-shadow:0 6px 20px rgba(0,0,0,.06)}
-    .video-wrap{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden}
-    .video-wrap iframe{position:absolute;inset:0;width:100%;height:100%}
-    .book-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .book-grid input,.book-grid select{width:100%;padding:12px 14px;border:1px solid #e7ecee;border-radius:12px;font-size:16px}
-    .btn-primary{display:block;width:100%;text-align:center;background:#FFD95A;border:none;border-radius:14px;padding:16px 18px;font-weight:800;color:#0b6657;margin-top:14px}
-    .back-link{display:inline-block;margin:10px 0 0;color:#0b6657;text-decoration:underline}
-    @media (max-width:720px){.coach-hero{flex-direction:column;align-items:flex-start}}
+    :root {
+      --main: #0b5b4c;
+      --accent: #ffd53d;
+      --bg: #fffdf7;
+    }
+
+    body {
+      background: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--main);
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #b2f1eb;
+      padding: 10px 16px;
+      font-size: 20px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header button {
+      background: var(--accent);
+      border: none;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-weight: bold;
+      cursor: pointer;
+      color: var(--main);
+    }
+
+    main {
+      padding: 16px;
+      max-width: 720px;
+      margin: auto;
+    }
+
+    .profile {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .profile img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 8px;
+    }
+
+    .tags {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .tag {
+      background: #9be8db;
+      color: var(--main);
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 13px;
+    }
+
+    .section {
+      background: #fff;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .section h3 {
+      font-size: 18px;
+      margin-top: 0;
+    }
+
+    .pill-prices {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .pill {
+      background: #b2f1eb;
+      color: var(--main);
+      padding: 10px 18px;
+      border-radius: 24px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    /* ==== レビュー ==== */
+    .review-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .review {
+      background: #f9f9f9;
+      border-radius: 10px;
+      padding: 12px;
+      border: 1px solid #eee;
+    }
+
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .review-name {
+      font-weight: bold;
+    }
+
+    .stars {
+      color: #ffd53d;
+      font-size: 16px;
+    }
+
+    .review p {
+      margin: 4px 0 0;
+      color: #444;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--accent);
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 0;
+      border-top: 1px solid #eee;
+    }
+
+    footer a {
+      text-align: center;
+      font-size: 14px;
+      text-decoration: none;
+      color: var(--main);
+    }
+
+    footer a.active {
+      font-weight: bold;
+    }
   </style>
 </head>
-<body class="detail">
-  <header class="site-header">
-    <h1>隣のゴルフコーチ</h1>
+<body>
+
+  <header>
+    🏌️‍♂️ コーチ管理
+    <button id="editBtn">編集</button>
   </header>
-  <section>
 
-  <main class="coach-page">
-    <a class="back-link" href="./">← 一覧に戻る</a>
-
-    <!-- ヒーロー -->
-    <section class="coach-hero">
-  <img id="pPhoto" alt="コーチ写真" />
-
-  <div class="hero-right">
-    <div class="coach-name" id="pName">コーチ名</div>
-    <div class="subline">
-      <span id="pTagline">得意クラブ：ー</span>
-      <span class="stars" id="pStars"></span>
-    </div>
-    <div class="pill-prices">
-      <div class="pill">60分 <span id="p60">ー</span></div>
-      <div class="pill">90分 <span id="p90">ー</span></div>
-    </div>
-
-    <!-- 🎥 この位置で横並びに -->
-    <div class="video-wrap">
-      <iframe id="pVideo"
-        src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-        title="スイング動画"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
-      </iframe>
-    </div>
-  </div>
-</section>
-
-    <!-- レビュー（ダミーでも表示） -->
-    <section class="section-card">
-      <h3 style="margin:0 0 8px;">レビュー</h3>
-      <div id="pReviews">
-        <p>「分かりやすいレッスンでした」 — Keiko</p>
-        <p>「飛距離が伸びました！」 — Takahashi</p>
+  <main>
+    <div id="viewMode">
+      <div class="profile">
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="コーチ写真">
+        <h2 id="coachName">佐藤 コーチ</h2>
+        <p id="coachDesc">ドライバー・飛距離アップが得意です！</p>
+        <div class="tags" id="coachTags">
+          <div class="tag">#ドライバー</div>
+          <div class="tag">#アプローチ</div>
+        </div>
       </div>
-    </section>
 
-    <!-- 予約（ダミー） -->
-    <section class="section-card">
-      <h3 style="margin:0 0 8px;">予約</h3>
-      <div class="book-grid">
-        <input type="date" id="pDate">
-        <select id="pTime">
-          <option value="14:00-15:00">14:00 - 15:00</option>
-          <option value="16:00-17:00">16:00 - 17:00</option>
-          <option value="18:00-19:00">18:00 - 19:00</option>
-        </select>
-        <select id="pDuration">
-          <option value="60">60分</option>
-          <option value="90">90分</option>
-        </select>
-        <select id="pPay">
-          <option>VISA</option>
-          <option>Mastercard</option>
-          <option>PayPay</option>
-        </select>
+      <div class="section">
+        <h3>料金</h3>
+        <div class="pill-prices">
+          <div class="pill">60分 ¥<span id="price60">3000</span></div>
+          <div class="pill">90分 ¥<span id="price90">5000</span></div>
+        </div>
       </div>
-      <button class="btn-primary" id="pBook">予約を確定する</button>
-      <p style="margin:10px 0 0;color:#6b7f85;font-size:14px;">※練習場利用料は別途現地払いとなります</p>
-    </section>
+
+      <div class="section">
+        <h3>レビュー</h3>
+        <div class="review-list">
+          <div class="review">
+            <div class="review-header">
+              <span class="review-name">山田 太郎</span>
+              <span class="stars">★★★★★</span>
+            </div>
+            <p>丁寧で明るい指導でした！</p>
+          </div>
+
+          <div class="review">
+            <div class="review-header">
+              <span class="review-name">鈴木 花子</span>
+              <span class="stars">★★★★☆</span>
+            </div>
+            <p>分かりやすく、楽しく練習できました。</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 
-  <script src="./coaches.js"></script>
-  <script src="./coach.js"></script>
+  <footer>
+    <a href="index.html">🏠 ホーム</a>
+    <a href="#" class="active">👤 管理</a>
+  </footer>
+
+  <script>
+    const editBtn = document.getElementById('editBtn');
+    editBtn.addEventListener('click', () => {
+      alert("ここから編集モードを追加予定です！");
+    });
+  </script>
+
 </body>
 </html>
