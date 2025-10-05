@@ -95,3 +95,13 @@ header.site-header {
   margin-bottom: 0 !important;
   padding-bottom: 0 !important;
 }
+/* 余白調整 */
+.detail .site-header {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.coach-page {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
