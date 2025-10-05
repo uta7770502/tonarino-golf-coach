@@ -91,3 +91,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic
   margin-top: 0 !important;
   padding-top: 0 !important;
 }
+header.site-header {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
