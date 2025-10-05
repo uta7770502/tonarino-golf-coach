@@ -1,49 +1,98 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>隣のゴルフコーチ</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>隣のゴルフコーチ | トップページ</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #b2f1eb;
+      color: #0b5b4c;
+      text-align: center;
+    }
+
+    header {
+      padding: 24px 0 12px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 80vh;
+    }
+
+    .logo {
+      font-size: 72px;
+      margin-bottom: 24px;
+    }
+
+    .button-container {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .role-card {
+      background: #fffdf7;
+      border-radius: 20px;
+      padding: 24px 32px;
+      width: 140px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: 0.3s;
+      cursor: pointer;
+      text-decoration: none;
+      color: #0b5b4c;
+    }
+
+    .role-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+
+    .role-card .icon {
+      font-size: 40px;
+      margin-bottom: 8px;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      padding: 12px 0;
+      font-size: 14px;
+      background: #ffd53d;
+      color: #0b5b4c;
+    }
+  </style>
 </head>
 <body>
-  <header class="site-header">
-    <h1>隣のゴルフコーチ</h1>
-  </header>
+
+  <header>🏌️‍♂️ 隣のゴルフコーチ</header>
 
   <main>
-  <section>
-    <h2>コーチを探す</h2>
-    <div id="map" style="height:400px;"></div>
-  </section>
-
-  <section class="grid-wrap">
-    <h2>コーチ一覧（20名）</h2>
-    <div id="coachGrid" class="coach-grid"></div>
-  </section>
-</main>
-
-<!-- モーダル -->
-<div id="coachModal" class="modal" aria-hidden="true">
-  <div class="modal-content" role="dialog">
-    <button class="close-btn" id="modalClose">&times;</button>
-    <div class="modal-head">
-      <img id="mPhoto" alt="コーチ写真" />
-      <div><h3 id="mName"></h3></div>
+    <div class="logo">⛳️</div>
+    <div class="button-container">
+      <a href="student-home.html" class="role-card">
+        <div class="icon">👨‍🎓</div>
+        <div class="text">生徒になる</div>
+      </a>
+      <a href="coach-dashboard.html" class="role-card">
+        <div class="icon">🧑‍🏫</div>
+        <div class="text">コーチになる</div>
+      </a>
     </div>
-    <div class="m-body">
-      <p id="mClub" class="m-club"></p>
-      <p id="mPrice" class="m-price"></p>
-      <button id="moreBtn" class="interest-btn">このコーチが気になる</button>
-    </div>
-  </div>
-</div>
+  </main>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<!-- 1️⃣ まずコーチデータ -->
-<script src="./coaches.js"></script>
-<!-- 2️⃣ 次にスクリプト本体 -->
-<script src="./script.js"></script>
+  <footer>© 2025 Tonarino Golf Coach</footer>
+
 </body>
 </html>
