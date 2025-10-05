@@ -6,47 +6,94 @@
   <title>コーチ詳細 | 隣のゴルフコーチ</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    .detail-wrap { max-width: 980px; margin: 20px auto; background:#fff; border:1px solid #e6f2ef; border-radius:16px; overflow:hidden; }
-    .detail-header { background:#0b6b62; color:#fff; padding:14px 16px; font-weight:800; }
-    .detail-body { display:grid; grid-template-columns: 1fr 1fr; gap: 0; }
-    @media (max-width: 760px){ .detail-body{ grid-template-columns:1fr; } }
-    .detail-media, .detail-info { padding: 18px; }
-    .detail-media img { width:100%; border-radius:12px; margin-bottom:12px; }
-    .back { display:inline-block; margin: 16px; color:#0b6b62; text-decoration:none; font-weight:700; }
+    /* ページ固有の最小追加（style.css末尾にも入れてありますが、単体でも動くように重複定義） */
+    .coach-page{max-width:960px;margin:24px auto;padding:16px}
+    .coach-hero{display:flex;gap:16px;align-items:center;background:#fff;border-radius:18px;padding:18px;box-shadow:0 6px 20px rgba(0,0,0,.08)}
+    .coach-hero img{width:92px;height:92px;border-radius:50%;object-fit:cover}
+    .coach-name{font-size:28px;font-weight:800;color:#0b6657;letter-spacing:.04em}
+    .stars{display:inline-flex;gap:2px;vertical-align:middle;margin-left:6px}
+    .star{font-size:18px;color:#FFD95A}
+    .subline{color:#0b6657c0;margin-top:6px}
+    .pill-prices{display:flex;gap:14px;margin:18px 0 8px}
+    .pill{background:#FFD95A;border-radius:14px;padding:12px 18px;font-weight:700}
+    .section-card{background:#fff;border-radius:18px;padding:18px;margin-top:18px;box-shadow:0 6px 20px rgba(0,0,0,.06)}
+    .video-wrap{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden}
+    .video-wrap iframe{position:absolute;inset:0;width:100%;height:100%}
+    .book-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .book-grid input,.book-grid select{width:100%;padding:12px 14px;border:1px solid #e7ecee;border-radius:12px;font-size:16px}
+    .btn-primary{display:block;width:100%;text-align:center;background:#FFD95A;border:none;border-radius:14px;padding:16px 18px;font-weight:800;color:#0b6657;margin-top:14px}
+    .back-link{display:inline-block;margin:10px 0 0;color:#0b6657;text-decoration:underline}
+    @media (max-width:720px){.coach-hero{flex-direction:column;align-items:flex-start}}
   </style>
 </head>
-<body>
-  <a class="back" href="index.html">← 一覧にもどる</a>
-  <div class="detail-wrap">
-    <div class="detail-header" id="coachTitle">コーチ詳細</div>
-    <div class="detail-body">
-      <div class="detail-media" id="mediaBox"></div>
-      <div class="detail-info" id="infoBox"></div>
-    </div>
-  </div>
+<body class="detail">
+  <header class="site-header">
+    <h1>🏌️‍♂️ 隣のゴルフコーチ</h1>
+  </header>
 
-  <script src="coaches.js"></script>
-  <script>
-    (function(){
-      const params = new URLSearchParams(location.search);
-      const id = Number(params.get('id'));
-      const c = (window.COACHES || []).find(x => x.id === id) || window.COACHES[0];
-      document.getElementById('coachTitle').textContent = c.name;
-      document.title = c.name + ' | 隣のゴルフコーチ';
-      document.getElementById('mediaBox').innerHTML = `
-        <img src="${c.img}" alt="${c.name}" />
-        <iframe width="100%" height="300" src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-          title="YouTube video player" frameborder="0"
+  <main class="coach-page">
+    <a class="back-link" href="./">← 一覧に戻る</a>
+
+    <!-- ヒーロー -->
+    <section class="coach-hero">
+      <img id="pPhoto" alt="コーチ写真" />
+      <div>
+        <div class="coach-name" id="pName">コーチ名</div>
+        <div class="subline">
+          <span id="pTagline">得意クラブ：—</span>
+          <span class="stars" id="pStars"></span>
+        </div>
+        <div class="pill-prices">
+          <div class="pill">60分 <span id="p60">—</span></div>
+          <div class="pill">90分 <span id="p90">—</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 動画 -->
+    <section class="section-card" id="videoSection" style="display:none;">
+      <div class="video-wrap">
+        <iframe id="pVideo" src="" title="YouTube video" frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowfullscreen></iframe>
-      `;
-      document.getElementById('infoBox').innerHTML = `
-        <h2 style="margin-top:0">${c.name}</h2>
-        <p>得意クラブ：${c.club}</p>
-        <p>レッスン料金：<b>60分 ${c.price}</b></p>
-        <button class="interest-btn" onclick="alert('デモ：予約フォームへ')">このコーチを予約する</button>
-      `;
-    })();
-  </script>
+      </div>
+    </section>
+
+    <!-- レビュー（ダミーでも表示） -->
+    <section class="section-card">
+      <h3 style="margin:0 0 8px;">レビュー</h3>
+      <div id="pReviews">
+        <p>「分かりやすいレッスンでした」 — Keiko</p>
+        <p>「飛距離が伸びました！」 — Takahashi</p>
+      </div>
+    </section>
+
+    <!-- 予約（ダミー） -->
+    <section class="section-card">
+      <h3 style="margin:0 0 8px;">予約</h3>
+      <div class="book-grid">
+        <input type="date" id="pDate">
+        <select id="pTime">
+          <option value="14:00-15:00">14:00 - 15:00</option>
+          <option value="16:00-17:00">16:00 - 17:00</option>
+          <option value="18:00-19:00">18:00 - 19:00</option>
+        </select>
+        <select id="pDuration">
+          <option value="60">60分</option>
+          <option value="90">90分</option>
+        </select>
+        <select id="pPay">
+          <option>VISA</option>
+          <option>Mastercard</option>
+          <option>PayPay</option>
+        </select>
+      </div>
+      <button class="btn-primary" id="pBook">予約を確定する</button>
+      <p style="margin:10px 0 0;color:#6b7f85;font-size:14px;">※練習場利用料は別途現地払いとなります</p>
+    </section>
+  </main>
+
+  <script src="./coaches.js"></script>
+  <script src="./coach.js"></script>
 </body>
 </html>
