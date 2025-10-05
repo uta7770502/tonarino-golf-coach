@@ -17,10 +17,10 @@
       <div id="map"></div>
     </section>
 
-    <section id="coaches">
-  <h2>コーチ一覧（20名）</h2>
-  <div id="coachGrid" class="coach-grid"></div>  <!-- ←これが必要！ -->
-</section>
+    <section class="grid-wrap">
+      <h2>コーチ一覧（20名）</h2>
+      <div id="coachGrid" class="coach-grid"></div>
+    </section>
   </main>
 
   <!-- モーダル（得意クラブ＋金額のみ） -->
@@ -29,9 +29,7 @@
       <button class="close-btn" id="modalClose" aria-label="閉じる">×</button>
       <div class="modal-head">
         <img id="mPhoto" alt="コーチ写真" />
-        <div>
-          <h3 id="mName"></h3>
-        </div>
+        <div><h3 id="mName"></h3></div>
       </div>
       <div class="m-body">
         <p id="mClub" class="m-club"></p>
@@ -42,7 +40,7 @@
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="./coaches.js"></script>  <!-- これを先に -->
-  <script src="./script.js"></script>   <!-- これを後に -->
+  <script src="./coaches.js"></script><!-- 先にデータ -->
+  <script src="./script.js"></script><!-- 後にロジック -->
 </body>
 </html>
