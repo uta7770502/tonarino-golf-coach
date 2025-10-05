@@ -16,16 +16,12 @@
   </style>
 </head>
 <body>
-  <a class="back" href="index.html">← コーチ一覧にもどる</a>
+  <a class="back" href="index.html">← 一覧にもどる</a>
   <div class="detail-wrap">
     <div class="detail-header" id="coachTitle">コーチ詳細</div>
     <div class="detail-body">
-      <div class="detail-media" id="mediaBox">
-        <!-- photo + youtube -->
-      </div>
-      <div class="detail-info" id="infoBox">
-        <!-- texts -->
-      </div>
+      <div class="detail-media" id="mediaBox"></div>
+      <div class="detail-info" id="infoBox"></div>
     </div>
   </div>
 
@@ -38,17 +34,13 @@
       document.getElementById('coachTitle').textContent = c.name;
       document.title = c.name + ' | 隣のゴルフコーチ';
       document.getElementById('mediaBox').innerHTML = `
-        <img src="${c.img}" alt="${c.name}">
-        <iframe width="100%" height="300" src="${c.yt}" title="YouTube video player"
-          frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen></iframe>
+        <img src="${c.img}" alt="${c.name}" />
       `;
       document.getElementById('infoBox').innerHTML = `
         <h2 style="margin-top:0">${c.name}</h2>
-        <p>⭐ ${c.rating.toFixed(1)} ／ 得意：${c.skill}</p>
-        <p>レッスン料金：<b>60分 ¥${c.price.toLocaleString()}</b> ／ <b>90分 ¥${(c.price*1.6|0).toLocaleString()}</b></p>
-        <p>このコーチは主に〇〇練習場で活動しています。</p>
-        <button class="btn-primary" onclick="alert('デモ：予約フローへ')">このコーチを予約する</button>
+        <p>得意クラブ：${c.club}</p>
+        <p>レッスン料金：<b>60分 ${c.price}</b></p>
+        <button class="interest-btn" onclick="alert('デモ：予約フォームへ')">このコーチを予約する</button>
       `;
     })();
   </script>
