@@ -1,156 +1,53 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>コーチ管理 | 隣のゴルフコーチ</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>コーチ管理ページ</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
-    :root {
-      --main: #0b5b4c;
-      --accent: #ffd53d;
-      --bg: #fffdf7;
-    }
+    body { background: #fffdf7; font-family: -apple-system, BlinkMacSystemFont, sans-serif; margin: 0; }
+    header { background: #b2f1eb; padding: 12px 16px; display: flex; align-items: center; }
+    header h1 { margin: 0; font-size: 20px; color: #0b5b4c; }
+    main { padding: 16px; max-width: 800px; margin: auto; }
 
-    body {
-      background: var(--bg);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--main);
-      margin: 0;
-      padding: 0;
-    }
+    .profile { text-align: center; margin-bottom: 24px; }
+    .profile img { width: 100px; height: 100px; border-radius: 50%; }
+    .profile h2 { margin: 8px 0 4px; color: #0b5b4c; }
+    .profile p { color: #555; margin: 0; }
+    .tags { display: flex; justify-content: center; gap: 8px; margin-top: 8px; }
+    .tag { background: #b2f1eb; color: #0b5b4c; padding: 4px 10px; border-radius: 12px; font-size: 14px; }
 
-    header {
-      background: #b2f1eb;
-      padding: 10px 16px;
-      font-size: 20px;
-      font-weight: bold;
-    }
+    .section { background: #fff; border-radius: 10px; padding: 16px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .section h3 { margin: 0 0 10px; color: #0b5b4c; }
 
-    main {
-      padding: 16px;
-      max-width: 720px;
-      margin: auto;
-    }
+    .days { display: flex; justify-content: space-around; }
+    .day { text-align: center; }
+    .day span { display: block; margin-top: 4px; }
+    .day .ok { background: #ffd53d; padding: 4px 8px; border-radius: 8px; }
 
-    .profile {
-      text-align: center;
-      margin-bottom: 16px;
-    }
+    .price-table { display: flex; justify-content: center; gap: 24px; margin-top: 10px; }
+    .price { background: #b2f1eb; padding: 8px 16px; border-radius: 10px; color: #0b5b4c; font-weight: 700; }
 
-    .profile img {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 8px;
-    }
+    .review { background: #f8f8f8; border-radius: 8px; padding: 10px; margin-bottom: 8px; }
+    .review strong { color: #0b5b4c; }
 
-    .tags {
-      display: flex;
-      justify-content: center;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-top: 6px;
-    }
+    .chart { text-align: center; margin-top: 10px; }
+    .chart img { width: 100%; max-width: 300px; }
 
-    .tag {
-      background: #9be8db;
-      color: var(--main);
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 13px;
-    }
-
-    .section {
-      background: #fff;
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 16px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    }
-
-    .section h3 {
-      font-size: 18px;
-      margin-top: 0;
-    }
-
-    .studio-days {
-      display: flex;
-      justify-content: space-around;
-      font-weight: bold;
-      font-size: 16px;
-      margin-top: 8px;
-    }
-
-    .day {
-      text-align: center;
-    }
-
-    .day span {
-      display: block;
-      background: var(--accent);
-      color: var(--main);
-      border-radius: 50%;
-      width: 32px;
-      height: 32px;
-      line-height: 32px;
-      margin: 4px auto 0;
-      font-weight: bold;
-    }
-
-    .pill-prices {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      margin-top: 8px;
-    }
-
-    .pill {
-      background: #b2f1eb;
-      color: var(--main);
-      padding: 10px 18px;
-      border-radius: 24px;
-      font-weight: bold;
-      font-size: 16px;
-    }
-
-    .earnings {
-      font-size: 16px;
-      line-height: 1.6;
-    }
-
-    footer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: var(--accent);
-      display: flex;
-      justify-content: space-around;
-      padding: 8px 0;
-      border-top: 1px solid #eee;
-    }
-
-    footer a {
-      text-align: center;
-      font-size: 14px;
-      text-decoration: none;
-      color: var(--main);
-    }
-
-    footer a.active {
-      font-weight: bold;
-    }
+    footer { position: fixed; bottom: 0; left: 0; width: 100%; background: #ffd53d; display: flex; justify-content: space-around; padding: 8px 0; border-top: 1px solid #ccc; }
+    footer a { text-decoration: none; color: #0b5b4c; font-weight: bold; text-align: center; }
   </style>
 </head>
 <body>
-
-  <header>🏌️‍♂️ コーチ管理</header>
+  <header>
+    <h1>🏌️‍♂️ コーチ管理</h1>
+  </header>
 
   <main>
+    <!-- プロフィール -->
     <div class="profile">
-      <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="コーチ写真">
+      <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="コーチ写真" />
       <h2>佐藤 コーチ</h2>
       <p>ドライバー・飛距離アップが得意です！</p>
       <div class="tags">
@@ -159,42 +56,57 @@
       </div>
     </div>
 
+    <!-- スタジオ管理 -->
     <div class="section">
       <h3>スタジオ管理</h3>
-      <div class="studio-days">
-        <div class="day">月<span>可</span></div>
-        <div class="day">火<span>可</span></div>
-        <div class="day">水<span>可</span></div>
-        <div class="day">木<span>可</span></div>
-        <div class="day">金<span>×</span></div>
-        <div class="day">土<span>可</span></div>
-        <div class="day">日<span>S</span></div>
+      <div class="days">
+        <div class="day"><b>月</b><span class="ok">可</span></div>
+        <div class="day"><b>火</b><span class="ok">可</span></div>
+        <div class="day"><b>水</b><span class="ok">可</span></div>
+        <div class="day"><b>木</b><span class="ok">可</span></div>
+        <div class="day"><b>金</b><span>不可</span></div>
+        <div class="day"><b>土</b><span class="ok">可</span></div>
+        <div class="day"><b>日</b><span class="ok">S</span></div>
       </div>
     </div>
 
+    <!-- 料金 -->
     <div class="section">
       <h3>料金</h3>
-      <div class="pill-prices">
-        <div class="pill">60分 ¥3,000〜</div>
-        <div class="pill">90分 ¥5,000〜</div>
+      <div class="price-table">
+        <div class="price">60分 ¥3,000</div>
+        <div class="price">90分 ¥5,000</div>
       </div>
     </div>
 
+    <!-- 売上・入金 -->
     <div class="section">
       <h3>今月の売上・入金予定</h3>
-      <div class="earnings">
-        今月の売上：<b>¥12,000</b><br>
-        入金予定日：<b>10月30日</b>
+      <p>今月の売上：<strong>¥12,000</strong><br>入金予定日：<strong>10月30日</strong></p>
+      <div class="chart">
+        <img src="https://i.imgur.com/Xy8m8RR.png" alt="売上グラフ" />
+      </div>
+    </div>
+
+    <!-- レビュー -->
+    <div class="section">
+      <h3>レビュー</h3>
+      <div class="review">
+        <strong>山田 太郎</strong> ⭐️⭐️⭐️⭐️⭐️<br>
+        丁寧で明るい指導でした！
+      </div>
+      <div class="review">
+        <strong>高橋 次郎</strong> ⭐️⭐️⭐️⭐️<br>
+        飛距離がかなり伸びました！
       </div>
     </div>
   </main>
 
   <footer>
-    <a href="#" class="active">🏠 ホーム</a>
+    <a href="#">🏠 ホーム</a>
     <a href="#">📅 スケジュール</a>
     <a href="#">💰 売上</a>
     <a href="#">👤 管理</a>
   </footer>
-
 </body>
 </html>
