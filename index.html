@@ -1,49 +1,25 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>隣のゴルフコーチ</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="site-header">
-    <h1>隣のゴルフコーチ</h1>
+    <h1>🏌️‍♂️ 隣のゴルフコーチ</h1>
   </header>
 
-  <main>
-  <section>
-    <h2>コーチを探す</h2>
-    <div id="map" style="height:400px;"></div>
-  </section>
-
-  <section class="grid-wrap">
-    <h2>コーチ一覧（20名）</h2>
-    <div id="coachGrid" class="coach-grid"></div>
-  </section>
-</main>
-
-<!-- モーダル -->
-<div id="coachModal" class="modal" aria-hidden="true">
-  <div class="modal-content" role="dialog">
-    <button class="close-btn" id="modalClose">&times;</button>
-    <div class="modal-head">
-      <img id="mPhoto" alt="コーチ写真" />
-      <div><h3 id="mName"></h3></div>
+  <main class="home-select">
+    <div class="button-container">
+      <a href="student.html" class="select-card">生徒になる</a>
+      <a href="coach.html" class="select-card">コーチになる</a>
     </div>
-    <div class="m-body">
-      <p id="mClub" class="m-club"></p>
-      <p id="mPrice" class="m-price"></p>
-      <button id="moreBtn" class="interest-btn">このコーチが気になる</button>
-    </div>
-  </div>
-</div>
+  </main>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<!-- 1️⃣ まずコーチデータ -->
-<script src="./coaches.js"></script>
-<!-- 2️⃣ 次にスクリプト本体 -->
-<script src="./script.js"></script>
+  <footer class="site-footer">
+    <p>© 2025 Tonarino Golf Coach</p>
+  </footer>
 </body>
 </html>
