@@ -221,3 +221,47 @@ header.site-header {
   font-weight: 700;
   text-decoration: underline;
 }
+/* ===== 新トップページ用 ===== */
+.home-select {
+  background: var(--bg, #b2f1eb);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.button-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.select-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--card, #fffdf7);
+  color: var(--ink, #0b5b4c);
+  border-radius: 16px;
+  font-size: 1.2rem;
+  text-decoration: none;
+  width: 140px;
+  height: 100px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: 0.2s ease-in-out;
+}
+
+.select-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.15);
+}
+
+.site-footer {
+  background: #ffd53d;
+  padding: 10px;
+  text-align: center;
+  color: #0b5b4c;
+  font-size: 0.9rem;
+}
