@@ -158,3 +158,66 @@ header.site-header {
   margin-top: 0 !important;
   padding-top: 0 !important;
 }
+/* ======= MyPage ======= */
+.mypage-main {
+  padding: 16px;
+  background: var(--bg);
+}
+
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--card);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.user-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+
+.mypage-section {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+
+.favorite-coaches {
+  display: flex;
+  gap: 10px;
+}
+
+.coach-card {
+  text-align: center;
+}
+
+.coach-card img {
+  border-radius: 50%;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  background: var(--accent);
+  padding: 10px 0;
+  font-size: 18px;
+}
+
+.bottom-nav a {
+  color: #0b5b4c;
+  text-decoration: none;
+}
+
+.bottom-nav a.active {
+  font-weight: 700;
+  text-decoration: underline;
+}
