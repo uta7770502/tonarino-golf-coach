@@ -53,3 +53,35 @@
   </footer>
 </body>
 </html>
+<script>
+document.getElementById("editProfileBtn").addEventListener("click", function() {
+  const form = document.getElementById("editForm");
+  form.style.display = form.style.display === "none" ? "block" : "none";
+});
+
+document.getElementById("saveProfileBtn").addEventListener("click", function() {
+  const name = document.getElementById("editName").value;
+  const email = document.getElementById("editEmail").value;
+  const photo = document.getElementById("editPhoto").value;
+
+  if (name) document.getElementById("studentName").innerText = name + " さん";
+  if (email) document.getElementById("studentEmail").innerText = email;
+  if (photo) document.getElementById("studentPhoto").src = photo;
+
+  // localStorage に保存（次回も反映されるように）
+  localStorage.setItem("studentProfile", JSON.stringify({ name, email, photo }));
+
+  alert("プロフィールを更新しました！");
+  document.getElementById("editForm").style.display = "none";
+});
+
+// ページ読み込み時に保存されたデータを反映
+window.addEventListener("load", function() {
+  const data = JSON.parse(localStorage.getItem("studentProfile"));
+  if (data) {
+    if (data.name) document.getElementById("studentName").innerText = data.name + " さん";
+    if (data.email) document.getElementById("studentEmail").innerText = data.email;
+    if (data.photo) document.getElementById("studentPhoto").src = data.photo;
+  }
+});
+</script>
