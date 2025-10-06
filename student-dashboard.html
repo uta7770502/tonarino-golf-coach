@@ -102,3 +102,43 @@ window.addEventListener("load", function() {
   }
 });
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const nameDisplay = document.querySelector("h2");
+  const emailDisplay = document.querySelector(".email");
+  const imgDisplay = document.querySelector(".profile-card img");
+
+  const nameInput = document.querySelector('input[placeholder="名前を入力"]');
+  const emailInput = document.querySelector('input[placeholder="メールを入力"]');
+  const imgInput = document.querySelector('input[placeholder="画像URLを入力"]');
+  const saveBtn = document.querySelector("button");
+
+  // ページ読み込み時にlocalStorageの値を表示に反映
+  const savedName = localStorage.getItem("studentName");
+  const savedEmail = localStorage.getItem("studentEmail");
+  const savedImg = localStorage.getItem("studentImg");
+
+  if (savedName) nameDisplay.textContent = savedName + " さん";
+  if (savedEmail) emailDisplay.textContent = savedEmail;
+  if (savedImg) imgDisplay.src = savedImg;
+
+  // 保存ボタンクリック時の処理
+  saveBtn.addEventListener("click", () => {
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
+    const img = imgInput.value.trim();
+
+    // LocalStorageに保存
+    localStorage.setItem("studentName", name);
+    localStorage.setItem("studentEmail", email);
+    localStorage.setItem("studentImg", img);
+
+    // 表示も即更新
+    if (name) nameDisplay.textContent = name + " さん";
+    if (email) emailDisplay.textContent = email;
+    if (img) imgDisplay.src = img;
+
+    alert("プロフィールを保存しました！");
+  });
+});
+</script>
