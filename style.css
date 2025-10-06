@@ -658,3 +658,19 @@ header.site-header {
 #reviewForm {
   display: none;
 }
+.coach-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.view-btn {
+  background: #b2f1eb;
+  color: #0b5b4c;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 8px;
+  text-decoration: none;
+  font-size: 12px;
+}
