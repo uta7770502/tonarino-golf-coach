@@ -60,3 +60,36 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const user = localStorage.getItem("loggedInUser");
+
+  // 生徒になるボタン
+  const studentBtn = document.getElementById("studentBtn");
+  if (studentBtn) {
+    studentBtn.addEventListener("click", () => {
+      if (user) {
+        // ログイン済み → 生徒マイページへ
+        window.location.href = "student-dashboard.html";
+      } else {
+        // 未ログイン → ログインページへ
+        window.location.href = "login.html";
+      }
+    });
+  }
+
+  // コーチになるボタン
+  const coachBtn = document.getElementById("coachBtn");
+  if (coachBtn) {
+    coachBtn.addEventListener("click", () => {
+      if (user) {
+        // ログイン済み → コーチ管理ページへ
+        window.location.href = "coach-dashboard.html";
+      } else {
+        // 未ログイン → ログインページへ
+        window.location.href = "login.html";
+      }
+    });
+  }
+});
+</script>
