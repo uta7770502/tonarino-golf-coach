@@ -42,7 +42,35 @@
         <li>10/20　高橋コーチ　90分　🕓 予定</li>
       </ul>
     </section>
+<section class="section-card">
+  <h3>⭐ レビュー投稿</h3>
+  <form id="reviewForm">
+    <label for="coachName">コーチ名：</label>
+    <select id="coachName">
+      <option value="佐藤コーチ">佐藤コーチ</option>
+      <option value="高橋コーチ">高橋コーチ</option>
+    </select>
 
+    <label for="rating">評価：</label>
+    <select id="rating">
+      <option value="5">★★★★★</option>
+      <option value="4">★★★★☆</option>
+      <option value="3">★★★☆☆</option>
+      <option value="2">★★☆☆☆</option>
+      <option value="1">★☆☆☆☆</option>
+    </select>
+
+    <label for="comment">コメント：</label>
+    <textarea id="comment" rows="3" placeholder="感想を入力してください"></textarea>
+
+    <button type="submit" class="btn">レビューを投稿する</button>
+  </form>
+
+  <div id="reviewList">
+    <h4>💬 投稿済みレビュー</h4>
+    <ul id="reviews"></ul>
+  </div>
+</section>
     <section class="section-card">
       <h3>⭐ お気に入りコーチ</h3>
       <div class="favorite-coaches">
