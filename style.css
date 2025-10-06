@@ -469,3 +469,29 @@ header.site-header {
 .section-card p strong {
   color: #0b5b4c;
 }
+/* === トップページのボタンデザイン === */
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  height: 80vh;
+}
+
+.button-container a {
+  display: inline-block;
+  padding: 20px 50px;
+  font-size: 1.2rem;
+  text-decoration: none;
+  color: #0b5b4c;
+  background-color: #fff;
+  border-radius: 16px;
+  font-weight: 700;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+}
+
+.button-container a:hover {
+  background-color: #ffd53d;
+  transform: translateY(-3px);
+}
