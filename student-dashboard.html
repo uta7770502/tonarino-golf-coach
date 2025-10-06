@@ -217,18 +217,20 @@ document.querySelectorAll(".review-btn").forEach(btn => {
 </html>
 </script>
 <script>
-document.addEventListener("DOMContentLoaded", function() {
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  /* ================================
+     ✅ レビュー開閉処理
+  ================================= */
   const reviewButtons = document.querySelectorAll(".write-review-btn");
   const reviewForm = document.getElementById("reviewForm");
 
-  // 初期状態では非表示に
   if (reviewForm) {
-    reviewForm.style.display = "none";
+    reviewForm.style.display = "none"; // 初期状態では非表示
   }
 
-  // 各「レビューを書く」ボタンにイベント設定
   reviewButtons.forEach(button => {
-    button.addEventListener("click", function() {
+    button.addEventListener("click", () => {
       if (reviewForm.style.display === "none") {
         reviewForm.style.display = "block";
         reviewForm.scrollIntoView({ behavior: "smooth" });
@@ -237,17 +239,37 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     });
   });
-});
-  document.addEventListener("DOMContentLoaded", () => {
-  const removeButtons = document.querySelectorAll(".remove-btn");
 
-  removeButtons.forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      const coachCard = e.target.closest(".coach");
-      coachCard.remove();
+  /* ================================
+     ⭐ お気に入りコーチ機能拡張（削除＋リンク）
+  ================================= */
+  const coachCards = document.querySelectorAll(".coach-card");
 
-      alert("お気に入りから削除しました！");
+  coachCards.forEach(card => {
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "✖️ 削除";
+    removeBtn.classList.add("remove-fav-btn");
+    removeBtn.style.display = "block";
+    removeBtn.style.margin = "6px auto";
+    removeBtn.style.fontSize = "12px";
+    removeBtn.style.color = "#b00";
+
+    // コーチ削除機能
+    removeBtn.addEventListener("click", () => {
+      card.remove();
+      alert("お気に入りから削除しました");
     });
+
+    // クリックでコーチ詳細へ（仮）
+    card.addEventListener("click", () => {
+      const coachName = card.querySelector("p").textContent;
+      alert(`${coachName} の詳細ページへ遷移（仮）`);
+    });
+
+    card.appendChild(removeBtn);
+  });
+});
+</script>
   });
 });
 </script>
