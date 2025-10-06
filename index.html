@@ -21,5 +21,24 @@
   <footer class="site-footer">
     <p>© 2025 Tonarino Golf Coach</p>
   </footer>
+  <script>
+  document.getElementById("studentBtn").addEventListener("click", () => {
+    const user = localStorage.getItem("loggedInUser");
+    if (user) {
+      window.location.href = "index.html"; // 生徒用マイページに差し替え可
+    } else {
+      window.location.href = "login.html";
+    }
+  });
+
+  document.getElementById("coachBtn").addEventListener("click", () => {
+    const user = localStorage.getItem("loggedInUser");
+    if (user) {
+      window.location.href = "coach-dashboard.html"; // コーチ管理ページ
+    } else {
+      window.location.href = "login.html";
+    }
+  });
+</script>
 </body>
 </html>
