@@ -192,6 +192,23 @@ document.querySelectorAll(".review-btn").forEach(btn => {
       }
     }
   });
+    </script>   <!-- 直前の script が終わるところ -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const reviewButton = document.querySelector(".write-review-btn");
+    const reviewForm = document.getElementById("reviewForm");
+
+    if (reviewButton && reviewForm) {
+      reviewButton.addEventListener("click", function() {
+        reviewForm.style.display =
+          reviewForm.style.display === "none" ? "block" : "none";
+        reviewForm.scrollIntoView({ behavior: "smooth" });
+      });
+    }
+  });
+</script>
+</body>
+</html>
 </script>
 </body>
 </html>
