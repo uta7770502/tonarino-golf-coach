@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ログイン | 隣のゴルフコーチ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="login-page">
+    <h1>ログイン</h1>
+    <form id="loginForm">
+      <input type="email" id="email" placeholder="メールアドレス" required><br>
+      <input type="password" id="password" placeholder="パスワード" required><br>
+      <button type="submit">ログイン</button>
+    </form>
+    <p id="loginMessage"></p>
+  </main>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      // 仮の簡易認証（デモ用）
+      if (email && password) {
+        localStorage.setItem("loggedInUser", email);
+        window.location.href = "index.html";
+      } else {
+        document.getElementById("loginMessage").textContent = "メールとパスワードを入力してください。";
+      }
+    });
+  </script>
+</body>
+</html>
