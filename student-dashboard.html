@@ -209,5 +209,28 @@ document.querySelectorAll(".review-btn").forEach(btn => {
 </body>
 </html>
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const reviewButtons = document.querySelectorAll(".write-review-btn");
+  const reviewForm = document.getElementById("reviewForm");
+
+  // 初期状態では非表示に
+  if (reviewForm) {
+    reviewForm.style.display = "none";
+  }
+
+  // 各「レビューを書く」ボタンにイベント設定
+  reviewButtons.forEach(button => {
+    button.addEventListener("click", function() {
+      if (reviewForm.style.display === "none") {
+        reviewForm.style.display = "block";
+        reviewForm.scrollIntoView({ behavior: "smooth" });
+      } else {
+        reviewForm.style.display = "none";
+      }
+    });
+  });
+});
+</script>
 </body>
 </html>
