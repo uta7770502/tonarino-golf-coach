@@ -106,74 +106,75 @@
     </nav>
   </footer>
 
-  <!-- ✅ スクリプト統合版 -->
   <script>
-  // --- レビュー投稿処理 ---
-  document.getElementById("reviewForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-    const coach = document.getElementById("coachName").value;
-    const rating = document.getElementById("rating").value;
-    const comment = document.getElementById("comment").value;
-
-    const review = {
-      coach, rating, comment,
-      date: new Date().toLocaleString()
-    };
-
-    let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
-    reviews.push(review);
-    localStorage.setItem("reviews", JSON.stringify(reviews));
-
-    alert("レビューを投稿しました！");
-    displayReviews();
-    this.reset();
-  });
-
-  // --- 投稿一覧表示 ---
-  function displayReviews() {
-    const list = document.getElementById("reviews");
-    const reviews = JSON.parse(localStorage.getItem("reviews")) || [];
-    list.innerHTML = "";
-    reviews.forEach(r => {
-      const li = document.createElement("li");
-      li.innerHTML = `<strong>${r.coach}</strong> (${r.rating}⭐)<br>${r.comment}<br><small>${r.date}</small>`;
-      list.appendChild(li);
-    });
-  }
-  window.addEventListener("load", displayReviews);
-
-  // --- プロフィール編集 ---
+  // --- プロフィール編集フォーム制御 ---
   const editBtn = document.getElementById("editProfileBtn");
   const saveBtn = document.getElementById("saveProfileBtn");
   const form = document.getElementById("editForm");
 
+  const nameInput = document.getElementById("editName");
+  const emailInput = document.getElementById("editEmail");
+  const fileInput = document.getElementById("editPhotoFile");
+
+  const photoEl = document.getElementById("studentPhoto");
+  const nameEl = document.getElementById("studentName");
+  const emailEl = document.getElementById("studentEmail");
+
+  // 編集フォーム開閉
   editBtn.addEventListener("click", () => {
     form.style.display = form.style.display === "none" ? "block" : "none";
   });
 
-  saveBtn.addEventListener("click", () => {
-    const name = document.getElementById("editName").value.trim();
-    const email = document.getElementById("editEmail").value.trim();
-    const photo = document.getElementById("editPhoto").value.trim();
-
-    if (name) document.getElementById("studentName").textContent = name + " さん";
-    if (email) document.getElementById("studentEmail").textContent = email;
-    if (photo) document.getElementById("studentPhoto").src = photo;
-
-    localStorage.setItem("studentProfile", JSON.stringify({ name, email, photo }));
-    alert("プロフィールを保存しました！");
-    form.style.display = "none";
+  // 名前・メール入力時に即反映
+  nameInput.addEventListener("input", () => {
+    nameEl.textContent = nameInput.value + " さん";
+    saveProfile();
+  });
+  emailInput.addEventListener("input", () => {
+    emailEl.textContent = emailInput.value;
+    saveProfile();
   });
 
-  // --- 保存データを読み込み時に反映 ---
+  // 画像アップロード時の処理
+  fileInput.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      photoEl.src = ev.target.result;
+      saveProfile();
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // 保存処理（localStorage）
+  function saveProfile() {
+    const profile = {
+      name: nameInput.value,
+      email: emailInput.value,
+      photo: photoEl.src
+    };
+    localStorage.setItem("studentProfile", JSON.stringify(profile));
+  }
+
+  // ページ読み込み時にデータ復元
   window.addEventListener("load", () => {
     const data = JSON.parse(localStorage.getItem("studentProfile"));
     if (data) {
-      if (data.name) document.getElementById("studentName").textContent = data.name + " さん";
-      if (data.email) document.getElementById("studentEmail").textContent = data.email;
-      if (data.photo) document.getElementById("studentPhoto").src = data.photo;
+      if (data.name) {
+        nameInput.value = data.name;
+        nameEl.textContent = data.name + " さん";
+      }
+      if (data.email) {
+        emailInput.value = data.email;
+        emailEl.textContent = data.email;
+      }
+      if (data.photo) {
+        photoEl.src = data.photo;
+      }
     }
   });
-  </script>
+</script>
 </body>
 </html>
