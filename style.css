@@ -526,3 +526,28 @@ header.site-header {
   border-radius: 6px;
   border: 1px solid #ccc;
 }
+#reviewForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#reviewForm select,
+#reviewForm textarea {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+#reviewList ul {
+  list-style: none;
+  padding: 0;
+}
+
+#reviewList li {
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
