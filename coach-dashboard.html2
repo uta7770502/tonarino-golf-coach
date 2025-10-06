@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>コーチ管理 | 隣のゴルフコーチ</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="coach-dashboard">
+  <header class="site-header">
+    <h1>⛳ コーチ管理</h1>
+  </header>
+
+  <main class="coach-main">
+    <section class="profile-card">
+      <img src="https://i.pravatar.cc/150?img=15" alt="コーチ写真" class="profile-img" />
+      <h2>佐藤 コーチ</h2>
+      <p class="bio">ドライバー・飛距離アップが得意です！</p>
+      <div class="tags">
+        <span>#ドライバー</span>
+        <span>#アプローチ</span>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <h3>🏌️ スタジオ管理</h3>
+      <div class="schedule-days">
+        <span class="ok">月</span>
+        <span class="ok">火</span>
+        <span class="ok">水</span>
+        <span class="ok">木</span>
+        <span class="ng">金</span>
+        <span class="ok">土</span>
+        <span class="ok">日</span>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <h3>💴 料金設定</h3>
+      <div class="price-list">
+        <div>60分 ￥3,000〜</div>
+        <div>90分 ￥5,000〜</div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <h3>📈 今月の売上</h3>
+      <p>売上合計：<strong>￥12,000</strong></p>
+      <p>入金予定日：<strong>10月30日</strong></p>
+    </section>
+  </main>
+
+  <footer class="footer-nav">
+    <nav>
+      <a href="index.html">🏠 ホーム</a>
+      <a href="#">📅 スケジュール</a>
+      <a href="#">💰 売上</a>
+      <a href="coach-dashboard.html" class="active">👨‍🏫 管理</a>
+    </nav>
+  </footer>
+</body>
+</html>
