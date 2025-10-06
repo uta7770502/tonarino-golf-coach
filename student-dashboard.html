@@ -139,7 +139,17 @@
     emailEl.textContent = emailInput.value;
     saveProfile();
   });
-
+// --- 予約履歴の「レビューを書く」ボタン機能 ---
+document.querySelectorAll(".review-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const coachName = btn.getAttribute("data-coach");
+    document.getElementById("coachName").value = coachName;
+    window.scrollTo({
+      top: document.getElementById("reviewForm").offsetTop - 50,
+      behavior: "smooth"
+    });
+  });
+});
   // 画像アップロード時の処理
   fileInput.addEventListener("change", (e) => {
     const file = e.target.files[0];
