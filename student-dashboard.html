@@ -99,6 +99,52 @@
 </body>
 </html>
 <script>
+  <script>
+  // レビュー投稿処理
+  document.getElementById("reviewForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const coach = document.getElementById("coachName").value;
+    const rating = document.getElementById("rating").value;
+    const comment = document.getElementById("comment").value;
+
+    const review = {
+      coach: coach,
+      rating: rating,
+      comment: comment,
+      date: new Date().toLocaleString()
+    };
+
+    // localStorage に保存
+    let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+    reviews.push(review);
+    localStorage.setItem("reviews", JSON.stringify(reviews));
+
+    alert("レビューを投稿しました！");
+    displayReviews();
+    document.getElementById("reviewForm").reset();
+  });
+
+  // 投稿一覧を表示
+  function displayReviews() {
+    const reviewList = document.getElementById("reviews");
+    const reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+    reviewList.innerHTML = "";
+
+    reviews.forEach(r => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <strong>${r.coach}</strong> (${r.rating}⭐)<br>
+        ${r.comment}<br>
+        <small>${r.date}</small>
+      `;
+      reviewList.appendChild(li);
+    });
+  }
+
+  // ページ読込時にレビュー表示
+  window.addEventListener("load", displayReviews);
+</script>
 document.getElementById("editProfileBtn").addEventListener("click", function() {
   const form = document.getElementById("editForm");
   form.style.display = form.style.display === "none" ? "block" : "none";
