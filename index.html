@@ -42,3 +42,21 @@
 </script>
 </body>
 </html>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const user = localStorage.getItem("loggedInUser");
+  const coachBtn = document.getElementById("coachBtn");
+
+  if (coachBtn) {
+    coachBtn.addEventListener("click", () => {
+      if (user) {
+        // ログイン済みならコーチ管理ページへ
+        window.location.href = "coach-dashboard.html";
+      } else {
+        // 未ログインならログインページへ
+        window.location.href = "login.html";
+      }
+    });
+  }
+});
+</script>
