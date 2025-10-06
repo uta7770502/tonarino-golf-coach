@@ -238,6 +238,18 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   });
 });
+  document.addEventListener("DOMContentLoaded", () => {
+  const removeButtons = document.querySelectorAll(".remove-btn");
+
+  removeButtons.forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      const coachCard = e.target.closest(".coach");
+      coachCard.remove();
+
+      alert("お気に入りから削除しました！");
+    });
+  });
+});
 </script>
 </body>
 </html>
