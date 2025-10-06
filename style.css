@@ -418,9 +418,12 @@ header.site-header {
   background: #fff;
   border-radius: 12px;
   padding: 20px;
-  text-align: center;
+  display: flex;              /* 横並びに変更 */
+  align-items: center;        /* 縦位置を中央に */
+  gap: 20px;                  /* 画像と文字の間に余白 */
   box-shadow: 0 3px 6px rgba(0,0,0,0.1);
   margin-bottom: 16px;
+  text-align: left;           /* 横並び時のテキスト整列 */
 }
 
 .profile-card .tags {
