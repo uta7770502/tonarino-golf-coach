@@ -407,3 +407,65 @@ header.site-header {
   font-weight: bold;
   border-bottom: 2px solid #0b5b4c;
 }
+/* coach-dashboard 用 */
+.coach-main {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.profile-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  margin-bottom: 16px;
+}
+
+.profile-card .tags {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.profile-card .tags span {
+  background: #b2f1eb;
+  color: #0b5b4c;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.schedule-days {
+  display: flex;
+  justify-content: space-around;
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.schedule-days span {
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.schedule-days .ok {
+  background: #FFD95A;
+}
+
+.schedule-days .ng {
+  background: #ccc;
+  color: #666;
+}
+
+.price-list {
+  display: flex;
+  justify-content: space-around;
+  font-weight: bold;
+}
+
+.section-card p strong {
+  color: #0b5b4c;
+}
