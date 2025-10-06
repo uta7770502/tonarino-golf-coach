@@ -6,35 +6,36 @@
   <title>マイページ | 隣のゴルフコーチ</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body class="student-dashboard">
   <header class="site-header">
     <h1>👩‍🎓 マイページ</h1>
   </header>
 
   <main class="student-main">
+    <!-- プロフィール -->
     <section class="profile-card">
-      <img src="https://i.pravatar.cc/150?img=5" alt="プロフィール写真" class="profile-img" />
-      <h2>山田 太郎 さん</h2>
-      <p class="email">yamada.taro@example.com</p>
+      <img id="studentPhoto" src="https://i.pravatar.cc/150?img=5" alt="プロフィール写真" class="profile-img" />
+      <h2 id="studentName">山田 太郎 さん</h2>
+      <p id="studentEmail" class="email">yamada.taro@example.com</p>
     </section>
-<!-- プロフィール編集ボタン -->
-<div class="profile-edit">
-  <button id="editProfileBtn" class="edit-btn">✏️ プロフィールを編集</button>
-</div>
 
-<!-- 編集フォーム（最初は非表示） -->
-<div id="editForm" class="edit-form" style="display: none;">
-  <label>名前：</label>
-  <input type="text" id="editName" placeholder="名前を入力" />
-  
-  <label>メール：</label>
-  <input type="email" id="editEmail" placeholder="メールを入力" />
-  
-  <label>プロフィール画像URL：</label>
-  <input type="text" id="editPhoto" placeholder="画像URLを入力" />
-  
-  <button id="saveProfileBtn" class="save-btn">💾 保存</button>
-</div>
+    <!-- プロフィール編集 -->
+    <div class="profile-edit">
+      <button id="editProfileBtn" class="edit-btn">✏️ プロフィールを編集</button>
+    </div>
+
+    <div id="editForm" class="edit-form" style="display: none;">
+      <label>名前：</label>
+      <input type="text" id="editName" placeholder="名前を入力" />
+      <label>メール：</label>
+      <input type="email" id="editEmail" placeholder="メールを入力" />
+      <label>プロフィール画像URL：</label>
+      <input type="text" id="editPhoto" placeholder="画像URLを入力" />
+      <button id="saveProfileBtn" class="save-btn">💾 保存</button>
+    </div>
+
+    <!-- 予約履歴 -->
     <section class="section-card">
       <h3>📅 予約履歴</h3>
       <ul>
@@ -42,35 +43,39 @@
         <li>10/20　高橋コーチ　90分　🕓 予定</li>
       </ul>
     </section>
-<section class="section-card">
-  <h3>⭐ レビュー投稿</h3>
-  <form id="reviewForm">
-    <label for="coachName">コーチ名：</label>
-    <select id="coachName">
-      <option value="佐藤コーチ">佐藤コーチ</option>
-      <option value="高橋コーチ">高橋コーチ</option>
-    </select>
 
-    <label for="rating">評価：</label>
-    <select id="rating">
-      <option value="5">★★★★★</option>
-      <option value="4">★★★★☆</option>
-      <option value="3">★★★☆☆</option>
-      <option value="2">★★☆☆☆</option>
-      <option value="1">★☆☆☆☆</option>
-    </select>
+    <!-- レビュー投稿 -->
+    <section class="section-card">
+      <h3>⭐ レビュー投稿</h3>
+      <form id="reviewForm">
+        <label for="coachName">コーチ名：</label>
+        <select id="coachName">
+          <option value="佐藤コーチ">佐藤コーチ</option>
+          <option value="高橋コーチ">高橋コーチ</option>
+        </select>
 
-    <label for="comment">コメント：</label>
-    <textarea id="comment" rows="3" placeholder="感想を入力してください"></textarea>
+        <label for="rating">評価：</label>
+        <select id="rating">
+          <option value="5">★★★★★</option>
+          <option value="4">★★★★☆</option>
+          <option value="3">★★★☆☆</option>
+          <option value="2">★★☆☆☆</option>
+          <option value="1">★☆☆☆☆</option>
+        </select>
 
-    <button type="submit" class="btn">レビューを投稿する</button>
-  </form>
+        <label for="comment">コメント：</label>
+        <textarea id="comment" rows="3" placeholder="感想を入力してください"></textarea>
 
-  <div id="reviewList">
-    <h4>💬 投稿済みレビュー</h4>
-    <ul id="reviews"></ul>
-  </div>
-</section>
+        <button type="submit" class="btn">レビューを投稿する</button>
+      </form>
+
+      <div id="reviewList">
+        <h4>💬 投稿済みレビュー</h4>
+        <ul id="reviews"></ul>
+      </div>
+    </section>
+
+    <!-- お気に入りコーチ -->
     <section class="section-card">
       <h3>⭐ お気に入りコーチ</h3>
       <div class="favorite-coaches">
@@ -97,122 +102,74 @@
     </nav>
   </footer>
 
+  <!-- ✅ スクリプト統合版 -->
   <script>
-  // レビュー投稿処理
+  // --- レビュー投稿処理 ---
   document.getElementById("reviewForm").addEventListener("submit", function(e) {
     e.preventDefault();
-
     const coach = document.getElementById("coachName").value;
     const rating = document.getElementById("rating").value;
     const comment = document.getElementById("comment").value;
 
     const review = {
-      coach: coach,
-      rating: rating,
-      comment: comment,
+      coach, rating, comment,
       date: new Date().toLocaleString()
     };
 
-    // localStorage に保存
     let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
     reviews.push(review);
     localStorage.setItem("reviews", JSON.stringify(reviews));
 
     alert("レビューを投稿しました！");
     displayReviews();
-    document.getElementById("reviewForm").reset();
+    this.reset();
   });
 
-  // 投稿一覧を表示
+  // --- 投稿一覧表示 ---
   function displayReviews() {
-    const reviewList = document.getElementById("reviews");
+    const list = document.getElementById("reviews");
     const reviews = JSON.parse(localStorage.getItem("reviews")) || [];
-    reviewList.innerHTML = "";
-
+    list.innerHTML = "";
     reviews.forEach(r => {
       const li = document.createElement("li");
-      li.innerHTML = `
-        <strong>${r.coach}</strong> (${r.rating}⭐)<br>
-        ${r.comment}<br>
-        <small>${r.date}</small>
-      `;
-      reviewList.appendChild(li);
+      li.innerHTML = `<strong>${r.coach}</strong> (${r.rating}⭐)<br>${r.comment}<br><small>${r.date}</small>`;
+      list.appendChild(li);
     });
   }
-
-  // ページ読込時にレビュー表示
   window.addEventListener("load", displayReviews);
-</script>
-document.getElementById("editProfileBtn").addEventListener("click", function() {
+
+  // --- プロフィール編集 ---
+  const editBtn = document.getElementById("editProfileBtn");
+  const saveBtn = document.getElementById("saveProfileBtn");
   const form = document.getElementById("editForm");
-  form.style.display = form.style.display === "none" ? "block" : "none";
-});
 
-document.getElementById("saveProfileBtn").addEventListener("click", function() {
-  const name = document.getElementById("editName").value;
-  const email = document.getElementById("editEmail").value;
-  const photo = document.getElementById("editPhoto").value;
-
-  if (name) document.getElementById("studentName").innerText = name + " さん";
-  if (email) document.getElementById("studentEmail").innerText = email;
-  if (photo) document.getElementById("studentPhoto").src = photo;
-
-  // localStorage に保存（次回も反映されるように）
-  localStorage.setItem("studentProfile", JSON.stringify({ name, email, photo }));
-
-  alert("プロフィールを更新しました！");
-  document.getElementById("editForm").style.display = "none";
-});
-
-// ページ読み込み時に保存されたデータを反映
-window.addEventListener("load", function() {
-  const data = JSON.parse(localStorage.getItem("studentProfile"));
-  if (data) {
-    if (data.name) document.getElementById("studentName").innerText = data.name + " さん";
-    if (data.email) document.getElementById("studentEmail").innerText = data.email;
-    if (data.photo) document.getElementById("studentPhoto").src = data.photo;
-  }
-});
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const nameDisplay = document.querySelector("h2");
-  const emailDisplay = document.querySelector(".email");
-  const imgDisplay = document.querySelector(".profile-card img");
-
-  const nameInput = document.querySelector('input[placeholder="名前を入力"]');
-  const emailInput = document.querySelector('input[placeholder="メールを入力"]');
-  const imgInput = document.querySelector('input[placeholder="画像URLを入力"]');
-  const saveBtn = document.querySelector("button");
-
-  // ページ読み込み時にlocalStorageの値を表示に反映
-  const savedName = localStorage.getItem("studentName");
-  const savedEmail = localStorage.getItem("studentEmail");
-  const savedImg = localStorage.getItem("studentImg");
-
-  if (savedName) nameDisplay.textContent = savedName + " さん";
-  if (savedEmail) emailDisplay.textContent = savedEmail;
-  if (savedImg) imgDisplay.src = savedImg;
-
-  // 保存ボタンクリック時の処理
-  saveBtn.addEventListener("click", () => {
-    const name = nameInput.value.trim();
-    const email = emailInput.value.trim();
-    const img = imgInput.value.trim();
-
-    // LocalStorageに保存
-    localStorage.setItem("studentName", name);
-    localStorage.setItem("studentEmail", email);
-    localStorage.setItem("studentImg", img);
-
-    // 表示も即更新
-    if (name) nameDisplay.textContent = name + " さん";
-    if (email) emailDisplay.textContent = email;
-    if (img) imgDisplay.src = img;
-
-    alert("プロフィールを保存しました！");
+  editBtn.addEventListener("click", () => {
+    form.style.display = form.style.display === "none" ? "block" : "none";
   });
-});
-</script>
+
+  saveBtn.addEventListener("click", () => {
+    const name = document.getElementById("editName").value.trim();
+    const email = document.getElementById("editEmail").value.trim();
+    const photo = document.getElementById("editPhoto").value.trim();
+
+    if (name) document.getElementById("studentName").textContent = name + " さん";
+    if (email) document.getElementById("studentEmail").textContent = email;
+    if (photo) document.getElementById("studentPhoto").src = photo;
+
+    localStorage.setItem("studentProfile", JSON.stringify({ name, email, photo }));
+    alert("プロフィールを保存しました！");
+    form.style.display = "none";
+  });
+
+  // --- 保存データを読み込み時に反映 ---
+  window.addEventListener("load", () => {
+    const data = JSON.parse(localStorage.getItem("studentProfile"));
+    if (data) {
+      if (data.name) document.getElementById("studentName").textContent = data.name + " さん";
+      if (data.email) document.getElementById("studentEmail").textContent = data.email;
+      if (data.photo) document.getElementById("studentPhoto").src = data.photo;
+    }
+  });
+  </script>
 </body>
 </html>
