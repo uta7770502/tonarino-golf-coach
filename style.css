@@ -551,3 +551,34 @@ header.site-header {
   margin-top: 10px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
+.review-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  padding: 15px;
+  margin-bottom: 15px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.review-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.review-card strong {
+  font-size: 1.1em;
+  color: #00796b;
+}
+
+.review-card small {
+  color: #777;
+  display: block;
+  margin-top: 5px;
+  font-size: 0.85em;
+}
+
+.review-card p {
+  margin: 8px 0 0;
+  color: #333;
+  line-height: 1.4;
+}
