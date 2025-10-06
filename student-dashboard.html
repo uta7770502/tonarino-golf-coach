@@ -17,7 +17,24 @@
       <h2>山田 太郎 さん</h2>
       <p class="email">yamada.taro@example.com</p>
     </section>
+<!-- プロフィール編集ボタン -->
+<div class="profile-edit">
+  <button id="editProfileBtn" class="edit-btn">✏️ プロフィールを編集</button>
+</div>
 
+<!-- 編集フォーム（最初は非表示） -->
+<div id="editForm" class="edit-form" style="display: none;">
+  <label>名前：</label>
+  <input type="text" id="editName" placeholder="名前を入力" />
+  
+  <label>メール：</label>
+  <input type="email" id="editEmail" placeholder="メールを入力" />
+  
+  <label>プロフィール画像URL：</label>
+  <input type="text" id="editPhoto" placeholder="画像URLを入力" />
+  
+  <button id="saveProfileBtn" class="save-btn">💾 保存</button>
+</div>
     <section class="section-card">
       <h3>📅 予約履歴</h3>
       <ul>
