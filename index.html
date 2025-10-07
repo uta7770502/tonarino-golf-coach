@@ -66,12 +66,15 @@
   </footer>
 
   <!--
-<script>
-  // クリックイベントを無効化せず、そのままリンクに飛ぶ（テスト用）
+  <script>
+  // クリックされたリンクの href に必ず遷移する
   document.querySelectorAll(".card-btn").forEach(btn => {
     btn.addEventListener("click", (e) => {
-      const target = e.target.getAttribute("href");
-      window.location.href = target; // そのまま移動
+      e.preventDefault(); // デフォルト動作を一度止めて
+      const href = btn.getAttribute("href"); // 正しいリンク先を取得
+      if (href) {
+        window.location.href = href; // そのページへ遷移
+      }
     });
   });
 </script>
