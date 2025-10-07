@@ -61,9 +61,13 @@ main.home-select {
 /* フッター */
 .site-footer {
   background: #ffd53d;
-  text-align: center;
   color: #0b5b4c;
   font-size: 14px;
+  text-align: center;
   padding: 12px 0;
+  position: fixed;      /* ← フッターを画面最下部に固定 */
+  bottom: 0;            /* ← 画面の下端にぴったり配置 */
+  left: 0;
   width: 100%;
+  z-index: 10;          /* ← 他の要素より上に */
 }
