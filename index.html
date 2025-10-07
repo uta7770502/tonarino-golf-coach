@@ -5,6 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>隣のゴルフコーチ</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .hero-illustration {
+      text-align: center;
+      margin: 0 auto 20px;
+    }
+    .hero-illustration img {
+      max-width: 200px;
+      height: auto;
+      display: inline-block;
+      margin-top: 0;
+    }
+  </style>
 </head>
 <body>
   <header class="site-header">
@@ -13,34 +25,32 @@
 
   <main class="home-select">
     <div class="hero-illustration">
-  <img src="images/IMG_6784.jpeg" alt="地図とピンのイラスト">
-</div>
-  <div class="button-container">
-  <a href="student-dashboard.html" class="card-btn">生徒になる</a>
-  <a href="coach-dashboard.html" class="card-btn">コーチになる</a>
-</div>
-</main>
+      <img src="map-pin-flag.png" alt="地図とピンのイラスト">
+    </div>
+
+    <div class="button-container">
+      <a href="student-dashboard.html" class="card-btn">生徒になる</a>
+      <a href="coach-dashboard.html" class="card-btn">コーチになる</a>
+    </div>
+  </main>
 
   <footer class="site-footer">
     <p>© 2025 Tonarino Golf Coach</p>
   </footer>
-  <script>
-  document.getElementById("studentBtn").addEventListener("click", () => {
-    const user = localStorage.getItem("loggedInUser");
-    if (user) {
-      window.location.href = "index.html"; // 生徒用マイページに差し替え可
-    } else {
-      window.location.href = "login.html";
-    }
-  });
 
-  document.getElementById("coachBtn").addEventListener("click", () => {
-    const user = localStorage.getItem("loggedInUser");
-    if (user) {
-      window.location.href = "coach-dashboard.html"; // コーチ管理ページ
-    } else {
-      window.location.href = "login.html";
-    }
-  });
-</script>
+  <script>
+    document.querySelectorAll(".card-btn").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        const user = localStorage.getItem("loggedInUser");
+        const target = e.target.getAttribute("href");
+        if (user) {
+          window.location.href = target;
+        } else {
+          window.location.href = "login.html";
+        }
+        e.preventDefault();
+      });
+    });
+  </script>
 </body>
+</html>
