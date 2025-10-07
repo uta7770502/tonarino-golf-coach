@@ -732,3 +732,23 @@ html, body {
   border-radius: 6px;
   padding: 6px 10px;
 }
+.schedule-days span {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 8px;
+  margin: 4px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.schedule-days .ok {
+  background: #FFD53D;
+  color: #0b5b4c;
+}
+.schedule-days .ng {
+  background: #ccc;
+  color: #666;
+}
