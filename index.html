@@ -5,86 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>隣のゴルフコーチ</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-  body {
-    margin: 0;
-    padding: 0;
-    background: #b2f1eb;
-  }
-
-  main {
-    margin: 0;
-    padding: 0;
-  }
-
-  .hero-illustration {
-  text-align: center;
-}
-
-.hero-illustration img {
-  width: 120px; /* 今のサイズを維持 */
-  height: auto;
-  margin-top: 50px; /* ← これで下に移動（数値で微調整） */
-}
-
-  .button-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px; /* ボタンの間隔を維持 */
-  margin-top: 50px; /* ← 小さいほど上に上がる（例: 20px〜60pxで微調整） */
-}
-
-  * {
-    box-sizing: border-box;
-  }
-
-  html, body {
-    height: auto;
-    overflow-x: hidden;
-  }
-</style>
 </head>
 <body>
   <header class="site-header">
-    <h1>隣のゴルフコーチ</h1>
+    <h1>🏌️‍♂️ 隣のゴルフコーチ</h1>
   </header>
 
   <main class="home-select">
     <div class="hero-illustration">
-      <img src="IMG_6801.png" alt="地図とピンのイラスト">
-    </div>
-
-    <div class="button-container">
-      <a href="student.html" class="card-btn">生徒になる</a>
-      <a href="coach-dashboard.html" class="card-btn">コーチになる</a>
-    </div>
-  </main>
+  <img src="images/IMG_6784.jpeg" alt="地図とピンのイラスト">
+</div>
+  <div class="button-container">
+  <a href="student-dashboard.html" class="card-btn">生徒になる</a>
+  <a href="coach-dashboard.html" class="card-btn">コーチになる</a>
+</div>
+</main>
 
   <footer class="site-footer">
     <p>© 2025 Tonarino Golf Coach</p>
   </footer>
-
-  <!--
   <script>
-  // 生徒になる・コーチになるボタンを確実に動作させる
-  document.querySelectorAll(".card-btn").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      const href = btn.getAttribute("href");
-      if (href) {
-        // 生徒ボタンは student.html に、コーチボタンは coach-dashboard.html に飛ばす
-        if (href.includes("student")) {
-          window.location.href = "student.html";
-        } else if (href.includes("coach")) {
-          window.location.href = "coach-dashboard.html";
-        } else {
-          window.location.href = href;
-        }
-      }
-    });
+  document.getElementById("studentBtn").addEventListener("click", () => {
+    const user = localStorage.getItem("loggedInUser");
+    if (user) {
+      window.location.href = "index.html"; // 生徒用マイページに差し替え可
+    } else {
+      window.location.href = "login.html";
+    }
+  });
+
+  document.getElementById("coachBtn").addEventListener("click", () => {
+    const user = localStorage.getItem("loggedInUser");
+    if (user) {
+      window.location.href = "coach-dashboard.html"; // コーチ管理ページ
+    } else {
+      window.location.href = "login.html";
+    }
   });
 </script>
--->
 </body>
-</html>
