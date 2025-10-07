@@ -12,24 +12,82 @@
   </header>
 
   <main class="coach-main">
+    <section class="profile-card">
+      <img src="https://i.pravatar.cc/150?img=15" alt="コーチ写真" class="profile-img" />
+      <h2>佐藤 コーチ</h2>
+      <p class="bio">ドライバー・飛距離アップが得意です！</p>
+      <div class="tags">
+        <span>#ドライバー</span>
+        <span>#アプローチ</span>
+      </div>
+    </section>
 
-  <!-- ▼ タブメニュー -->
-  <div class="tab-menu">
-    <button class="tab-btn active" data-tab="price">💬 料金設定</button>
-    <button class="tab-btn" data-tab="schedule">📅 スケジュール</button>
-    <button class="tab-btn" data-tab="sales">💰 今月の売上</button>
+    <section class="section-card">
+      <h3>スタジオ管理</h3>
+      <div class="schedule-days">
+        <span class="ok">月</span>
+        <span class="ok">火</span>
+        <span class="ok">水</span>
+        <span class="ok">木</span>
+        <span class="ng">金</span>
+        <span class="ok">土</span>
+        <span class="ok">日</span>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <h3>料金設定</h3>
+      <!-- ▼ 修正前 -->
+<!-- ▼ 修正後 -->
+<div class="price-section">
+  <p>30分 ¥2,000〜</p>
+  <p>60分 ¥3,000〜</p>
+  <p>90分 ¥5,000〜</p>
+  <button id="editBtn" class="edit-btn">✏️ 編集する</button>
+</div>
+
+<!-- ▼ 編集フォーム（最初は非表示） -->
+<div id="editForm" class="edit-form" style="display:none;">
+  <label>名前：<input type="text" id="editName"></label><br>
+  <label>得意クラブ：<input type="text" id="editSpeciality"></label><br>
+  <label>紹介文：<textarea id="editIntro"></textarea></label><br>
+  <label>30分料金：<input type="number" id="edit30" value="2000"></label><br>
+  <label>60分料金：<input type="number" id="edit60" value="3000"></label><br>
+  <label>90分料金：<input type="number" id="edit90" value="5000"></label><br>
+  <button id="saveBtn">💾 保存</button>
+  <button id="cancelBtn">キャンセル</button>
+</div>
+    </section>
+<section class="section-card">
+  <h3>📅 スケジュール</h3>
+  <div id="schedule-list">
+    <ul id="scheduleItems">
+      <li>2025-10-10（金） 10:00〜11:00　生徒：山田太郎</li>
+    </ul>
   </div>
 
-  <!-- ▼ 料金設定 -->
-  <div id="tab-price" class="tab-content active"> ... </div>
-
-  <!-- ▼ スケジュール -->
-  <div id="tab-schedule" class="tab-content"> ... </div>
-
-  <!-- ▼ 売上 -->
-  <div id="tab-sales" class="tab-content"> ... </div>
-
-</main>
+  <div id="addSchedule">
+    <input type="date" id="dateInput">
+    <input type="time" id="startInput">
+    <input type="time" id="endInput">
+    <input type="text" id="studentInput" placeholder="生徒名">
+    <button id="addBtn">＋ 追加</button>
+  </div>
+</section>
+    <section class="section-card">
+  <h3>今月の売上</h3>
+  <div id="sales-container">
+    <p>30分レッスン：<input type="number" id="sales30" value="0"> 回</p>
+    <p>60分レッスン：<input type="number" id="sales60" value="0"> 回</p>
+    <p>90分レッスン：<input type="number" id="sales90" value="0"> 回</p>
+    <button id="calcSalesBtn">💰 売上計算</button>
+  </div>
+  <div id="sales-result">
+    <p>売上合計：<strong id="salesTotal">¥0</strong></p>
+    <p>入金予定日：<strong id="salesDate"></strong></p>
+  </div>
+</section>
+  </main>
 
   <footer class="footer-nav">
     <nav>
@@ -199,31 +257,6 @@ window.addEventListener("DOMContentLoaded", () => {
   const date = localStorage.getItem("salesDate");
   if (total) document.getElementById("salesTotal").textContent = `¥${Number(total).toLocaleString()}`;
   if (date) document.getElementById("salesDate").textContent = date;
-});
-    // =======================
-// タブ切り替え機能
-// =======================
-document.addEventListener("DOMContentLoaded", () => {
-  const tabs = document.querySelectorAll(".tab-btn");
-  const contents = document.querySelectorAll(".tab-content");
-
-  tabs.forEach(tab => {
-    tab.addEventListener("click", () => {
-      const targetId = tab.getAttribute("data-tab");
-
-      // タブのアクティブ切り替え
-      tabs.forEach(t => t.classList.remove("active"));
-      tab.classList.add("active");
-
-      // コンテンツの切り替え
-      contents.forEach(content => {
-        content.classList.remove("active");
-        if (content.id === `tab-${targetId}`) {
-          content.classList.add("active");
-        }
-      });
-    });
-  });
 });
 </script>
 </body>
