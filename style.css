@@ -752,3 +752,25 @@ html, body {
   background: #ccc;
   color: #666;
 }
+#sales-container input {
+  width: 60px;
+  text-align: right;
+  margin-left: 4px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 3px;
+}
+#calcSalesBtn {
+  margin-top: 8px;
+  background: #007b7f;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+}
+#sales-result {
+  margin-top: 10px;
+  background: #f5fff5;
+  border-radius: 8px;
+  padding: 10px;
+}
