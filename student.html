@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>隣のゴルフコーチ</title>
-  <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
@@ -27,21 +26,28 @@
     #map {
       height: 320px;
       width: 100%;
+      z-index: 1;
+      position: relative;
     }
 
-    /* 吹き出しデザイン */
+    .leaflet-pane, .leaflet-map-pane {
+      z-index: 2 !important;
+    }
+
+    /* 吹き出し（写真右側にテキスト） */
     .leaflet-popup-content-wrapper {
       border-radius: 16px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
 
     .leaflet-popup-content {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       color: #0b5b4c;
       font-size: 15px;
       font-weight: 600;
+      margin: 0 !important;
     }
 
     .leaflet-popup-content img {
@@ -51,7 +57,7 @@
       object-fit: cover;
     }
 
-    /* 簡易詳細モーダル */
+    /* モーダル */
     .modal {
       display: none;
       position: fixed;
@@ -62,7 +68,7 @@
       background: rgba(0, 0, 0, 0.5);
       justify-content: center;
       align-items: center;
-      z-index: 1000;
+      z-index: 9999;
     }
 
     .modal-content {
@@ -115,13 +121,14 @@
       border-radius: 16px;
       padding: 12px;
       text-align: center;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     .coach-card img {
       width: 100%;
       border-radius: 50%;
       margin-bottom: 8px;
+      object-fit: cover;
     }
 
     .coach-card strong {
@@ -138,6 +145,7 @@
 
 <body>
   <header>🏌️‍♂️ 隣のゴルフコーチ</header>
+
   <main>
     <div id="map"></div>
 
@@ -164,6 +172,10 @@
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
+    // --- 画像が存在しない場合のAI風プレースホルダー ---
+    const placeholder = "https://api.dicebear.com/7.x/adventurer/svg?seed=coach";
+
+    // --- ダミー20名データ ---
     const coaches = [];
     for (let i = 1; i <= 20; i++) {
       coaches.push({
@@ -182,25 +194,25 @@
     // --- 吹き出し生成 ---
     coaches.forEach(coach => {
       const marker = L.marker([coach.lat, coach.lng]).addTo(map);
-      const popup = `
+      const popupHTML = `
         <div onclick="openModal(${coach.id})" style="cursor:pointer;">
-          <img src="${coach.img}" alt="${coach.name}">
+          <img src="${coach.img}" onerror="this.src='${placeholder}'" alt="${coach.name}">
           <div>
-            <strong>${coach.name}</strong><br>
-            ${coach.area}
+            <div><strong>${coach.name}</strong></div>
+            <div>${coach.area}</div>
           </div>
         </div>
       `;
-      marker.bindPopup(popup);
+      marker.bindPopup(popupHTML);
     });
 
-    // --- コーチ一覧生成 ---
+    // --- コーチ一覧 ---
     const list = document.getElementById("coachCards");
     coaches.forEach(c => {
       const card = document.createElement("div");
       card.className = "coach-card";
       card.innerHTML = `
-        <img src="${c.img}" alt="${c.name}">
+        <img src="${c.img}" onerror="this.src='${placeholder}'" alt="${c.name}">
         <strong>${c.name}</strong>
         <div>${c.area} | ${c.specialty}</div>
         <div>${c.time}</div>
@@ -210,9 +222,9 @@
       list.appendChild(card);
     });
 
-    // --- 簡易詳細モーダル制御 ---
+    // --- モーダル制御 ---
     const modal = document.getElementById("coachModal");
-    const modalImg = document.getElementById("modalContent").querySelector("img");
+    const modalImg = document.querySelector("#modalContent img");
     const modalName = document.getElementById("modalName");
     const modalArea = document.getElementById("modalArea");
     const detailBtn = document.getElementById("detailBtn");
