@@ -717,3 +717,18 @@ html, body {
   height: auto;
   overflow-x: hidden;
 }
+.edit-form {
+  background: #fff;
+  padding: 12px;
+  border-radius: 10px;
+  margin-top: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.edit-btn {
+  margin-top: 8px;
+  background: #007b7f;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+}
