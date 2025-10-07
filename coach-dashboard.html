@@ -180,6 +180,49 @@ window.addEventListener("DOMContentLoaded", () => {
     dateEl.textContent = d.date;
   }
 });
+    // ======================
+// スケジュール管理処理
+// ======================
+const addBtn = document.getElementById("addBtn");
+const listEl = document.getElementById("scheduleItems");
+
+addBtn.addEventListener("click", () => {
+  const date = document.getElementById("dateInput").value;
+  const start = document.getElementById("startInput").value;
+  const end = document.getElementById("endInput").value;
+  const student = document.getElementById("studentInput").value;
+
+  if (!date || !start || !end || !student) {
+    alert("すべての項目を入力してください。");
+    return;
+  }
+
+  const text = `${date}　${start}〜${end}　生徒：${student}`;
+  const li = document.createElement("li");
+  li.textContent = text;
+  listEl.appendChild(li);
+
+  // localStorage保存
+  const schedules = JSON.parse(localStorage.getItem("schedules") || "[]");
+  schedules.push(text);
+  localStorage.setItem("schedules", JSON.stringify(schedules));
+
+  // 入力リセット
+  document.getElementById("dateInput").value = "";
+  document.getElementById("startInput").value = "";
+  document.getElementById("endInput").value = "";
+  document.getElementById("studentInput").value = "";
+});
+
+// ページ読み込み時にスケジュールを復元
+window.addEventListener("DOMContentLoaded", () => {
+  const schedules = JSON.parse(localStorage.getItem("schedules") || "[]");
+  schedules.forEach((text) => {
+    const li = document.createElement("li");
+    li.textContent = text;
+    listEl.appendChild(li);
+  });
+});
 </script>
 </body>
 </html>
