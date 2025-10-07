@@ -1,0 +1,69 @@
+/* === トップページ（index.html）最適化 === */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #b2f1eb;
+  color: #0b5b4c;
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* メイン全体を縦に整列：上＝イラスト、中＝ボタン、下＝フッター */
+main.home-select {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+}
+
+/* イラスト（ピン＋地図） */
+.hero-illustration {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.hero-illustration img {
+  width: 120px;
+  height: auto;
+  display: inline-block;
+}
+
+/* ボタン2つ */
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.button-container a {
+  display: inline-block;
+  padding: 16px 48px;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+  color: #0b5b4c;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: all 0.2s ease;
+}
+
+.button-container a:hover {
+  background: #ffd53d;
+  transform: translateY(-3px);
+}
+
+/* フッター */
+.site-footer {
+  background: #ffd53d;
+  text-align: center;
+  color: #0b5b4c;
+  font-size: 14px;
+  padding: 12px 0;
+  width: 100%;
+}
