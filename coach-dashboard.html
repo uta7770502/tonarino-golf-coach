@@ -8,7 +8,7 @@
 </head>
 <body class="coach-dashboard">
   <header class="site-header">
-    <h1>⛳ コーチ管理</h1>
+    <h1>コーチ管理</h1>
   </header>
 
   <main class="coach-main">
@@ -23,7 +23,7 @@
     </section>
 
     <section class="section-card">
-      <h3>🏌️ スタジオ管理</h3>
+      <h3>スタジオ管理</h3>
       <div class="schedule-days">
         <span class="ok">月</span>
         <span class="ok">火</span>
@@ -36,15 +36,31 @@
     </section>
 
     <section class="section-card">
-      <h3>💴 料金設定</h3>
-      <div class="price-list">
-        <div>60分 ￥3,000〜</div>
-        <div>90分 ￥5,000〜</div>
-      </div>
+      <h3>料金設定</h3>
+      <!-- ▼ 修正前 -->
+<!-- ▼ 修正後 -->
+<div class="price-section">
+  <p>30分 ¥2,000〜</p>
+  <p>60分 ¥3,000〜</p>
+  <p>90分 ¥5,000〜</p>
+  <button id="editBtn" class="edit-btn">✏️ 編集する</button>
+</div>
+
+<!-- ▼ 編集フォーム（最初は非表示） -->
+<div id="editForm" class="edit-form" style="display:none;">
+  <label>名前：<input type="text" id="editName"></label><br>
+  <label>得意クラブ：<input type="text" id="editSpeciality"></label><br>
+  <label>紹介文：<textarea id="editIntro"></textarea></label><br>
+  <label>30分料金：<input type="number" id="edit30" value="2000"></label><br>
+  <label>60分料金：<input type="number" id="edit60" value="3000"></label><br>
+  <label>90分料金：<input type="number" id="edit90" value="5000"></label><br>
+  <button id="saveBtn">💾 保存</button>
+  <button id="cancelBtn">キャンセル</button>
+</div>
     </section>
 
     <section class="section-card">
-      <h3>📈 今月の売上</h3>
+      <h3>今月の売上</h3>
       <p>売上合計：<strong>￥12,000</strong></p>
       <p>入金予定日：<strong>10月30日</strong></p>
     </section>
