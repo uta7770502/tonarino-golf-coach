@@ -9,24 +9,16 @@
 
 <body class="student-dashboard">
   <header class="site-header">
-  <h1>🎓 マイページ</h1>
-  <div class="notification">
-    <button id="notifyBtn">🔔</button>
-    <div id="notifyList" class="notify-list">
-      <p>📩 メッセージはまだありません</p>
-    </div>
-  </div>
-</header>
+    <h1>👩‍🎓 マイページ</h1>
+  </header>
 
   <main class="student-main">
     <!-- プロフィール -->
     <section class="profile-card">
-  <img src="https://i.pravatar.cc/150" alt="プロフィール写真" class="user-photo">
-  <div class="profile-info">
-    <h2>山田 太郎 さん</h2>
-    <p class="email">yamada.taro@example.com</p>
-  </div>
-</section>
+      <img id="studentPhoto" src="https://i.pravatar.cc/150?img=5" alt="プロフィール写真" class="profile-img" />
+      <h2 id="studentName">山田 太郎 さん</h2>
+      <p id="studentEmail" class="email">yamada.taro@example.com</p>
+    </section>
 
     <!-- プロフィール編集 -->
     <div class="profile-edit">
@@ -34,31 +26,23 @@
     </div>
 
     <div id="editForm" class="edit-form" style="display: none;">
-  <label>名前：</label>
-  <input type="text" id="editName" placeholder="名前を入力" />
-
-  <label>メール：</label>
-  <input type="email" id="editEmail" placeholder="メールを入力" />
-
-  <label>プロフィール画像：</label>
-  <input type="file" id="editPhotoFile" accept="image/*" />
-  <small>※ 画像を選択すると自動で更新されます</small>
-
-  <button id="saveProfileBtn" class="save-btn">💾 保存</button>
-</div>
+      <label>名前：</label>
+      <input type="text" id="editName" placeholder="名前を入力" />
+      <label>メール：</label>
+      <input type="email" id="editEmail" placeholder="メールを入力" />
+      <label>プロフィール画像URL：</label>
+      <input type="text" id="editPhoto" placeholder="画像URLを入力" />
+      <button id="saveProfileBtn" class="save-btn">💾 保存</button>
+    </div>
 
     <!-- 予約履歴 -->
     <section class="section-card">
-  <h3> 予約履歴</h3>
-  <ul id="reservationList">
-    <li>10/10 佐藤コーチ 60分 ✅ 完了
-  <button class="write-review-btn">✏️ レビューを書く</button>
-</li>
-    <li>
-      10/20 高橋コーチ 90分 ⏰予定
-    </li>
-  </ul>
-</section>
+      <h3>📅 予約履歴</h3>
+      <ul>
+        <li>10/10　佐藤コーチ　60分　✅ 完了</li>
+        <li>10/20　高橋コーチ　90分　🕓 予定</li>
+      </ul>
+    </section>
 
     <!-- レビュー投稿 -->
     <section class="section-card">
@@ -86,29 +70,27 @@
       </form>
 
       <div id="reviewList">
-  <h4>💬 投稿済みレビュー</h4>
-  <ul id="reviews"></ul>
-</div>
+        <h4>💬 投稿済みレビュー</h4>
+        <ul id="reviews"></ul>
+      </div>
     </section>
 
     <!-- お気に入りコーチ -->
     <section class="section-card">
-  <h3>⭐ お気に入りコーチ</h3>
-  <div class="favorite-coaches">
-    <div class="coach" data-id="1">
-      <img src="https://i.pravatar.cc/100?img=1">
-      <div class="coach-info">
-        <p class="coach-name"><a href="#">佐藤コーチ</a></p>
-        <span>★★★★★</span>
+      <h3>⭐ お気に入りコーチ</h3>
+      <div class="favorite-coaches">
+        <div class="coach">
+          <img src="https://i.pravatar.cc/100?img=12" alt="佐藤コーチ">
+          <p>佐藤コーチ</p>
+          <span>★★★★★</span>
+        </div>
+        <div class="coach">
+          <img src="https://i.pravatar.cc/100?img=13" alt="高橋コーチ">
+          <p>高橋コーチ</p>
+          <span>★★★★☆</span>
+        </div>
       </div>
-      <div class="coach-actions">
-        <a href="coach-detail.html?id=1" class="view-btn">🔗 詳細</a>
-        <button class="remove-btn">🗑</button>
-        <a href="coach-detail.html?id=1" class="detail-btn">🔗 詳細</a>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
   </main>
 
   <footer class="footer-nav">
@@ -120,159 +102,74 @@
     </nav>
   </footer>
 
+  <!-- ✅ スクリプト統合版 -->
   <script>
-  // --- プロフィール編集フォーム制御 ---
+  // --- レビュー投稿処理 ---
+  document.getElementById("reviewForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const coach = document.getElementById("coachName").value;
+    const rating = document.getElementById("rating").value;
+    const comment = document.getElementById("comment").value;
+
+    const review = {
+      coach, rating, comment,
+      date: new Date().toLocaleString()
+    };
+
+    let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+    reviews.push(review);
+    localStorage.setItem("reviews", JSON.stringify(reviews));
+
+    alert("レビューを投稿しました！");
+    displayReviews();
+    this.reset();
+  });
+
+  // --- 投稿一覧表示 ---
+  function displayReviews() {
+    const list = document.getElementById("reviews");
+    const reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+    list.innerHTML = "";
+    reviews.forEach(r => {
+      const li = document.createElement("li");
+      li.innerHTML = `<strong>${r.coach}</strong> (${r.rating}⭐)<br>${r.comment}<br><small>${r.date}</small>`;
+      list.appendChild(li);
+    });
+  }
+  window.addEventListener("load", displayReviews);
+
+  // --- プロフィール編集 ---
   const editBtn = document.getElementById("editProfileBtn");
   const saveBtn = document.getElementById("saveProfileBtn");
   const form = document.getElementById("editForm");
 
-  const nameInput = document.getElementById("editName");
-  const emailInput = document.getElementById("editEmail");
-  const fileInput = document.getElementById("editPhotoFile");
-
-  const photoEl = document.getElementById("studentPhoto");
-  const nameEl = document.getElementById("studentName");
-  const emailEl = document.getElementById("studentEmail");
-
-  // 編集フォーム開閉
   editBtn.addEventListener("click", () => {
     form.style.display = form.style.display === "none" ? "block" : "none";
   });
 
-  // 名前・メール入力時に即反映
-  nameInput.addEventListener("input", () => {
-    nameEl.textContent = nameInput.value + " さん";
-    saveProfile();
-  });
-  emailInput.addEventListener("input", () => {
-    emailEl.textContent = emailInput.value;
-    saveProfile();
-  });
-// --- 予約履歴の「レビューを書く」ボタン機能 ---
-document.querySelectorAll(".review-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const coachName = btn.getAttribute("data-coach");
-    document.getElementById("coachName").value = coachName;
-    window.scrollTo({
-      top: document.getElementById("reviewForm").offsetTop - 50,
-      behavior: "smooth"
-    });
-  });
-});
-  // 画像アップロード時の処理
-  fileInput.addEventListener("change", (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+  saveBtn.addEventListener("click", () => {
+    const name = document.getElementById("editName").value.trim();
+    const email = document.getElementById("editEmail").value.trim();
+    const photo = document.getElementById("editPhoto").value.trim();
 
-    const reader = new FileReader();
-    reader.onload = function(ev) {
-      photoEl.src = ev.target.result;
-      saveProfile();
-    };
-    reader.readAsDataURL(file);
+    if (name) document.getElementById("studentName").textContent = name + " さん";
+    if (email) document.getElementById("studentEmail").textContent = email;
+    if (photo) document.getElementById("studentPhoto").src = photo;
+
+    localStorage.setItem("studentProfile", JSON.stringify({ name, email, photo }));
+    alert("プロフィールを保存しました！");
+    form.style.display = "none";
   });
 
-  // 保存処理（localStorage）
-  function saveProfile() {
-    const profile = {
-      name: nameInput.value,
-      email: emailInput.value,
-      photo: photoEl.src
-    };
-    localStorage.setItem("studentProfile", JSON.stringify(profile));
-  }
-
-  // ページ読み込み時にデータ復元
+  // --- 保存データを読み込み時に反映 ---
   window.addEventListener("load", () => {
     const data = JSON.parse(localStorage.getItem("studentProfile"));
     if (data) {
-      if (data.name) {
-        nameInput.value = data.name;
-        nameEl.textContent = data.name + " さん";
-      }
-      if (data.email) {
-        emailInput.value = data.email;
-        emailEl.textContent = data.email;
-      }
-      if (data.photo) {
-        photoEl.src = data.photo;
-      }
+      if (data.name) document.getElementById("studentName").textContent = data.name + " さん";
+      if (data.email) document.getElementById("studentEmail").textContent = data.email;
+      if (data.photo) document.getElementById("studentPhoto").src = data.photo;
     }
   });
-    </script>   <!-- 直前の script が終わるところ -->
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const reviewButton = document.querySelector(".write-review-btn");
-    const reviewForm = document.getElementById("reviewForm");
-
-    if (reviewButton && reviewForm) {
-      reviewButton.addEventListener("click", function() {
-        reviewForm.style.display =
-          reviewForm.style.display === "none" ? "block" : "none";
-        reviewForm.scrollIntoView({ behavior: "smooth" });
-      });
-    }
-  });
-</script>
-</body>
-</html>
-</script>
-<script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  /* ================================
-     ✅ レビュー開閉処理
-  ================================= */
-  const reviewButtons = document.querySelectorAll(".write-review-btn");
-  const reviewForm = document.getElementById("reviewForm");
-
-  if (reviewForm) {
-    reviewForm.style.display = "none"; // 初期状態では非表示
-  }
-
-  reviewButtons.forEach(button => {
-    button.addEventListener("click", () => {
-      if (reviewForm.style.display === "none") {
-        reviewForm.style.display = "block";
-        reviewForm.scrollIntoView({ behavior: "smooth" });
-      } else {
-        reviewForm.style.display = "none";
-      }
-    });
-  });
-
-  /* ================================
-     ⭐ お気に入りコーチ機能拡張（削除＋リンク）
-  ================================= */
-  const coachCards = document.querySelectorAll(".coach-card");
-
-  coachCards.forEach(card => {
-    const removeBtn = document.createElement("button");
-    removeBtn.textContent = "✖️ 削除";
-    removeBtn.classList.add("remove-fav-btn");
-    removeBtn.style.display = "block";
-    removeBtn.style.margin = "6px auto";
-    removeBtn.style.fontSize = "12px";
-    removeBtn.style.color = "#b00";
-
-    // コーチ削除機能
-    removeBtn.addEventListener("click", () => {
-      card.remove();
-      alert("お気に入りから削除しました");
-    });
-
-    // クリックでコーチ詳細へ（仮）
-    card.addEventListener("click", () => {
-      const coachName = card.querySelector("p").textContent;
-      alert(`${coachName} の詳細ページへ遷移（仮）`);
-    });
-
-    card.appendChild(removeBtn);
-  });
-});
-</script>
-  });
-});
-</script>
+  </script>
 </body>
 </html>

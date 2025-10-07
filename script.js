@@ -92,24 +92,3 @@ document.addEventListener('DOMContentLoaded', () => {
   initMap();
   renderGrid();
 });
-document.addEventListener("DOMContentLoaded", () => {
-  const notifyBtn = document.getElementById("notifyBtn");
-  const notifyList = document.getElementById("notifyList");
-
-  notifyBtn.addEventListener("click", () => {
-    notifyList.style.display =
-      notifyList.style.display === "block" ? "none" : "block";
-  });
-
-  // 仮のメッセージ（あとでlocalStorage対応可能）
-  const messages = [
-    "📅 明日のレッスンは9:00開始です！",
-    "⭐ 佐藤コーチからレビュー返信があります",
-  ];
-
-  if (messages.length > 0) {
-    notifyList.innerHTML = messages
-      .map((m) => `<p>${m}</p>`)
-      .join("<hr style='border:none;border-top:1px solid #ddd;'>");
-  }
-});
