@@ -28,9 +28,12 @@
 }
 
   .button-container {
-    text-align: center;
-    margin-top: 0px; /* ← ボタンを少しだけ上げる */
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* ボタンの間隔を維持 */
+  margin-top: 40px; /* ← 小さいほど上に上がる（例: 20px〜60pxで微調整） */
+}
 
   * {
     box-sizing: border-box;
