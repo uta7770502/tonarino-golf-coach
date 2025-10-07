@@ -710,3 +710,10 @@ header.site-header {
   height: auto;
   display: inline-block;
 }
+* {
+  box-sizing: border-box;
+}
+html, body {
+  height: auto;
+  overflow-x: hidden;
+}
