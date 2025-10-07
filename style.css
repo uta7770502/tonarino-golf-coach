@@ -409,6 +409,18 @@ header.site-header {
     padding: 28px 0;
     font-size: 18px;
   }
+  /* ====== トップページのヒーローイラスト ====== */
+.hero-illustration {
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 30px;
+}
+
+.hero-illustration img {
+  width: 60%;
+  max-width: 300px;
+  height: auto;
+}
 }
 /* student-dashboard 用 */
 .student-main {
