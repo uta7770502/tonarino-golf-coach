@@ -67,18 +67,13 @@
 
   <!--
 <script>
-document.querySelectorAll(".card-btn").forEach(btn => {
-  btn.addEventListener("click", (e) => {
-    const user = localStorage.getItem("loggedInUser");
-    const target = e.target.getAttribute("href");
-    if (user) {
-      window.location.href = target;
-    } else {
-      window.location.href = "login.html";
-    }
-    e.preventDefault();
+  // クリックイベントを無効化せず、そのままリンクに飛ぶ（テスト用）
+  document.querySelectorAll(".card-btn").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      const target = e.target.getAttribute("href");
+      window.location.href = target; // そのまま移動
+    });
   });
-});
 </script>
 -->
 </body>
