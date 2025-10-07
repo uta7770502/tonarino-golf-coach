@@ -74,5 +74,50 @@
       <a href="coach-dashboard.html" class="active">👨‍🏫 管理</a>
     </nav>
   </footer>
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const editBtn = document.getElementById("editBtn");
+  const editForm = document.getElementById("editForm");
+  const saveBtn = document.getElementById("saveBtn");
+  const cancelBtn = document.getElementById("cancelBtn");
+
+  // 編集フォーム開閉
+  editBtn.addEventListener("click", () => {
+    editForm.style.display = "block";
+  });
+  cancelBtn.addEventListener("click", () => {
+    editForm.style.display = "none";
+  });
+
+  // 保存処理
+  saveBtn.addEventListener("click", () => {
+    const profile = {
+      name: document.getElementById("editName").value,
+      speciality: document.getElementById("editSpeciality").value,
+      intro: document.getElementById("editIntro").value,
+      price30: document.getElementById("edit30").value,
+      price60: document.getElementById("edit60").value,
+      price90: document.getElementById("edit90").value
+    };
+
+    localStorage.setItem("coachProfile", JSON.stringify(profile));
+    alert("保存しました！");
+    editForm.style.display = "none";
+    location.reload();
+  });
+
+  // ページ読み込み時に保存データ反映
+  const saved = localStorage.getItem("coachProfile");
+  if (saved) {
+    const p = JSON.parse(saved);
+    document.querySelector(".price-section").innerHTML = `
+      <p>30分 ¥${p.price30}〜</p>
+      <p>60分 ¥${p.price60}〜</p>
+      <p>90分 ¥${p.price90}〜</p>
+      <button id="editBtn" class="edit-btn">✏️ 編集する</button>
+    `;
+  }
+});
+</script>
 </body>
 </html>
