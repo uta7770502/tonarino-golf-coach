@@ -9,7 +9,7 @@
   body {
     margin: 0;
     padding: 0;
-    background: #b2f1eb; /* ページ全体の背景色 */
+    background: #b2f1eb;
   }
 
   main {
@@ -19,7 +19,8 @@
 
   .hero-illustration {
     text-align: center;
-    margin: 0 auto 10px; /* 下だけ少し余白 */
+    margin: 0 auto 0; /* ← 下の余白を0に変更 */
+    padding-bottom: 0; /* 念のため */
   }
 
   .hero-illustration img {
@@ -31,7 +32,16 @@
 
   .button-container {
     text-align: center;
-    margin-top: 0;
+    margin-top: 8px; /* ← ボタンを少しだけ上げる */
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    height: auto;
+    overflow-x: hidden;
   }
 </style>
 </head>
