@@ -2,48 +2,235 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>隣のゴルフコーチ</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      background: #b2f1eb;
+      font-family: "Noto Sans JP", sans-serif;
+      color: #0b5b4c;
+    }
+
+    header {
+      background: #fff;
+      padding: 10px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 20px;
+    }
+
+    #map {
+      height: 320px;
+      width: 100%;
+    }
+
+    /* 吹き出しデザイン */
+    .leaflet-popup-content-wrapper {
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .leaflet-popup-content {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #0b5b4c;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .leaflet-popup-content img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* 簡易詳細モーダル */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      width: 80%;
+      max-width: 350px;
+      text-align: center;
+      color: #0b5b4c;
+    }
+
+    .modal-content img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+
+    .modal-content button {
+      background: #0b5b4c;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    /* コーチ一覧 */
+    .coach-list {
+      padding: 20px;
+      background: #b2f1eb;
+    }
+
+    .coach-list h2 {
+      text-align: center;
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+
+    .coach-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .coach-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 12px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .coach-card img {
+      width: 100%;
+      border-radius: 50%;
+      margin-bottom: 8px;
+    }
+
+    .coach-card strong {
+      display: block;
+      font-size: 16px;
+    }
+
+    .price {
+      color: #008000;
+      font-weight: bold;
+    }
+  </style>
 </head>
+
 <body>
-  <header class="site-header">
-    <h1>隣のゴルフコーチ</h1>
-  </header>
-
+  <header>🏌️‍♂️ 隣のゴルフコーチ</header>
   <main>
-  <section>
-    <h2>コーチを探す</h2>
-    <div id="map" style="height:400px;"></div>
-  </section>
+    <div id="map"></div>
 
-  <section class="grid-wrap">
-    <h2>コーチ一覧（20名）</h2>
-    <div id="coachGrid" class="coach-grid"></div>
-  </section>
-</main>
+    <section class="coach-list">
+      <h2>コーチ一覧（20名）</h2>
+      <div class="coach-cards" id="coachCards"></div>
+    </section>
+  </main>
 
-<!-- モーダル -->
-<div id="coachModal" class="modal" aria-hidden="true">
-  <div class="modal-content" role="dialog">
-    <button class="close-btn" id="modalClose">&times;</button>
-    <div class="modal-head">
-      <img id="mPhoto" alt="コーチ写真" />
-      <div><h3 id="mName"></h3></div>
-    </div>
-    <div class="m-body">
-      <p id="mClub" class="m-club"></p>
-      <p id="mPrice" class="m-price"></p>
-      <button id="moreBtn" class="interest-btn">このコーチが気になる</button>
+  <!-- 簡易詳細モーダル -->
+  <div id="coachModal" class="modal">
+    <div class="modal-content" id="modalContent">
+      <img src="" alt="coach">
+      <h3 id="modalName"></h3>
+      <p id="modalArea"></p>
+      <button id="detailBtn">このコーチが気になる</button><br>
+      <button onclick="closeModal()">閉じる</button>
     </div>
   </div>
-</div>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<!-- 1️⃣ まずコーチデータ -->
-<script src="./coaches.js"></script>
-<!-- 2️⃣ 次にスクリプト本体 -->
-<script src="./script.js"></script>
+  <script>
+    const map = L.map('map').setView([35.6895, 139.6917], 6);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const coaches = [];
+    for (let i = 1; i <= 20; i++) {
+      coaches.push({
+        id: i,
+        name: `コーチ ${i}`,
+        area: ["東京", "大阪", "名古屋", "福岡", "札幌"][i % 5],
+        specialty: ["ドライバー", "パター", "アプローチ", "アイアン"][i % 4],
+        price: `¥${3000 + i * 100}〜`,
+        time: "60分",
+        img: `images/coach${(i % 3) + 1}.jpg`,
+        lat: 35.6895 + (Math.random() - 0.5) * 5,
+        lng: 139.6917 + (Math.random() - 0.5) * 5
+      });
+    }
+
+    // --- 吹き出し生成 ---
+    coaches.forEach(coach => {
+      const marker = L.marker([coach.lat, coach.lng]).addTo(map);
+      const popup = `
+        <div onclick="openModal(${coach.id})" style="cursor:pointer;">
+          <img src="${coach.img}" alt="${coach.name}">
+          <div>
+            <strong>${coach.name}</strong><br>
+            ${coach.area}
+          </div>
+        </div>
+      `;
+      marker.bindPopup(popup);
+    });
+
+    // --- コーチ一覧生成 ---
+    const list = document.getElementById("coachCards");
+    coaches.forEach(c => {
+      const card = document.createElement("div");
+      card.className = "coach-card";
+      card.innerHTML = `
+        <img src="${c.img}" alt="${c.name}">
+        <strong>${c.name}</strong>
+        <div>${c.area} | ${c.specialty}</div>
+        <div>${c.time}</div>
+        <div class="price">${c.price}</div>
+      `;
+      card.onclick = () => openModal(c.id);
+      list.appendChild(card);
+    });
+
+    // --- 簡易詳細モーダル制御 ---
+    const modal = document.getElementById("coachModal");
+    const modalImg = document.getElementById("modalContent").querySelector("img");
+    const modalName = document.getElementById("modalName");
+    const modalArea = document.getElementById("modalArea");
+    const detailBtn = document.getElementById("detailBtn");
+
+    function openModal(id) {
+      const coach = coaches.find(c => c.id === id);
+      modalImg.src = coach.img;
+      modalName.textContent = coach.name;
+      modalArea.textContent = `${coach.area}｜${coach.specialty}｜${coach.time} ${coach.price}`;
+      detailBtn.onclick = () => {
+        window.location.href = `coach.html?id=${coach.id}`;
+      };
+      modal.style.display = "flex";
+    }
+
+    function closeModal() {
+      modal.style.display = "none";
+    }
+  </script>
 </body>
 </html>
