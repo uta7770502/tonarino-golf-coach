@@ -60,10 +60,18 @@
     </section>
 
     <section class="section-card">
-      <h3>今月の売上</h3>
-      <p>売上合計：<strong>￥12,000</strong></p>
-      <p>入金予定日：<strong>10月30日</strong></p>
-    </section>
+  <h3>今月の売上</h3>
+  <div id="sales-container">
+    <p>30分レッスン：<input type="number" id="sales30" value="0"> 回</p>
+    <p>60分レッスン：<input type="number" id="sales60" value="0"> 回</p>
+    <p>90分レッスン：<input type="number" id="sales90" value="0"> 回</p>
+    <button id="calcSalesBtn">💰 売上計算</button>
+  </div>
+  <div id="sales-result">
+    <p>売上合計：<strong id="salesTotal">¥0</strong></p>
+    <p>入金予定日：<strong id="salesDate"></strong></p>
+  </div>
+</section>
   </main>
 
   <footer class="footer-nav">
