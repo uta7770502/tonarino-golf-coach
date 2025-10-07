@@ -67,13 +67,20 @@
 
   <!--
   <script>
-  // クリックされたリンクの href に必ず遷移する
+  // 生徒になる・コーチになるボタンを確実に動作させる
   document.querySelectorAll(".card-btn").forEach(btn => {
     btn.addEventListener("click", (e) => {
-      e.preventDefault(); // デフォルト動作を一度止めて
-      const href = btn.getAttribute("href"); // 正しいリンク先を取得
+      e.preventDefault();
+      const href = btn.getAttribute("href");
       if (href) {
-        window.location.href = href; // そのページへ遷移
+        // 生徒ボタンは student.html に、コーチボタンは coach-dashboard.html に飛ばす
+        if (href.includes("student")) {
+          window.location.href = "student.html";
+        } else if (href.includes("coach")) {
+          window.location.href = "coach-dashboard.html";
+        } else {
+          window.location.href = href;
+        }
       }
     });
   });
