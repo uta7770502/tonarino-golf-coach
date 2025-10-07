@@ -65,19 +65,21 @@
     <p>© 2025 Tonarino Golf Coach</p>
   </footer>
 
-  <script>
-    document.querySelectorAll(".card-btn").forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        const user = localStorage.getItem("loggedInUser");
-        const target = e.target.getAttribute("href");
-        if (user) {
-          window.location.href = target;
-        } else {
-          window.location.href = "login.html";
-        }
-        e.preventDefault();
-      });
-    });
-  </script>
+  <!--
+<script>
+document.querySelectorAll(".card-btn").forEach(btn => {
+  btn.addEventListener("click", (e) => {
+    const user = localStorage.getItem("loggedInUser");
+    const target = e.target.getAttribute("href");
+    if (user) {
+      window.location.href = target;
+    } else {
+      window.location.href = "login.html";
+    }
+    e.preventDefault();
+  });
+});
+</script>
+-->
 </body>
 </html>
