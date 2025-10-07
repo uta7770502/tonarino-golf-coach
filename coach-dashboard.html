@@ -127,6 +127,44 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
     tonarino-golf-coach-main/
+      // ======================
+// 売上計算処理
+// ======================
+const calcBtn = document.getElementById("calcSalesBtn");
+const totalEl = document.getElementById("salesTotal");
+const dateEl = document.getElementById("salesDate");
+
+calcBtn.addEventListener("click", () => {
+  const count30 = parseInt(document.getElementById("sales30").value) || 0;
+  const count60 = parseInt(document.getElementById("sales60").value) || 0;
+  const count90 = parseInt(document.getElementById("sales90").value) || 0;
+
+  const total = count30 * 2000 + count60 * 3000 + count90 * 5000;
+  totalEl.textContent = "¥" + total.toLocaleString();
+
+  // 入金予定日 = 本日 + 5日
+  const date = new Date();
+  date.setDate(date.getDate() + 5);
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  dateEl.textContent = `${month}月${day}日`;
+
+  // localStorage 保存
+  localStorage.setItem("salesData", JSON.stringify({ count30, count60, count90, total, date: `${month}月${day}日` }));
+});
+
+// ページ読み込み時に保存データを反映
+window.addEventListener("DOMContentLoaded", () => {
+  const saved = localStorage.getItem("salesData");
+  if (saved) {
+    const d = JSON.parse(saved);
+    document.getElementById("sales30").value = d.count30;
+    document.getElementById("sales60").value = d.count60;
+    document.getElementById("sales90").value = d.count90;
+    totalEl.textContent = "¥" + d.total.toLocaleString();
+    dateEl.textContent = d.date;
+  }
+});
 </script>
 </body>
 </html>
