@@ -809,3 +809,34 @@ html, body {
   padding: 6px 12px;
   font-weight: bold;
 }
+/* ===== タブUI ===== */
+.tab-menu {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 10px 0 20px;
+}
+
+.tab-btn {
+  background: #fff;
+  border: 2px solid #0b5b4c;
+  color: #0b5b4c;
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.tab-btn.active {
+  background: #0b5b4c;
+  color: #fff;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
