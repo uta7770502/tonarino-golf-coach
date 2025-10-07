@@ -774,3 +774,38 @@ html, body {
   border-radius: 8px;
   padding: 10px;
 }
+#schedule-list {
+  background: #f6fff6;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 6px;
+}
+
+#scheduleItems li {
+  list-style: none;
+  border-bottom: 1px dotted #ccc;
+  padding: 6px 0;
+}
+
+#addSchedule {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+#addSchedule input {
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  padding: 6px;
+  font-size: 14px;
+}
+
+#addBtn {
+  background: #007b7f;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-weight: bold;
+}
