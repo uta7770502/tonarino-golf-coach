@@ -223,6 +223,41 @@ window.addEventListener("DOMContentLoaded", () => {
     listEl.appendChild(li);
   });
 });
+    // ======================
+// 売上計算機能
+// ======================
+document.getElementById("calcSalesBtn").addEventListener("click", () => {
+  const n30 = Number(document.getElementById("sales30").value) || 0;
+  const n60 = Number(document.getElementById("sales60").value) || 0;
+  const n90 = Number(document.getElementById("sales90").value) || 0;
+
+  // 単価設定
+  const price30 = 2000;
+  const price60 = 3000;
+  const price90 = 5000;
+
+  // 売上合計を計算
+  const total = n30 * price30 + n60 * price60 + n90 * price90;
+  document.getElementById("salesTotal").textContent = `¥${total.toLocaleString()}`;
+
+  // 入金予定日を「翌月10日」に設定
+  const now = new Date();
+  const payDate = new Date(now.getFullYear(), now.getMonth() + 1, 10);
+  const dateStr = `${payDate.getFullYear()}年${payDate.getMonth() + 1}月${payDate.getDate()}日`;
+  document.getElementById("salesDate").textContent = dateStr;
+
+  // localStorage に保存
+  localStorage.setItem("salesTotal", total);
+  localStorage.setItem("salesDate", dateStr);
+});
+
+// ページ読込時に復元
+window.addEventListener("DOMContentLoaded", () => {
+  const total = localStorage.getItem("salesTotal");
+  const date = localStorage.getItem("salesDate");
+  if (total) document.getElementById("salesTotal").textContent = `¥${Number(total).toLocaleString()}`;
+  if (date) document.getElementById("salesDate").textContent = date;
+});
 </script>
 </body>
 </html>
