@@ -99,18 +99,44 @@
   </footer>
   <script>
 document.addEventListener("DOMContentLoaded", () => {
+  // ==============================
+  // 編集フォーム開閉処理
+  // ==============================
   const editBtn = document.getElementById("editBtn");
   const editForm = document.getElementById("editForm");
   const saveBtn = document.getElementById("saveBtn");
   const cancelBtn = document.getElementById("cancelBtn");
 
-  // 編集フォーム開閉
   editBtn.addEventListener("click", () => {
     editForm.style.display = "block";
   });
+
   cancelBtn.addEventListener("click", () => {
     editForm.style.display = "none";
   });
+
+  // ==============================
+  // タブ切り替え処理
+  // ==============================
+  const tabButtons = document.querySelectorAll(".tab-btn");
+  const tabContents = document.querySelectorAll(".tab-content");
+
+  tabButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      tabButtons.forEach((b) => b.classList.remove("active"));
+      tabContents.forEach((c) => c.classList.remove("active"));
+      btn.classList.add("active");
+      const target = btn.getAttribute("data-tab");
+      document.getElementById(`tab-${target}`).classList.add("active");
+    });
+  });
+
+  // ==============================
+  // （以下：売上計算など既存処理）
+  // ==============================
+  const calcBtn = document.getElementById("calcSalesBtn");
+  // ...ここから下は既存のコードをそのまま残す ...
+});
 
   // 保存処理
   saveBtn.addEventListener("click", () => {
