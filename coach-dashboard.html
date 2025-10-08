@@ -89,6 +89,65 @@
   <h3>📈 売上推移</h3>
   <canvas id="salesChart" width="400" height="200"></canvas>
 </section>
+    // ===============================
+// 売上グラフ機能
+// ===============================
+function updateSalesHistory(total) {
+  const now = new Date();
+  const month = `${now.getFullYear()}-${now.getMonth() + 1}`; // 例: 2025-10
+
+  let history = JSON.parse(localStorage.getItem("salesHistory")) || {};
+  history[month] = total;
+  localStorage.setItem("salesHistory", JSON.stringify(history));
+
+  drawSalesChart(history);
+}
+
+function drawSalesChart(history) {
+  const ctx = document.getElementById("salesChart").getContext("2d");
+  const months = Object.keys(history).slice(-6); // 直近6ヶ月
+  const totals = months.map(m => history[m]);
+
+  if (window.salesChart) window.salesChart.destroy(); // 再描画時の重複防止
+
+  window.salesChart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: months,
+      datasets: [
+        {
+          label: "売上合計（円）",
+          data: totals,
+          backgroundColor: "#4CAF50",
+          borderRadius: 6
+        }
+      ]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            callback: value => "¥" + value.toLocaleString()
+          }
+        }
+      }
+    }
+  });
+}
+
+// 売上保存時に履歴更新
+calcBtn.addEventListener("click", () => {
+  const totalText = totalEl.textContent.replace("¥", "").replace(",", "");
+  const total = Number(totalText);
+  updateSalesHistory(total);
+});
+
+// 初期表示時
+window.addEventListener("DOMContentLoaded", () => {
+  const history = JSON.parse(localStorage.getItem("salesHistory")) || {};
+  drawSalesChart(history);
+});
     <p>売上合計：<strong id="salesTotal">¥0</strong></p>
     <p>入金予定日：<strong id="salesDate"></strong></p>
   </div>
@@ -209,5 +268,6 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 });
 </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
