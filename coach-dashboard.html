@@ -101,5 +101,63 @@
 <label>30分料金：<input type="number" id="editPrice30"></label>
 <label>60分料金：<input type="number" id="editPrice60"></label>
 <label>90分料金：<input type="number" id="editPrice90"></label>
+<script>
+// ===============================
+// スケジュール管理処理（改良版）
+// ===============================
+const addBtn = document.getElementById("addBtn");
+const listEl = document.getElementById("scheduleItems");
+
+// スケジュール一覧を描画
+function renderSchedules() {
+  listEl.innerHTML = "";
+  const schedules = JSON.parse(localStorage.getItem("schedules")) || [];
+  schedules.forEach((s, index) => {
+    const li = document.createElement("li");
+    li.textContent = `${s.date} ${s.start}〜${s.end}（${s.student}）`;
+
+    // 削除ボタン
+    const delBtn = document.createElement("button");
+    delBtn.textContent = "🗑️";
+    delBtn.style.marginLeft = "8px";
+    delBtn.addEventListener("click", () => {
+      schedules.splice(index, 1);
+      localStorage.setItem("schedules", JSON.stringify(schedules));
+      renderSchedules();
+    });
+
+    li.appendChild(delBtn);
+    listEl.appendChild(li);
+  });
+}
+
+// 登録処理
+addBtn.addEventListener("click", () => {
+  const date = document.getElementById("dateInput").value;
+  const start = document.getElementById("startInput").value;
+  const end = document.getElementById("endInput").value;
+  const student = document.getElementById("studentInput").value.trim();
+
+  if (!date || !start || !end || !student) {
+    alert("すべての項目を入力してください。");
+    return;
+  }
+
+  const schedules = JSON.parse(localStorage.getItem("schedules")) || [];
+  schedules.push({ date, start, end, student });
+  localStorage.setItem("schedules", JSON.stringify(schedules));
+
+  renderSchedules();
+
+  // 入力リセット
+  document.getElementById("dateInput").value = "";
+  document.getElementById("startInput").value = "";
+  document.getElementById("endInput").value = "";
+  document.getElementById("studentInput").value = "";
+});
+
+// 初期ロード時
+renderSchedules();
+</script>
 </body>
 </html>
