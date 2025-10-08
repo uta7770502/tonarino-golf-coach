@@ -132,176 +132,23 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ==============================
-  // （以下：売上計算など既存処理）
+  // 売上計算処理
   // ==============================
   const calcBtn = document.getElementById("calcSalesBtn");
-  // ...ここから下は既存のコードをそのまま残す ...
-});
+  const totalEl = document.getElementById("salesTotal");
+  const dateEl = document.getElementById("salesDate");
 
-  // 保存処理
-  saveBtn.addEventListener("click", () => {
-    const profile = {
-      name: document.getElementById("editName").value,
-      speciality: document.getElementById("editSpeciality").value,
-      intro: document.getElementById("editIntro").value,
-      price30: document.getElementById("edit30").value,
-      price60: document.getElementById("edit60").value,
-      price90: document.getElementById("edit90").value
-    };
+  calcBtn.addEventListener("click", () => {
+    const count30 = parseInt(document.getElementById("sales30").value) || 0;
+    const count60 = parseInt(document.getElementById("sales60").value) || 0;
+    const count90 = parseInt(document.getElementById("sales90").value) || 0;
+    const total = count30 * 2000 + count60 * 3000 + count90 * 5000;
+    totalEl.textContent = "¥" + total;
 
-    localStorage.setItem("coachProfile", JSON.stringify(profile));
-    alert("保存しました！");
-    editForm.style.display = "none";
-    location.reload();
-  });
-
-  // ページ読み込み時に保存データ反映
-  const saved = localStorage.getItem("coachProfile");
-  if (saved) {
-    const p = JSON.parse(saved);
-    document.querySelector(".price-section").innerHTML = `
-      <p>30分 ¥${p.price30}〜</p>
-      <p>60分 ¥${p.price60}〜</p>
-      <p>90分 ¥${p.price90}〜</p>
-      <button id="editBtn" class="edit-btn">✏️ 編集する</button>
-    `;
-  }
-});
-    tonarino-golf-coach-main/
-      // ======================
-// 売上計算処理
-// ======================
-const calcBtn = document.getElementById("calcSalesBtn");
-const totalEl = document.getElementById("salesTotal");
-const dateEl = document.getElementById("salesDate");
-
-calcBtn.addEventListener("click", () => {
-  const count30 = parseInt(document.getElementById("sales30").value) || 0;
-  const count60 = parseInt(document.getElementById("sales60").value) || 0;
-  const count90 = parseInt(document.getElementById("sales90").value) || 0;
-
-  const total = count30 * 2000 + count60 * 3000 + count90 * 5000;
-  totalEl.textContent = "¥" + total.toLocaleString();
-
-  // 入金予定日 = 本日 + 5日
-  const date = new Date();
-  date.setDate(date.getDate() + 5);
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  dateEl.textContent = `${month}月${day}日`;
-
-  // localStorage 保存
-  localStorage.setItem("salesData", JSON.stringify({ count30, count60, count90, total, date: `${month}月${day}日` }));
-});
-
-// ページ読み込み時に保存データを反映
-window.addEventListener("DOMContentLoaded", () => {
-  const saved = localStorage.getItem("salesData");
-  if (saved) {
-    const d = JSON.parse(saved);
-    document.getElementById("sales30").value = d.count30;
-    document.getElementById("sales60").value = d.count60;
-    document.getElementById("sales90").value = d.count90;
-    totalEl.textContent = "¥" + d.total.toLocaleString();
-    dateEl.textContent = d.date;
-  }
-});
-    // ======================
-// スケジュール管理処理
-// ======================
-const addBtn = document.getElementById("addBtn");
-const listEl = document.getElementById("scheduleItems");
-
-addBtn.addEventListener("click", () => {
-  const date = document.getElementById("dateInput").value;
-  const start = document.getElementById("startInput").value;
-  const end = document.getElementById("endInput").value;
-  const student = document.getElementById("studentInput").value;
-
-  if (!date || !start || !end || !student) {
-    alert("すべての項目を入力してください。");
-    return;
-  }
-
-  const text = `${date}　${start}〜${end}　生徒：${student}`;
-  const li = document.createElement("li");
-  li.textContent = text;
-  listEl.appendChild(li);
-
-  // localStorage保存
-  const schedules = JSON.parse(localStorage.getItem("schedules") || "[]");
-  schedules.push(text);
-  localStorage.setItem("schedules", JSON.stringify(schedules));
-
-  // 入力リセット
-  document.getElementById("dateInput").value = "";
-  document.getElementById("startInput").value = "";
-  document.getElementById("endInput").value = "";
-  document.getElementById("studentInput").value = "";
-});
-
-// ページ読み込み時にスケジュールを復元
-window.addEventListener("DOMContentLoaded", () => {
-  const schedules = JSON.parse(localStorage.getItem("schedules") || "[]");
-  schedules.forEach((text) => {
-    const li = document.createElement("li");
-    li.textContent = text;
-    listEl.appendChild(li);
-  });
-});
-    // ======================
-// 売上計算機能
-// ======================
-document.getElementById("calcSalesBtn").addEventListener("click", () => {
-  const n30 = Number(document.getElementById("sales30").value) || 0;
-  const n60 = Number(document.getElementById("sales60").value) || 0;
-  const n90 = Number(document.getElementById("sales90").value) || 0;
-
-  // 単価設定
-  const price30 = 2000;
-  const price60 = 3000;
-  const price90 = 5000;
-
-  // 売上合計を計算
-  const total = n30 * price30 + n60 * price60 + n90 * price90;
-  document.getElementById("salesTotal").textContent = `¥${total.toLocaleString()}`;
-
-  // 入金予定日を「翌月10日」に設定
-  const now = new Date();
-  const payDate = new Date(now.getFullYear(), now.getMonth() + 1, 10);
-  const dateStr = `${payDate.getFullYear()}年${payDate.getMonth() + 1}月${payDate.getDate()}日`;
-  document.getElementById("salesDate").textContent = dateStr;
-
-  // localStorage に保存
-  localStorage.setItem("salesTotal", total);
-  localStorage.setItem("salesDate", dateStr);
-});
-
-// ページ読込時に復元
-window.addEventListener("DOMContentLoaded", () => {
-  const total = localStorage.getItem("salesTotal");
-  const date = localStorage.getItem("salesDate");
-  if (total) document.getElementById("salesTotal").textContent = `¥${Number(total).toLocaleString()}`;
-  if (date) document.getElementById("salesDate").textContent = date;
-});
-    // ==============================
-// タブ切り替え処理
-// ==============================
-document.addEventListener("DOMContentLoaded", () => {
-  const tabButtons = document.querySelectorAll(".tab-btn");
-  const tabContents = document.querySelectorAll(".tab-content");
-
-  tabButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      // すべてリセット
-      tabButtons.forEach((b) => b.classList.remove("active"));
-      tabContents.forEach((c) => c.classList.remove("active"));
-
-      // クリックされたタブをアクティブに
-      btn.classList.add("active");
-      const target = btn.getAttribute("data-tab");
-      document.getElementById(`tab-${target}`).classList.add("active");
-    });
+    const date = new Date();
+    date.setDate(date.getDate() + 5);
+    dateEl.textContent = `${date.getMonth() + 1}月${date.getDate()}日`;
+    localStorage.setItem("salesData", JSON.stringify({ total, date: dateEl.textContent }));
   });
 });
 </script>
