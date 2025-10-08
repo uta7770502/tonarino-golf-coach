@@ -109,63 +109,166 @@
     </nav>
   </footer>
 
-  <!-- ========================= -->
-  <!-- JS処理全統合版 -->
-  <!-- ========================= -->
   <!-- ===================== -->
 <!-- JS処理（Chart.jsを先に読み込み） -->
 <!-- ===================== -->
 
-<!-- Chart.jsを先にロード -->
+<!-- Chart.js を先にロード（defer なし＝ここで即実行） -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
 
 <script>
-// ==========================
-// 料金編集フォーム制御
-// ==========================
-const editBtn = document.getElementById("editBtn");
-const editForm = document.getElementById("editForm");
-const saveBtn = document.getElementById("saveBtn");
-const cancelBtn = document.getElementById("cancelBtn");
+// ------------- 小さなユーティリティ -------------
+const $ = (sel) => document.querySelector(sel);
 
-editBtn.addEventListener("click", () => {
-  editForm.style.display = "block";
-});
-cancelBtn.addEventListener("click", () => {
-  editForm.style.display = "none";
-});
-saveBtn.addEventListener("click", () => {
-  editForm.style.display = "none";
-});
+// ------------- 料金編集フォーム -------------
+const editBtn    = $("#editBtn");
+const editForm   = $("#editForm");
+const saveBtn    = $("#saveBtn");
+const cancelBtn  = $("#cancelBtn");
 
-// ==========================
-// スケジュール管理
-// ==========================
-const addBtn = document.getElementById("addBtn");
-const listEl = document.getElementById("scheduleItems");
+if (editBtn && editForm) {
+  editBtn.addEventListener("click", () => { editForm.style.display = "block"; });
+}
+if (cancelBtn && editForm) {
+  cancelBtn.addEventListener("click", () => { editForm.style.display = "none"; });
+}
+if (saveBtn && editForm) {
+  saveBtn.addEventListener("click", () => {
+    // 必要ならここで入力値を保存する処理を書く
+    editForm.style.display = "none";
+  });
+}
+
+// ------------- スケジュール管理 -------------
+const addBtn = $("#addBtn");
+const listEl = $("#scheduleItems");
 
 function renderSchedules() {
+  if (!listEl) return;
   listEl.innerHTML = "";
   const schedules = JSON.parse(localStorage.getItem("schedules")) || [];
-  schedules.forEach((s, i) => {
+  schedules.forEach((s, index) => {
     const li = document.createElement("li");
     li.textContent = `${s.date} ${s.start}〜${s.end} ${s.student}`;
-    const del = document.createElement("button");
-    del.textContent = "🗑️";
-    del.style.marginLeft = "8px";
-    del.addEventListener("click", () => {
-      schedules.splice(i, 1);
+    const delBtn = document.createElement("button");
+    delBtn.textContent = "🗑️";
+    delBtn.style.marginLeft = "8px";
+    delBtn.addEventListener("click", () => {
+      schedules.splice(index, 1);
       localStorage.setItem("schedules", JSON.stringify(schedules));
       renderSchedules();
     });
-    li.appendChild(del);
+    li.appendChild(delBtn);
     listEl.appendChild(li);
   });
 }
 
-addBtn.addEventListener("click", () => {
-  const date = document.getElementById("dateInput").value;
-  const start = document.getElementById("startInput").value;
-  const end = document.getElementById("endInput").value;
-  const student = document.getElementById("studentInput").value;
-  if (!
+if (addBtn) {
+  addBtn.addEventListener("click", () => {
+    const date    = $("#dateInput")?.value || "";
+    const start   = $("#startInput")?.value || "";
+    const end     = $("#endInput")?.value || "";
+    const student = $("#studentInput")?.value || "";
+    if (!date || !start || !end || !student) {
+      alert("すべての項目を入力してください。");
+      return;
+    }
+    const schedules = JSON.parse(localStorage.getItem("schedules")) || [];
+    schedules.push({ date, start, end, student });
+    localStorage.setItem("schedules", JSON.stringify(schedules));
+    // 入力クリア
+    $("#dateInput").value = "";
+    $("#startInput").value = "";
+    $("#endInput").value = "";
+    $("#studentInput").value = "";
+    renderSchedules();
+  });
+}
+renderSchedules();
+
+// ------------- 売上 + グラフ -------------
+const calcSalesBtn = $("#calcSalesBtn");
+const totalEl = $("#salesTotal");
+const dateEl  = $("#salesDate");
+
+function updateSalesHistory(total) {
+  try {
+    const now = new Date();
+    const key = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}`;
+    const history = JSON.parse(localStorage.getItem("salesHistory")) || {};
+    history[key] = total;
+    localStorage.setItem("salesHistory", JSON.stringify(history));
+    drawSalesChart(history);
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+function drawSalesChart(historyObj) {
+  const canvas = $("#salesChart");
+  if (!canvas || typeof Chart === "undefined") return;
+  const ctx = canvas.getContext("2d");
+  const months = Object.keys(historyObj || {});
+  const totals = months.map(m => historyObj[m]);
+
+  // データが無ければ「空データ」で表示（真っ白に見える問題を回避）
+  const labels = months.length ? months : ["データなし"];
+  const data   = months.length ? totals : [0];
+
+  // 再描画時の破棄
+  if (window.salesChart) window.salesChart.destroy();
+
+  window.salesChart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels,
+      datasets: [{
+        label: "売上合計 (円)",
+        data,
+        backgroundColor: "#4CAF50",
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false }},
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: { callback: v => "¥" + Number(v).toLocaleString() }
+        }
+      }
+    }
+  });
+}
+
+if (calcSalesBtn && totalEl && dateEl) {
+  calcSalesBtn.addEventListener("click", () => {
+    const n30 = Number($("#n30")?.value || 0);
+    const n60 = Number($("#n60")?.value || 0);
+    const n90 = Number($("#n90")?.value || 0);
+    const total = n30*2000 + n60*3000 + n90*5000;
+
+    totalEl.textContent = "¥" + total.toLocaleString();
+
+    const d = new Date();
+    d.setDate(d.getDate() + 7); // 入金予想 = 本日+7日
+    const pay = `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,"0")}/${String(d.getDate()).padStart(2,"0")}`;
+    dateEl.textContent = pay;
+
+    updateSalesHistory(total);
+  });
+}
+
+// 初期描画（Chart.js読み込み後 / 画面ロード後）
+window.addEventListener("load", () => {
+  try {
+    const history = JSON.parse(localStorage.getItem("salesHistory")) || {};
+    drawSalesChart(history);
+  } catch (e) {
+    console.error(e);
+  }
+});
+</script>
+</body>
+</html>
