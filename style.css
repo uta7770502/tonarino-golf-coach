@@ -890,3 +890,8 @@ html, body {
   text-align: center;
   font-weight: bold;
 }
+#salesChart {
+  margin-top: 12px;
+  width: 100%;
+  max-width: 480px;
+}
