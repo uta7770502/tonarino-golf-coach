@@ -240,9 +240,12 @@
     });
   }
 
-  window.addEventListener("load", () => {
-    const history = JSON.parse(localStorage.getItem("salesHistory")) || {};
-    drawSalesChart(history);
+    window.addEventListener("load", () => {
+    // 少し遅らせて描画（DOM完全ロード後に実行）
+    setTimeout(() => {
+      const history = JSON.parse(localStorage.getItem("salesHistory")) || {};
+      drawSalesChart(history);
+    }, 300);
   });
   </script>
 </body>
