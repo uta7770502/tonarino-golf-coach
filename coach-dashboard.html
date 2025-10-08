@@ -98,60 +98,8 @@
       <a href="coach-dashboard.html" class="active">管理</a>
     </nav>
   </footer>
-  <script>
-document.addEventListener("DOMContentLoaded", () => {
-  // ==============================
-  // 編集フォーム開閉処理
-  // ==============================
-  const editBtn = document.getElementById("editBtn");
-  const editForm = document.getElementById("editForm");
-  const saveBtn = document.getElementById("saveBtn");
-  const cancelBtn = document.getElementById("cancelBtn");
-
-  editBtn.addEventListener("click", () => {
-    editForm.style.display = "block";
-  });
-
-  cancelBtn.addEventListener("click", () => {
-    editForm.style.display = "none";
-  });
-
-  // ==============================
-  // タブ切り替え処理
-  // ==============================
-  const tabButtons = document.querySelectorAll(".tab-btn");
-  const tabContents = document.querySelectorAll(".tab-content");
-
-  tabButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      tabButtons.forEach((b) => b.classList.remove("active"));
-      tabContents.forEach((c) => c.classList.remove("active"));
-      btn.classList.add("active");
-      const target = btn.getAttribute("data-tab");
-      document.getElementById(`tab-${target}`).classList.add("active");
-    });
-  });
-
-  // ==============================
-  // 売上計算処理
-  // ==============================
-  const calcBtn = document.getElementById("calcSalesBtn");
-  const totalEl = document.getElementById("salesTotal");
-  const dateEl = document.getElementById("salesDate");
-
-  calcBtn.addEventListener("click", () => {
-    const count30 = parseInt(document.getElementById("sales30").value) || 0;
-    const count60 = parseInt(document.getElementById("sales60").value) || 0;
-    const count90 = parseInt(document.getElementById("sales90").value) || 0;
-    const total = count30 * 2000 + count60 * 3000 + count90 * 5000;
-    totalEl.textContent = "¥" + total;
-
-    const date = new Date();
-    date.setDate(date.getDate() + 5);
-    dateEl.textContent = `${date.getMonth() + 1}月${date.getDate()}日`;
-    localStorage.setItem("salesData", JSON.stringify({ total, date: dateEl.textContent }));
-  });
-});
-</script>
+<label>30分料金：<input type="number" id="editPrice30"></label>
+<label>60分料金：<input type="number" id="editPrice60"></label>
+<label>90分料金：<input type="number" id="editPrice90"></label>
 </body>
 </html>
