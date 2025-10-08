@@ -158,8 +158,8 @@ addBtn.addEventListener("click", () => {
 
 // 初期ロード時
 renderSchedules();
-  // ===============================
-// 売上計算機能
+// ===============================
+// 売上計算機能（修正版）
 // ===============================
 const calcBtn = document.getElementById("calcSalesBtn");
 const totalEl = document.getElementById("salesTotal");
@@ -182,21 +182,25 @@ calcBtn.addEventListener("click", () => {
   date.setDate(date.getDate() + 5);
   const month = date.getMonth() + 1;
   const day = date.getDate();
-  dateEl.textContent = `${month}月${day}日`;
+  const dateStr = `${month}月${day}日`;
+  dateEl.textContent = dateStr;
 
   // 保存
-  localStorage.setItem("salesData", JSON.stringify({ n30, n60, n90, total, month, day }));
+  localStorage.setItem(
+    "salesData",
+    JSON.stringify({ n30, n60, n90, total, dateStr })
+  );
 });
 
 // ページ読み込み時に保存データを反映
 window.addEventListener("DOMContentLoaded", () => {
   const saved = JSON.parse(localStorage.getItem("salesData"));
   if (saved) {
-    document.getElementById("sales30").value = saved.n30;
-    document.getElementById("sales60").value = saved.n60;
-    document.getElementById("sales90").value = saved.n90;
+    document.getElementById("sales30").value = saved.n30 ?? "";
+    document.getElementById("sales60").value = saved.n60 ?? "";
+    document.getElementById("sales90").value = saved.n90 ?? "";
     totalEl.textContent = "¥" + saved.total.toLocaleString();
-    dateEl.textContent = `${saved.month}月${saved.day}日`;
+    dateEl.textContent = saved.dateStr;
   }
 });
 </script>
