@@ -502,19 +502,36 @@ header.site-header {
   background: #fff;
   border-radius: 12px;
   padding: 20px;
-  display: flex;              /* 横並びに変更 */
-  align-items: center;        /* 縦位置を中央に */
-  gap: 20px;                  /* 画像と文字の間に余白 */
+  display: flex;
+  align-items: flex-start; /* 写真と上端をそろえる */
+  gap: 20px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.1);
   margin-bottom: 16px;
-  text-align: left;           /* 横並び時のテキスト整列 */
+  text-align: left;
 }
 
+/* 名前・紹介文・タグのまとまり */
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 6px;
+}
+
+/* 紹介文 */
+.profile-card .bio {
+  writing-mode: horizontal-tb;
+  text-orientation: mixed;
+  white-space: normal;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* タグの横並び */
 .profile-card .tags {
   display: flex;
-  justify-content: center;
-  gap: 8px;
   flex-wrap: wrap;
+  gap: 6px;
 }
 
 .profile-card .tags span {
