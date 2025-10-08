@@ -112,154 +112,60 @@
   <!-- ========================= -->
   <!-- JS処理全統合版 -->
   <!-- ========================= -->
-  <script>
-  // =====================
-  // 料金編集フォーム制御
-  // =====================
-  const editBtn = document.getElementById("editBtn");
-  const editForm = document.getElementById("editForm");
-  const saveBtn = document.getElementById("saveBtn");
-  const cancelBtn = document.getElementById("cancelBtn");
+  <!-- ===================== -->
+<!-- JS処理（Chart.jsを先に読み込み） -->
+<!-- ===================== -->
 
-  editBtn.addEventListener("click", () => {
-    editForm.style.display = "block";
-  });
-  cancelBtn.addEventListener("click", () => {
-    editForm.style.display = "none";
-  });
-  saveBtn.addEventListener("click", () => {
-    document.getElementById("coachName").textContent = document.getElementById("editName").value;
-    document.getElementById("coachBio").textContent = document.getElementById("editIntro").value;
-    document.getElementById("price30").textContent = `30分 ¥${document.getElementById("edit30").value}〜`;
-    document.getElementById("price60").textContent = `60分 ¥${document.getElementById("edit60").value}〜`;
-    document.getElementById("price90").textContent = `90分 ¥${document.getElementById("edit90").value}〜`;
-    editForm.style.display = "none";
-  });
-
-  // =====================
-  // スケジュール管理
-  // =====================
-  const addBtn = document.getElementById("addBtn");
-  const listEl = document.getElementById("scheduleItems");
-
-  function renderSchedules() {
-    listEl.innerHTML = "";
-    const schedules = JSON.parse(localStorage.getItem("schedules")) || [];
-    schedules.forEach((s, index) => {
-      const li = document.createElement("li");
-      li.textContent = `${s.date} ${s.start}〜${s.end}（${s.student}）`;
-
-      const delBtn = document.createElement("button");
-      delBtn.textContent = "🗑️";
-      delBtn.addEventListener("click", () => {
-        schedules.splice(index, 1);
-        localStorage.setItem("schedules", JSON.stringify(schedules));
-        renderSchedules();
-      });
-      li.appendChild(delBtn);
-      listEl.appendChild(li);
-    });
-  }
-
-  addBtn.addEventListener("click", () => {
-    const date = document.getElementById("dateInput").value;
-    const start = document.getElementById("startInput").value;
-    const end = document.getElementById("endInput").value;
-    const student = document.getElementById("studentInput").value.trim();
-
-    if (!date || !start || !end || !student) {
-      alert("すべての項目を入力してください。");
-      return;
-    }
-
-    const schedules = JSON.parse(localStorage.getItem("schedules")) || [];
-    schedules.push({ date, start, end, student });
-    localStorage.setItem("schedules", JSON.stringify(schedules));
-    renderSchedules();
-
-    document.getElementById("dateInput").value = "";
-    document.getElementById("startInput").value = "";
-    document.getElementById("endInput").value = "";
-    document.getElementById("studentInput").value = "";
-  });
-  renderSchedules();
-
-  // ==========================
-// 売上管理 + グラフ（修正版）
-// ==========================
-const calcSalesBtn = document.getElementById("calcSalesBtn");
-const totalEl = document.getElementById("salesTotal");
-const dateEl = document.getElementById("salesDate");
-
-calcSalesBtn.addEventListener("click", () => {
-  const n30 = Number(document.getElementById("n30")?.value || 0);
-  const n60 = Number(document.getElementById("n60")?.value || 0);
-  const n90 = Number(document.getElementById("n90")?.value || 0);
-  const total = n30 * 2000 + n60 * 3000 + n90 * 5000;
-
-  totalEl.textContent = "¥" + total.toLocaleString();
-
-  const d = new Date();
-  d.setDate(d.getDate() + 7);
-  const payDate = `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, "0")}/${String(d.getDate()).padStart(2, "0")}`;
-  dateEl.textContent = payDate;
-
-  updateSalesHistory(total);
-});
-
-function updateSalesHistory(total) {
-  const now = new Date();
-  const month = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
-  let history = JSON.parse(localStorage.getItem("salesHistory")) || {};
-  history[month] = total;
-  localStorage.setItem("salesHistory", JSON.stringify(history));
-  drawSalesChart(history);
-}
-
-function drawSalesChart(history) {
-  const canvas = document.getElementById("salesChart");
-  if (!canvas) return;
-  const ctx = canvas.getContext("2d");
-  const months = Object.keys(history);
-  const totals = months.map(m => history[m]);
-
-  if (window.salesChart) {
-    window.salesChart.destroy();
-  }
-
-  window.salesChart = new Chart(ctx, {
-    type: "bar",
-    data: {
-      labels: months,
-      datasets: [{
-        label: "売上合計 (円)",
-        data: totals,
-        backgroundColor: "#4CAF50",
-        borderRadius: 6
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false }
-      },
-      scales: {
-        y: { beginAtZero: true, ticks: { callback: v => "¥" + v.toLocaleString() } }
-      }
-    }
-  });
-}
-
-// ページ読込時に履歴からグラフ描画
-window.addEventListener("load", () => {
-  setTimeout(() => {
-    const history = JSON.parse(localStorage.getItem("salesHistory")) || {};
-    drawSalesChart(history);
-  }, 500);
-});
-</script>
-
-<!-- Chart.js 読み込み -->
+<!-- Chart.jsを先にロード -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
-</body>
-</html>
+
+<script>
+// ==========================
+// 料金編集フォーム制御
+// ==========================
+const editBtn = document.getElementById("editBtn");
+const editForm = document.getElementById("editForm");
+const saveBtn = document.getElementById("saveBtn");
+const cancelBtn = document.getElementById("cancelBtn");
+
+editBtn.addEventListener("click", () => {
+  editForm.style.display = "block";
+});
+cancelBtn.addEventListener("click", () => {
+  editForm.style.display = "none";
+});
+saveBtn.addEventListener("click", () => {
+  editForm.style.display = "none";
+});
+
+// ==========================
+// スケジュール管理
+// ==========================
+const addBtn = document.getElementById("addBtn");
+const listEl = document.getElementById("scheduleItems");
+
+function renderSchedules() {
+  listEl.innerHTML = "";
+  const schedules = JSON.parse(localStorage.getItem("schedules")) || [];
+  schedules.forEach((s, i) => {
+    const li = document.createElement("li");
+    li.textContent = `${s.date} ${s.start}〜${s.end} ${s.student}`;
+    const del = document.createElement("button");
+    del.textContent = "🗑️";
+    del.style.marginLeft = "8px";
+    del.addEventListener("click", () => {
+      schedules.splice(i, 1);
+      localStorage.setItem("schedules", JSON.stringify(schedules));
+      renderSchedules();
+    });
+    li.appendChild(del);
+    listEl.appendChild(li);
+  });
+}
+
+addBtn.addEventListener("click", () => {
+  const date = document.getElementById("dateInput").value;
+  const start = document.getElementById("startInput").value;
+  const end = document.getElementById("endInput").value;
+  const student = document.getElementById("studentInput").value;
+  if (!
