@@ -428,14 +428,16 @@ header.site-header {
   margin: 0 auto;
   padding: 20px;
 }
-
 .profile-card {
   background: #fff;
   border-radius: 12px;
   padding: 20px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 20px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.1);
   margin-bottom: 16px;
+  text-align: left;
 }
 
 .profile-img {
