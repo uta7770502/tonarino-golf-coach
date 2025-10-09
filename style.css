@@ -920,3 +920,25 @@ html, body {
 .main-btn:hover {
   transform: scale(1.05);
 }
+.go-search-container {
+  text-align: center;
+  margin: 40px 0 100px; /* 下のナビと被らないよう余白を確保 */
+}
+
+.go-search-btn {
+  display: inline-block;
+  padding: 14px 26px;
+  background-color: #ffeb3b;
+  color: #004d40;
+  font-weight: bold;
+  border-radius: 12px;
+  text-decoration: none;
+  font-size: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+}
+
+.go-search-btn:hover {
+  background-color: #fdd835;
+  transform: scale(1.05);
+}
