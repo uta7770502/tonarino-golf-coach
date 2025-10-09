@@ -3,47 +3,192 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>隣のゴルフコーチ</title>
+  <title>隣のゴルフコーチ｜コーチを探す</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background-color: #b2f1eb;
+      margin: 0;
+      font-family: "Helvetica Neue", sans-serif;
+      color: #004d40;
+    }
+
+    header.site-header {
+      background-color: #fff;
+      text-align: center;
+      padding: 10px 0;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      font-weight: bold;
+    }
+
+    main {
+      padding: 16px;
+    }
+
+    h1, h2 {
+      margin: 0 0 10px;
+    }
+
+    h1 {
+      font-size: 20px;
+      color: #00695c;
+    }
+
+    h2 {
+      color: #00796b;
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    #map {
+      height: 350px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      margin-bottom: 20px;
+    }
+
+    /* コーチカードグリッド */
+    .coach-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 16px;
+      padding-bottom: 80px;
+    }
+
+    .coach-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      padding: 12px;
+      transition: 0.2s ease;
+    }
+
+    .coach-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .coach-card img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 8px;
+    }
+
+    .coach-card h3 {
+      font-size: 15px;
+      margin: 6px 0 4px;
+      color: #004d40;
+    }
+
+    .coach-card p {
+      font-size: 13px;
+      color: #555;
+      margin: 0 0 4px;
+    }
+
+    /* 下部固定ボタン */
+    .goto-map-btn {
+      position: fixed;
+      bottom: 65px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #ffeb3b;
+      color: #004d40;
+      font-weight: bold;
+      border: none;
+      border-radius: 30px;
+      padding: 14px 32px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .goto-map-btn:hover {
+      background-color: #ffe035;
+    }
+
+    /* 下部ナビ */
+    .footer-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #ffeb3b;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px 0;
+      border-top: 1px solid #ccc;
+      font-size: 14px;
+      color: #004d40;
+      font-weight: 500;
+    }
+
+    .footer-nav a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .footer-nav a.active {
+      text-decoration: underline;
+      font-weight: bold;
+    }
+  </style>
 </head>
+
 <body>
   <header class="site-header">
-    <h1>隣のゴルフコーチ</h1>
+    <h1>🏌️‍♀️ コーチを探す</h1>
   </header>
 
   <main>
-  <section>
-    <h2>コーチを探す</h2>
-    <div id="map" style="height:400px;"></div>
-  </section>
+    <section>
+      <h2>📍 地図から探す</h2>
+      <div id="map"></div>
+    </section>
 
-  <section class="grid-wrap">
-    <h2>コーチ一覧（20名）</h2>
-    <div id="coachGrid" class="coach-grid"></div>
-  </section>
-</main>
+    <section>
+      <h2>👨‍🏫 コーチ一覧（20名）</h2>
+      <div id="coachGrid" class="coach-grid"></div>
+    </section>
+  </main>
 
-<!-- モーダル -->
-<div id="coachModal" class="modal" aria-hidden="true">
-  <div class="modal-content" role="dialog">
-    <button class="close-btn" id="modalClose">&times;</button>
-    <div class="modal-head">
-      <img id="mPhoto" alt="コーチ写真" />
-      <div><h3 id="mName"></h3></div>
-    </div>
-    <div class="m-body">
-      <p id="mClub" class="m-club"></p>
-      <p id="mPrice" class="m-price"></p>
-      <button id="moreBtn" class="interest-btn">このコーチが気になる</button>
+  <button class="goto-map-btn" onclick="window.location.href='student-dashboard.html'">
+    ⬅ マイページに戻る
+  </button>
+
+  <footer class="footer-nav">
+    <nav>
+      <a href="index.html">🏠 ホーム</a>
+      <a href="student.html" class="active">🔍 検索</a>
+      <a href="booking.html">📅 予約</a>
+      <a href="student-dashboard.html">👤 マイページ</a>
+    </nav>
+  </footer>
+
+  <!-- モーダルはそのまま -->
+  <div id="coachModal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog">
+      <button class="close-btn" id="modalClose">&times;</button>
+      <div class="modal-head">
+        <img id="mPhoto" alt="コーチ写真" />
+        <div><h3 id="mName"></h3></div>
+      </div>
+      <div class="m-body">
+        <p id="mClub" class="m-club"></p>
+        <p id="mPrice" class="m-price"></p>
+        <button id="moreBtn" class="interest-btn">このコーチが気になる</button>
+      </div>
     </div>
   </div>
-</div>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<!-- 1️⃣ まずコーチデータ -->
-<script src="./coaches.js"></script>
-<!-- 2️⃣ 次にスクリプト本体 -->
-<script src="./script.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="./coaches.js"></script>
+  <script src="./script.js"></script>
 </body>
 </html>
