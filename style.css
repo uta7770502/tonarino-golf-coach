@@ -895,3 +895,28 @@ html, body {
   width: 100%;
   max-width: 480px;
 }
+.main-btn {
+  display: inline-block;
+  padding: 16px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 12px;
+  text-align: center;
+  text-decoration: none;
+  width: 180px;
+  transition: 0.3s;
+}
+
+.student-btn {
+  background-color: #ffeb3b;
+  color: #004d40;
+}
+
+.coach-btn {
+  background-color: #00796b;
+  color: #fff;
+}
+
+.main-btn:hover {
+  transform: scale(1.05);
+}
