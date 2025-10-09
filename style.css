@@ -1016,28 +1016,3 @@ html, body {
 .coach-actions a:hover {
   background-color: #b2dfdb;
 }
-/* ===============================
-   コーチを探しに行くボタン（上部）
-================================= */
-.go-search-container {
-  display: flex;
-  justify-content: center;
-  margin: 15px 0 10px;
-}
-
-.go-search-btn {
-  display: inline-block;
-  background-color: #ffd54f;
-  color: #004d40;
-  font-weight: bold;
-  padding: 10px 20px;
-  border-radius: 25px;
-  text-decoration: none;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-  transition: background 0.2s ease, transform 0.1s ease;
-}
-
-.go-search-btn:hover {
-  background-color: #ffca28;
-  transform: translateY(-1px);
-}
