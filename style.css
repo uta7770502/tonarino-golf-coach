@@ -943,61 +943,60 @@ html, body {
   transform: scale(1.05);
 }
 /* ===============================
-   お気に入りコーチ 3列グリッド
+   お気に入りコーチ 3列グリッド（スマホ対応）
 ================================= */
 .favorite-coaches {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* スマホでも3列 */
-  gap: 15px;
+  grid-template-columns: repeat(3, 1fr); /* 常に3列 */
+  gap: 12px;
   padding: 10px;
   justify-items: center;
 }
 
 .coach {
-  background: #fff;
+  background: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
-  padding: 10px;
-  width: 100%;
-  max-width: 110px; /* カード幅を制限して3列に */
+  padding: 10px 8px;
+  width: 95px; /* ← ここで横幅を調整 */
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .coach:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .coach img {
-  width: 55px;
-  height: 55px;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
   object-fit: cover;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .coach-name {
   font-weight: bold;
-  margin: 4px 0;
-  font-size: 14px;
+  font-size: 13px;
+  margin: 2px 0;
 }
 
 .coach-info span {
   color: #ffb300;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .coach-actions {
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
 .coach-actions a {
-  font-size: 11px;
-  padding: 3px 8px;
+  font-size: 10px;
+  padding: 3px 6px;
   background-color: #e0f2f1;
   color: #004d40;
-  border-radius: 8px;
+  border-radius: 6px;
   text-decoration: none;
 }
 
