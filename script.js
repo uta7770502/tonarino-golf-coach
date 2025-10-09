@@ -11,14 +11,13 @@ function initMap(){
   window.COACHES.forEach(c => {
     const marker = L.marker([c.lat, c.lng]).addTo(map);
     const popupHtml = `
-  <div class="popup-card" data-id="${c.id}" style="cursor:pointer">
-    <img src="${c.img}" alt="${c.name}" />
-    <div>
-      <div class="popup-name">${c.name}</div>
-      <div class="small">${c.city}</div>
-      <a href="student-dashboard.html" class="link-to-mypage">📋 マイページで確認 →</a>
-    </div>
-  </div>`;
+      <div class="popup-card" data-id="${c.id}" style="cursor:pointer">
+        <img src="${c.img}" alt="${c.name}" />
+        <div>
+          <div class="popup-name">${c.name}</div>
+          <div class="small">${c.city}</div>
+        </div>
+      </div>`;
 
     marker.on('click', () => {
       if (openedPopup) map.closePopup(openedPopup);
