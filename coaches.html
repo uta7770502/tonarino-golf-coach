@@ -3,123 +3,98 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>コーチを探す - 隣のゴルフコーチ</title>
+  <title>隣のゴルフコーチ | トップページ</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    /* --- 以下、今回の追加部分 --- */
-
-    .coach-popup {
-      background: #fff;
-      border: 2px solid #4caf50;
-      border-radius: 12px;
-      padding: 16px;
-      width: 90%;
-      max-width: 350px;
-      margin: 20px auto;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-
-    .coach-popup h3 {
-      margin: 0 0 8px;
-      font-size: 18px;
-      color: #004d40;
-    }
-
-    .coach-popup p {
-      font-size: 14px;
-      margin-bottom: 12px;
-    }
-
-    .coach-popup button {
-      display: inline-block;
-      padding: 8px 16px;
-      margin: 6px 4px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: bold;
-    }
-
-    .favorite-btn {
-      background: #fff;
-      border: 2px solid #4caf50;
-      color: #4caf50;
-    }
-
-    .reserve-btn {
-      background: #4caf50;
-      color: #fff;
-    }
-
-    .link-to-mypage {
-      display: inline-block;
-      margin-top: 10px;
-      font-size: 14px;
-      color: #00796b;
-      text-decoration: underline;
-    }
-
-    /* --- 固定ナビバー --- */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: #ffeb3b;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      height: 60px;
-      border-top: 2px solid #f0f0f0;
-      z-index: 100;
-    }
-
-    .bottom-nav .nav-item {
-      text-decoration: none;
-      color: #004d40;
-      font-size: 14px;
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #b2f1eb;
+      color: #0b5b4c;
       text-align: center;
     }
 
-    .bottom-nav .nav-item.active {
+    header {
+      padding: 24px 0 12px;
+      font-size: 24px;
       font-weight: bold;
-      border-bottom: 2px solid #004d40;
     }
 
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 80vh;
+    }
+
+    .logo {
+      font-size: 72px;
+      margin-bottom: 24px;
+    }
+
+    .button-container {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .role-card {
+      background: #fffdf7;
+      border-radius: 20px;
+      padding: 24px 32px;
+      width: 140px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: 0.3s;
+      cursor: pointer;
+      text-decoration: none;
+      color: #0b5b4c;
+    }
+
+    .role-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+
+    .role-card .icon {
+      font-size: 40px;
+      margin-bottom: 8px;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      padding: 12px 0;
+      font-size: 14px;
+      background: #ffd53d;
+      color: #0b5b4c;
+    }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>コーチを探す</h1>
-  </header>
+  <header>🏌️‍♂️ 隣のゴルフコーチ</header>
 
   <main>
-    <!-- ▼ ここに地図が入る -->
-    <div id="map" style="width:100%; height:300px; background:#b2f1eb; border-radius:12px;">
-      📍 地図表示エリア（仮）
-    </div>
-
-    <!-- ▼ コーチポップアップ例 -->
-    <div class="coach-popup">
-      <h3>佐藤コーチ</h3>
-      <p>得意分野：アプローチ・パッティング</p>
-      <button class="favorite-btn">♡ お気に入り登録</button>
-      <button class="reserve-btn">📅 レッスン予約</button>
-      <a href="student-dashboard.html" class="link-to-mypage">マイページで確認 →</a>
+      <div class="hero-illustration">
+    <img src="images/map-pin-flag.png" alt="地図とピンのイラスト">
+  </div>
+    <div class="button-container">
+      <a href="student-home.html" class="role-card">
+        <div class="icon"></div>
+        <div class="text">生徒になる</div>
+      </a>
+      <a href="coach-dashboard.html" class="role-card">
+        <div class="icon"></div>
+        <div class="text">コーチになる</div>
+      </a>
     </div>
   </main>
 
-  <!-- ▼ 共通ナビ -->
-  <footer class="bottom-nav">
-    <nav>
-      <a href="index.html" class="nav-item">🏠 ホーム</a>
-      <a href="coach-map.html" class="nav-item active">🗺 コーチを探す</a>
-      <a href="reservation.html" class="nav-item">📅 予約</a>
-      <a href="student-dashboard.html" class="nav-item">👤 マイページ</a>
-    </nav>
-  </footer>
+  <footer>© 2025 Tonarino Golf Coach</footer>
 
 </body>
 </html>
