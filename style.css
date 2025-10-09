@@ -942,3 +942,68 @@ html, body {
   background-color: #fdd835;
   transform: scale(1.05);
 }
+/* ===============================
+   お気に入りコーチ 3列レイアウト
+================================= */
+.favorite-coaches {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  justify-items: center;
+  padding: 10px 0;
+}
+
+.coach {
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 110px;
+  text-align: center;
+  padding: 10px;
+}
+
+.coach img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-bottom: 6px;
+}
+
+.coach-info {
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.coach-name {
+  font-weight: bold;
+  margin: 4px 0 2px;
+}
+
+.coach-info span {
+  color: #fbc02d; /* 星の色 */
+}
+
+.coach-actions {
+  margin-top: 4px;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+}
+
+.coach-actions a,
+.coach-actions button {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  background-color: #e0f2f1;
+  color: #004d40;
+}
+
+.coach-actions button:hover,
+.coach-actions a:hover {
+  background-color: #b2dfdb;
+}
