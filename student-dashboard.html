@@ -3,120 +3,385 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>生徒マイページ</title>
-
-  <style>
-    /* 🌟 共通スタイル */
-    body {
-      font-family: "Helvetica Neue", Arial, sans-serif;
-      background-color: #e6f9f5;
-      margin: 0;
-      padding: 0;
-    }
-
-    .section-card {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      margin: 16px;
-      padding: 16px;
-    }
-
-    h3 {
-      margin-top: 0;
-      color: #065;
-    }
-
-    /* 🌟 お気に入りコーチ一覧を3列整列 */
-    .favorite-coaches {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-      gap: 16px;
-      justify-items: center;
-      margin-top: 10px;
-    }
-
-    .coach {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      padding: 10px;
-      text-align: center;
-      width: 100%;
-      max-width: 130px;
-      transition: transform 0.2s ease;
-    }
-
-    .coach:hover {
-      transform: translateY(-3px);
-    }
-
-    .coach img {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 6px;
-    }
-
-    .coach-name {
-      font-size: 15px;
-      font-weight: 600;
-      margin: 4px 0;
-      color: #055;
-    }
-
-    .coach-actions {
-      margin-top: 6px;
-    }
-
-    .remove-btn {
-      background: none;
-      border: none;
-      color: #b00;
-      cursor: pointer;
-      font-size: 12px;
-    }
-  </style>
+  <title>マイページ | 隣のゴルフコーチ</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 
-<body>
-  <section class="section-card">
-    <h3>⭐ お気に入りコーチ</h3>
-    <div class="favorite-coaches" id="favoriteList">
-      <!-- JSでお気に入りがここに追加されます -->
+<body class="student-dashboard">
+  <header class="site-header">
+  <h1>マイページ</h1>
+  <div class="notification">
+    <button id="notifyBtn">🔔</button>
+    <div id="notifyList" class="notify-list">
+      <p>📩 メッセージはまだありません</p>
     </div>
-  </section>
+  </div>
+</header>
+
+  <main class="student-main">
+    <!-- プロフィール -->
+    <section class="profile-card">
+  <img src="https://i.pravatar.cc/150" alt="プロフィール写真" class="user-photo">
+  <div class="profile-info">
+    <h2>山田 太郎 さん</h2>
+    <p class="email">yamada.taro@example.com</p>
+  </div>
+</section>
+
+    <!-- プロフィール編集 -->
+    <div class="profile-edit">
+      <button id="editProfileBtn" class="edit-btn">✏️ プロフィールを編集</button>
+    </div>
+    <div id="editForm" class="edit-form" style="display: none;">
+  <label>名前：</label>
+  <input type="text" id="editName" placeholder="名前を入力" />
+
+  <label>メール：</label>
+  <input type="email" id="editEmail" placeholder="メールを入力" />
+
+  <label>プロフィール画像：</label>
+  <input type="file" id="editPhotoFile" accept="image/*" />
+  <small>※ 画像を選択すると自動で更新されます</small>
+
+  <button id="saveProfileBtn" class="save-btn">💾 保存</button>
+</div>
+
+    <!-- 予約履歴 -->
+    <section class="section-card">
+  <h3> 予約履歴</h3>
+  <ul id="reservationList">
+    <li>10/10 佐藤コーチ 60分 ✅ 完了
+  <button class="write-review-btn">✏️ レビューを書く</button>
+</li>
+    <li>
+      10/20 高橋コーチ 90分 ⏰予定
+    </li>
+  </ul>
+</section>
+
+    <!-- レビュー投稿 -->
+    <section class="section-card">
+      <h3>⭐ レビュー投稿</h3>
+      <form id="reviewForm">
+        <label for="coachName">コーチ名：</label>
+        <select id="coachName">
+          <option value="佐藤コーチ">佐藤コーチ</option>
+          <option value="高橋コーチ">高橋コーチ</option>
+        </select>
+
+        <label for="rating">評価：</label>
+        <select id="rating">
+          <option value="5">★★★★★</option>
+          <option value="4">★★★★☆</option>
+          <option value="3">★★★☆☆</option>
+          <option value="2">★★☆☆☆</option>
+          <option value="1">★☆☆☆☆</option>
+        </select>
+
+        <label for="comment">コメント：</label>
+        <textarea id="comment" rows="3" placeholder="感想を入力してください"></textarea>
+
+        <button type="submit" class="btn">レビューを投稿する</button>
+      </form>
+
+      <div id="reviewList">
+  <h4>投稿済みレビュー</h4>
+  <ul id="reviews"></ul>
+</div>
+    </section>
+
+    <!-- お気に入りコーチ -->
+    <section class="section-card">
+  <h3>⭐ お気に入りコーチ</h3>
+  <div class="favorite-coaches">
+  <div class="coach" data-id="1">
+    <img src="https://i.pravatar.cc/100?img=1" alt="コーチ1">
+    <div class="coach-info">
+      <p class="coach-name">佐藤コーチ</p>
+      <span>★★★★★</span>
+    </div>
+    <div class="coach-actions">
+      <a href="coach-detail.html?id=1">詳細</a>
+      <button class="remove-btn">🗑</button>
+    </div>
+  </div>
+
+  <div class="coach" data-id="2">
+    <img src="https://i.pravatar.cc/100?img=2" alt="コーチ2">
+    <div class="coach-info">
+      <p class="coach-name">高橋コーチ</p>
+      <span>★★★★☆</span>
+    </div>
+    <div class="coach-actions">
+      <a href="coach-detail.html?id=2">詳細</a>
+      <button class="remove-btn">🗑</button>
+    </div>
+  </div>
+
+  <div class="coach" data-id="3">
+    <img src="https://i.pravatar.cc/100?img=3" alt="コーチ3">
+    <div class="coach-info">
+      <p class="coach-name">田中コーチ</p>
+      <span>★★★★★</span>
+    </div>
+    <div class="coach-actions">
+      <a href="coach-detail.html?id=3">詳細</a>
+      <button class="remove-btn">🗑</button>
+    </div>
+  </div>
+</div>
+</section>
+    <!-- ▼ コーチを探しに行くボタン -->
+<div class="go-search-container">
+  <a href="student.html" class="go-search-btn">コーチを探しに行く</a>
+</div>
+  </main>
+
+  <footer class="footer-nav">
+    <nav>
+      <a href="index.html">ホーム</a>
+      <a href="#">検索</a>
+      <a href="#">予約</a>
+      <a href="student-dashboard.html" class="active">マイページ</a>
+    </nav>
+  </footer>
 
   <script>
-    // 🌟 お気に入りコーチのサンプルデータ
-    const favorites = JSON.parse(localStorage.getItem("favorites")) || [
-      { name: "佐藤一郎", photo: "https://i.pravatar.cc/150?img=3", rating: 5 },
-      { name: "高橋次郎", photo: "https://i.pravatar.cc/150?img=7", rating: 4 },
-      { name: "佐々木優奈", photo: "https://i.pravatar.cc/150?img=8", rating: 5 },
-      { name: "石井未来", photo: "https://i.pravatar.cc/150?img=10", rating: 5 }
-    ];
+  // --- プロフィール編集フォーム制御 ---
+  const editBtn = document.getElementById("editProfileBtn");
+  const saveBtn = document.getElementById("saveProfileBtn");
+  const form = document.getElementById("editForm");
 
-    const list = document.getElementById("favoriteList");
+  const nameInput = document.getElementById("editName");
+  const emailInput = document.getElementById("editEmail");
+  const fileInput = document.getElementById("editPhotoFile");
 
-    favorites.forEach((c) => {
-      // undefinedデータをスキップ
-      if (!c.name || !c.photo) return;
+  const photoEl = document.getElementById("studentPhoto");
+  const nameEl = document.getElementById("studentName");
+  const emailEl = document.getElementById("studentEmail");
 
-      const card = document.createElement("div");
-      card.classList.add("coach");
+  // 編集フォーム開閉
+  editBtn.addEventListener("click", () => {
+    form.style.display = form.style.display === "none" ? "block" : "none";
+  });
 
-      card.innerHTML = `
-        <img src="${c.photo}" alt="${c.name}">
-        <p class="coach-name">${c.name}</p>
-        <p>${"★".repeat(c.rating)}</p>
-        <div class="coach-actions">
-          <a href="coach.html" class="detail-btn">詳細</a>
-        </div>
-      `;
-
-      list.appendChild(card);
+  // 名前・メール入力時に即反映
+  nameInput.addEventListener("input", () => {
+    nameEl.textContent = nameInput.value + " さん";
+    saveProfile();
+  });
+  emailInput.addEventListener("input", () => {
+    emailEl.textContent = emailInput.value;
+    saveProfile();
+  });
+// --- 予約履歴の「レビューを書く」ボタン機能 ---
+document.querySelectorAll(".review-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const coachName = btn.getAttribute("data-coach");
+    document.getElementById("coachName").value = coachName;
+    window.scrollTo({
+      top: document.getElementById("reviewForm").offsetTop - 50,
+      behavior: "smooth"
     });
-  </script>
+  });
+});
+  // 画像アップロード時の処理
+  fileInput.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      photoEl.src = ev.target.result;
+      saveProfile();
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // 保存処理（localStorage）
+  function saveProfile() {
+    const profile = {
+      name: nameInput.value,
+      email: emailInput.value,
+      photo: photoEl.src
+    };
+    localStorage.setItem("studentProfile", JSON.stringify(profile));
+  }
+
+  // ページ読み込み時にデータ復元
+  window.addEventListener("load", () => {
+    const data = JSON.parse(localStorage.getItem("studentProfile"));
+    if (data) {
+      if (data.name) {
+        nameInput.value = data.name;
+        nameEl.textContent = data.name + " さん";
+      }
+      if (data.email) {
+        emailInput.value = data.email;
+        emailEl.textContent = data.email;
+      }
+      if (data.photo) {
+        photoEl.src = data.photo;
+      }
+    }
+  });
+    </script>   <!-- 直前の script が終わるところ -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const reviewButton = document.querySelector(".write-review-btn");
+    const reviewForm = document.getElementById("reviewForm");
+
+    if (reviewButton && reviewForm) {
+      reviewButton.addEventListener("click", function() {
+        reviewForm.style.display =
+          reviewForm.style.display === "none" ? "block" : "none";
+        reviewForm.scrollIntoView({ behavior: "smooth" });
+      });
+    }
+  });
+</script>
+</body>
+</html>
+</script>
+<script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  /* ================================
+     ✅ レビュー開閉処理
+  ================================= */
+  const reviewButtons = document.querySelectorAll(".write-review-btn");
+  const reviewForm = document.getElementById("reviewForm");
+
+  if (reviewForm) {
+    reviewForm.style.display = "none"; // 初期状態では非表示
+  }
+
+  reviewButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      if (reviewForm.style.display === "none") {
+        reviewForm.style.display = "block";
+        reviewForm.scrollIntoView({ behavior: "smooth" });
+      } else {
+        reviewForm.style.display = "none";
+      }
+    });
+  });
+
+  /* ================================
+     ⭐ お気に入りコーチ機能拡張（削除＋リンク）
+  ================================= */
+  const coachCards = document.querySelectorAll(".coach-card");
+
+  coachCards.forEach(card => {
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "✖️ 削除";
+    removeBtn.classList.add("remove-fav-btn");
+    removeBtn.style.display = "block";
+    removeBtn.style.margin = "6px auto";
+    removeBtn.style.fontSize = "12px";
+    removeBtn.style.color = "#b00";
+
+    // コーチ削除機能
+    removeBtn.addEventListener("click", () => {
+      card.remove();
+      alert("お気に入りから削除しました");
+    });
+
+    // クリックでコーチ詳細へ（仮）
+    // クリックでコーチ詳細ページへ遷移
+card.addEventListener("click", () => {
+  const coachId = card.getAttribute("data-id");
+  window.location.href = `coach-detail.html?id=${coachId}`;
+});
+
+    card.appendChild(removeBtn);
+  });
+});
+</script>
+  });
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const historyContainer = document.querySelector(".section-card ul"); // 予約履歴リストの <ul> がある場合
+  const fallbackArea = document.querySelector(".section-card"); // <ul> がない場合、ここに直接追加
+
+  // LocalStorageから予約情報を取得
+  const bookings = JSON.parse(localStorage.getItem("bookings") || "[]");
+
+  if (bookings.length === 0) {
+    const msg = document.createElement("p");
+    msg.textContent = "まだ予約はありません。";
+    fallbackArea.appendChild(msg);
+    return;
+  }
+
+  // 最新の3件だけ表示
+  const latest = bookings.slice(-3).reverse();
+
+  latest.forEach((b) => {
+    const item = document.createElement("div");
+    item.classList.add("booking-card");
+    item.style.margin = "10px 0";
+    item.style.padding = "10px";
+    item.style.borderRadius = "8px";
+    item.style.background = "#fff";
+    item.style.boxShadow = "0 2px 4px rgba(0,0,0,0.1)";
+    item.innerHTML = `
+      <p>📅 <strong>${b.date || "日付未選択"}</strong> ${b.time}</p>
+      <p>👨‍🏫 コーチ：${b.coach}</p>
+      <p>⏱ ${b.duration}分　💳 ${b.pay}</p>
+    `;
+    fallbackArea.appendChild(item);
+  });
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const favContainer = document.querySelector(".favorite-coaches");
+  if (!favContainer) return;
+
+  // LocalStorageからお気に入りコーチを取得
+  const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+
+  // 初期化
+  favContainer.innerHTML = "";
+
+  if (favorites.length === 0) {
+    favContainer.innerHTML = "<p>お気に入り登録はまだありません。</p>";
+    return;
+  }
+
+  // カードを生成して表示
+  favorites.forEach((coach) => {
+    const card = document.createElement("div");
+    card.classList.add("coach-card");
+    card.style.background = "#fff";
+    card.style.borderRadius = "10px";
+    card.style.padding = "10px";
+    card.style.boxShadow = "0 2px 5px rgba(0,0,0,0.1)";
+    card.style.textAlign = "center";
+    card.style.width = "30%";
+    card.style.margin = "5px";
+
+    card.innerHTML = `
+      <img src="${coach.photo}" alt="${coach.name}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;">
+      <p><strong>${coach.name}</strong></p>
+      <p>⭐ ${"★".repeat(coach.rating)}${"☆".repeat(5 - coach.rating)}</p>
+      <button class="detail-btn" data-id="${coach.id}" style="padding:4px 8px;border:none;border-radius:4px;background:#cde;cursor:pointer;">詳細</button>
+    `;
+
+    favContainer.appendChild(card);
+  });
+
+  // 詳細ページへ遷移（コーチIDでリンク）
+  document.querySelectorAll(".detail-btn").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const id = e.target.dataset.id;
+      window.location.href = `coach.html?id=${id}`;
+    });
+  });
+});
+</script>
 </body>
 </html>
