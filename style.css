@@ -1128,3 +1128,9 @@ html, body {
 .review-btn:hover {
   background: #45a049;
 }
+.favorite-coaches {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
