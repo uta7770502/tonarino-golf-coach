@@ -141,5 +141,42 @@
 
   <script src="./coaches.js"></script>
   <script src="./coach.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const bookBtn = document.querySelector(".btn-primary"); // 予約ボタン
+  const dateInput = document.getElementById("pDate");
+  const timeSelect = document.getElementById("pTime");
+  const durationSelect = document.getElementById("pDuration");
+  const paySelect = document.getElementById("pPay");
+
+  if (bookBtn) {
+    bookBtn.addEventListener("click", () => {
+      const date = dateInput.value || "日付未選択";
+      const time = timeSelect.value;
+      const duration = durationSelect.value;
+      const pay = paySelect.value;
+
+      // 仮の予約オブジェクト
+      const booking = {
+        date,
+        time,
+        duration,
+        pay,
+        coach: document.getElementById("pName")?.textContent || "不明なコーチ"
+      };
+
+      // LocalStorageに保存（将来マイページで反映）
+      let bookings = JSON.parse(localStorage.getItem("bookings") || "[]");
+      bookings.push(booking);
+      localStorage.setItem("bookings", JSON.stringify(bookings));
+
+      // 完了メッセージ
+      alert(
+        `✅ 予約が完了しました！\n\nコーチ：${booking.coach}\n日時：${booking.date} ${booking.time}\n時間：${booking.duration}分\n支払い：${booking.pay}`
+      );
+    });
+  }
+});
+</script>
 </body>
 </html>
