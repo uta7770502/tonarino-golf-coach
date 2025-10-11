@@ -93,43 +93,7 @@
     <!-- お気に入りコーチ -->
     <section class="section-card">
   <h3>⭐ お気に入りコーチ</h3>
-  <div class="favorite-coaches">
-  <div class="coach" data-id="1">
-    <img src="https://i.pravatar.cc/100?img=1" alt="コーチ1">
-    <div class="coach-info">
-      <p class="coach-name">佐藤コーチ</p>
-      <span>★★★★★</span>
-    </div>
-    <div class="coach-actions">
-      <a href="coach-detail.html?id=1">詳細</a>
-      <button class="remove-btn">🗑</button>
-    </div>
-  </div>
-
-  <div class="coach" data-id="2">
-    <img src="https://i.pravatar.cc/100?img=2" alt="コーチ2">
-    <div class="coach-info">
-      <p class="coach-name">高橋コーチ</p>
-      <span>★★★★☆</span>
-    </div>
-    <div class="coach-actions">
-      <a href="coach-detail.html?id=2">詳細</a>
-      <button class="remove-btn">🗑</button>
-    </div>
-  </div>
-
-  <div class="coach" data-id="3">
-    <img src="https://i.pravatar.cc/100?img=3" alt="コーチ3">
-    <div class="coach-info">
-      <p class="coach-name">田中コーチ</p>
-      <span>★★★★★</span>
-    </div>
-    <div class="coach-actions">
-      <a href="coach-detail.html?id=3">詳細</a>
-      <button class="remove-btn">🗑</button>
-    </div>
-  </div>
-</div>
+  <div id="favoriteList" class="favorite-coaches"></div>
 </section>
     <!-- ▼ コーチを探しに行くボタン -->
 <div class="go-search-container">
@@ -298,6 +262,26 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
   });
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+  const list = document.getElementById("favoriteList");
+
+  if (favorites.length === 0) {
+    list.innerHTML = "<p>まだお気に入りのコーチはいません。</p>";
+  } else {
+    list.innerHTML = favorites.map(c => `
+      <div class="coach-card">
+        <img src="${c.img}" alt="${c.name}">
+        <h3>${c.name}</h3>
+        <p>${c.city}</p>
+        <p>得意：${c.club}</p>
+        <button onclick="window.location.href='coach.html?id=${c.id}'">▶ 詳細へ</button>
+      </div>
+    `).join('');
+  }
 });
 </script>
 </body>
