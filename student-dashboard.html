@@ -288,10 +288,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // クリックでコーチ詳細へ（仮）
-    card.addEventListener("click", () => {
-      const coachName = card.querySelector("p").textContent;
-      alert(`${coachName} の詳細ページへ遷移（仮）`);
-    });
+    // クリックでコーチ詳細ページへ遷移
+card.addEventListener("click", () => {
+  const coachId = card.getAttribute("data-id");
+  window.location.href = `coach-detail.html?id=${coachId}`;
+});
 
     card.appendChild(removeBtn);
   });
