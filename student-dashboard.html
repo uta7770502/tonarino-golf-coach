@@ -91,46 +91,63 @@
     </section>
 
     <!-- お気に入りコーチ -->
-    <section class="section-card">
-  <h3>⭐ お気に入りコーチ</h3>
-  <div class="favorite-coaches">
-  <div class="coach" data-id="1">
-    <img src="https://i.pravatar.cc/100?img=1" alt="コーチ1">
-    <div class="coach-info">
-      <p class="coach-name">佐藤コーチ</p>
-      <span>★★★★★</span>
-    </div>
-    <div class="coach-actions">
-      <a href="coach-detail.html?id=1">詳細</a>
-      <button class="remove-btn">🗑</button>
-    </div>
-  </div>
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const favContainer = document.getElementById("favorite-coaches");
+  if (!favContainer) return;
 
-  <div class="coach" data-id="2">
-    <img src="https://i.pravatar.cc/100?img=2" alt="コーチ2">
-    <div class="coach-info">
-      <p class="coach-name">高橋コーチ</p>
-      <span>★★★★☆</span>
-    </div>
-    <div class="coach-actions">
-      <a href="coach-detail.html?id=2">詳細</a>
-      <button class="remove-btn">🗑</button>
-    </div>
-  </div>
+  // localStorageからお気に入りを取得
+  const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
 
-  <div class="coach" data-id="3">
-    <img src="https://i.pravatar.cc/100?img=3" alt="コーチ3">
-    <div class="coach-info">
-      <p class="coach-name">田中コーチ</p>
-      <span>★★★★★</span>
-    </div>
-    <div class="coach-actions">
-      <a href="coach-detail.html?id=3">詳細</a>
-      <button class="remove-btn">🗑</button>
-    </div>
-  </div>
-</div>
-</section>
+  // 表示クリア
+  favContainer.innerHTML = "";
+
+  if (favorites.length === 0) {
+    favContainer.innerHTML = "<p>お気に入り登録されたコーチはまだいません。</p>";
+    return;
+  }
+
+  // グリッド表示（3列レイアウト）
+  favContainer.style.display = "grid";
+  favContainer.style.gridTemplateColumns = "repeat(auto-fit, minmax(150px, 1fr))";
+  favContainer.style.gap = "12px";
+
+  // 各コーチカード生成
+  favorites.forEach(c => {
+    const card = document.createElement("div");
+    card.className = "favorite-card";
+    card.style.border = "1px solid #ddd";
+    card.style.borderRadius = "10px";
+    card.style.padding = "10px";
+    card.style.textAlign = "center";
+    card.style.background = "#fff";
+    card.style.cursor = "pointer";
+    card.style.boxShadow = "0 2px 4px rgba(0,0,0,0.1)";
+
+    card.innerHTML = `
+      <img src="${c.photo || 'https://i.pravatar.cc/120'}" 
+           alt="${c.name}" 
+           style="width:80px;height:80px;border-radius:50%;object-fit:cover;margin-bottom:8px;">
+      <h4 style="font-size:14px;margin:0;">${c.name || '名前未登録'}</h4>
+      <p style="font-size:12px;color:#555;margin:2px 0;">${c.club || '得意クラブ未設定'}</p>
+      <button style="margin-top:5px;font-size:12px;padding:4px 8px;border:none;background:#4caf50;color:white;border-radius:5px;">
+        詳細を見る
+      </button>
+    `;
+
+    // ボタン押下でコーチ詳細へ遷移
+    card.querySelector("button").addEventListener("click", () => {
+      if (c.id) {
+        window.location.href = `coach.html?id=${c.id}`;
+      } else {
+        alert("コーチ詳細ページが見つかりません。");
+      }
+    });
+
+    favContainer.appendChild(card);
+  });
+});
+</script>
     <!-- ▼ コーチを探しに行くボタン -->
 <div class="go-search-container">
   <a href="student.html" class="go-search-btn">コーチを探しに行く</a>
