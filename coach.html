@@ -282,7 +282,24 @@ document.addEventListener("DOMContentLoaded", () => {
       <!-- 💬 メッセージ送信フォーム -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const heroSection = document.querySelector(".hero-right");
+  document.addEventListener("DOMContentLoaded", () => {
+  // 🎯 予約セクションの下にメッセージボタンを出す
+  const bookingSection = document.querySelector(".section-card");
+  if (!bookingSection) return;
+
+  // ボタン生成
+  const msgBtn = document.createElement("button");
+  msgBtn.textContent = "💬 コーチにメッセージを送る";
+  msgBtn.style.marginTop = "15px";
+  msgBtn.style.background = "#4caf50";
+  msgBtn.style.color = "#fff";
+  msgBtn.style.border = "none";
+  msgBtn.style.padding = "10px 14px";
+  msgBtn.style.borderRadius = "6px";
+  msgBtn.style.cursor = "pointer";
+  msgBtn.style.display = "block";
+  msgBtn.style.width = "100%";
+  bookingSection.insertAdjacentElement("afterend", msgBtn);
   if (!heroSection) return;
 
   // ボタン追加
