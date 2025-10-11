@@ -44,25 +44,33 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // -----------------------------
-  // 「お気に入り」ボタンイベント
-  // -----------------------------
-  const favBtn = el("favoriteBtn");
-  if (favBtn) {
-    favBtn.addEventListener("click", () => {
-      let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-      const exists = favorites.find(f => f.id === c.id);
+// 「お気に入り」ボタンイベント
+// -----------------------------
+const favBtn = el("favoriteBtn");
+if (favBtn) {
+  let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+  const isFavorited = favorites.some(f => f.id === c.id);
 
-      if (exists) {
-        favorites = favorites.filter(f => f.id !== c.id);
-        alert(`${c.name} をお気に入りから削除しました。`);
-      } else {
-        favorites.push(c);
-        alert(`${c.name} をお気に入りに追加しました！`);
-      }
+  // 初期状態（❤️ or 🤍）
+  favBtn.textContent = isFavorited ? "❤️ お気に入り中" : "🤍 お気に入りに追加";
 
-      localStorage.setItem("favorites", JSON.stringify(favorites));
-    });
-  }
+  favBtn.addEventListener("click", () => {
+    favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    const exists = favorites.find(f => f.id === c.id);
+
+    if (exists) {
+      favorites = favorites.filter(f => f.id !== c.id);
+      favBtn.textContent = "🤍 お気に入りに追加";
+      alert(`${c.name} をお気に入りから削除しました。`);
+    } else {
+      favorites.push(c);
+      favBtn.textContent = "❤️ お気に入り中";
+      alert(`${c.name} をお気に入りに追加しました！`);
+    }
+
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  });
+}
 
   // -----------------------------
   // 「戻る」ボタン（マイページへ）
