@@ -169,7 +169,30 @@
         alert(`${coachData.name} をお気に入りに追加しました`);
       }
     });
+// メッセージ送信処理
+document.getElementById("sendMessageBtn")?.addEventListener("click", () => {
+  const name = document.getElementById("messageName").value;
+  const message = document.getElementById("messageText").value;
+  const coach = document.getElementById("pName").textContent; // コーチ名取得
 
+  if (!name || !message) {
+    alert("お名前とメッセージを入力してください。");
+    return;
+  }
+
+  const messages = JSON.parse(localStorage.getItem("messages")) || [];
+  messages.push({
+    coach,
+    name,
+    message,
+    date: new Date().toLocaleString()
+  });
+  localStorage.setItem("messages", JSON.stringify(messages));
+
+  alert("📩 メッセージを送信しました！");
+  document.getElementById("messageName").value = "";
+  document.getElementById("messageText").value = "";
+});
     // ✅ 予約処理
     const bookBtn = document.querySelector(".btn-primary");
     const dateInput = document.getElementById("pDate");
