@@ -152,6 +152,34 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+    <section class="section-card">
+  <h3>📩 コーチへのメッセージ一覧</h3>
+  <div id="messageList"></div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const list = document.getElementById("messageList");
+  const messages = JSON.parse(localStorage.getItem("messages")) || [];
+
+  if (messages.length === 0) {
+    list.innerHTML = "<p>まだメッセージはありません。</p>";
+    return;
+  }
+
+  list.innerHTML = messages
+    .slice()
+    .reverse()
+    .map(m => `
+      <div style="border:1px solid #ddd; border-radius:8px; padding:8px; margin-bottom:10px; background:#fff;">
+        <p><strong>宛先:</strong> ${m.coach}</p>
+        <p><strong>日付:</strong> ${m.date}</p>
+        <p><strong>${m.name}さん:</strong> ${m.message}</p>
+      </div>
+    `)
+    .join("");
+});
+</script>
     <!-- ▼ コーチを探しに行くボタン -->
 <div class="go-search-container">
   <a href="student.html" class="go-search-btn">コーチを探しに行く</a>
