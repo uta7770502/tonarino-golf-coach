@@ -91,15 +91,20 @@
     </section>
 
     <!-- お気に入りコーチ -->
-    <script>
+    <!-- ⭐ お気に入りコーチ -->
+<section class="section-card">
+  <h3>⭐ お気に入りコーチ</h3>
+  <div id="favorite-coaches"></div>
+</section>
+
+<!-- コーチカード生成スクリプト -->
+<script>
 document.addEventListener("DOMContentLoaded", () => {
   const favContainer = document.getElementById("favorite-coaches");
   if (!favContainer) return;
 
-  // localStorageからお気に入りを取得
+  // localStorageから取得
   const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-
-  // 表示クリア
   favContainer.innerHTML = "";
 
   if (favorites.length === 0) {
@@ -107,35 +112,34 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // グリッド表示（3列レイアウト）
+  // グリッド（3列）
   favContainer.style.display = "grid";
-  favContainer.style.gridTemplateColumns = "repeat(auto-fit, minmax(150px, 1fr))";
-  favContainer.style.gap = "12px";
+  favContainer.style.gridTemplateColumns = "repeat(auto-fit, minmax(160px, 1fr))";
+  favContainer.style.gap = "14px";
+  favContainer.style.marginTop = "10px";
 
-  // 各コーチカード生成
   favorites.forEach(c => {
     const card = document.createElement("div");
     card.className = "favorite-card";
     card.style.border = "1px solid #ddd";
-    card.style.borderRadius = "10px";
-    card.style.padding = "10px";
+    card.style.borderRadius = "12px";
+    card.style.padding = "12px";
     card.style.textAlign = "center";
     card.style.background = "#fff";
-    card.style.cursor = "pointer";
-    card.style.boxShadow = "0 2px 4px rgba(0,0,0,0.1)";
+    card.style.boxShadow = "0 2px 4px rgba(0,0,0,0.08)";
 
     card.innerHTML = `
-      <img src="${c.photo || 'https://i.pravatar.cc/120'}" 
-           alt="${c.name}" 
+      <img src="${c.photo || 'https://i.pravatar.cc/120'}"
+           alt="${c.name || 'コーチ'}"
            style="width:80px;height:80px;border-radius:50%;object-fit:cover;margin-bottom:8px;">
       <h4 style="font-size:14px;margin:0;">${c.name || '名前未登録'}</h4>
-      <p style="font-size:12px;color:#555;margin:2px 0;">${c.club || '得意クラブ未設定'}</p>
-      <button style="margin-top:5px;font-size:12px;padding:4px 8px;border:none;background:#4caf50;color:white;border-radius:5px;">
+      <p style="font-size:12px;color:#555;margin:4px 0;">${c.club || '得意クラブ未設定'}</p>
+      <button style="margin-top:6px;font-size:12px;padding:5px 10px;border:none;background:#0b6657;color:white;border-radius:5px;">
         詳細を見る
       </button>
     `;
 
-    // ボタン押下でコーチ詳細へ遷移
+    // ボタン動作
     card.querySelector("button").addEventListener("click", () => {
       if (c.id) {
         window.location.href = `coach.html?id=${c.id}`;
