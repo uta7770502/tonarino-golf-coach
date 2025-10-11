@@ -301,5 +301,40 @@ card.addEventListener("click", () => {
   });
 });
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const historyContainer = document.querySelector(".section-card ul"); // 予約履歴リストの <ul> がある場合
+  const fallbackArea = document.querySelector(".section-card"); // <ul> がない場合、ここに直接追加
+
+  // LocalStorageから予約情報を取得
+  const bookings = JSON.parse(localStorage.getItem("bookings") || "[]");
+
+  if (bookings.length === 0) {
+    const msg = document.createElement("p");
+    msg.textContent = "まだ予約はありません。";
+    fallbackArea.appendChild(msg);
+    return;
+  }
+
+  // 最新の3件だけ表示
+  const latest = bookings.slice(-3).reverse();
+
+  latest.forEach((b) => {
+    const item = document.createElement("div");
+    item.classList.add("booking-card");
+    item.style.margin = "10px 0";
+    item.style.padding = "10px";
+    item.style.borderRadius = "8px";
+    item.style.background = "#fff";
+    item.style.boxShadow = "0 2px 4px rgba(0,0,0,0.1)";
+    item.innerHTML = `
+      <p>📅 <strong>${b.date || "日付未選択"}</strong> ${b.time}</p>
+      <p>👨‍🏫 コーチ：${b.coach}</p>
+      <p>⏱ ${b.duration}分　💳 ${b.pay}</p>
+    `;
+    fallbackArea.appendChild(item);
+  });
+});
+</script>
 </body>
 </html>
