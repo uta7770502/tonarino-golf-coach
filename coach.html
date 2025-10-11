@@ -178,5 +178,60 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 </script>
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const reviewForm = document.getElementById("reviewForm");
+  const reviewList = document.getElementById("reviewList");
+
+  // --- LocalStorageから既存レビューを読み込む ---
+  let reviews = JSON.parse(localStorage.getItem("reviews") || "[]");
+  renderReviews();
+
+  // --- フォーム送信処理 ---
+  reviewForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById("reviewName").value || "匿名";
+    const rating = document.getElementById("reviewRating").value;
+    const comment = document.getElementById("reviewComment").value;
+
+    // 新しいレビューを作成
+    const newReview = { name, rating, comment, date: new Date().toLocaleDateString() };
+
+    // LocalStorageに保存
+    reviews.push(newReview);
+    localStorage.setItem("reviews", JSON.stringify(reviews));
+
+    // 表示更新
+    renderReviews();
+
+    // フォームリセット
+    reviewForm.reset();
+
+    alert("📘 レビューを投稿しました！");
+  });
+
+  // --- 表示関数 ---
+  function renderReviews() {
+    reviewList.innerHTML = "";
+    if (reviews.length === 0) {
+      reviewList.innerHTML = "<p>まだレビューはありません。</p>";
+      return;
+    }
+
+    reviews.slice().reverse().forEach((r) => {
+      const div = document.createElement("div");
+      div.classList.add("review-card");
+      div.innerHTML = `
+        <p><strong>${r.name}</strong> (${r.date})</p>
+        <p>評価：${"★".repeat(r.rating)}${"☆".repeat(5 - r.rating)}</p>
+        <p>${r.comment}</p>
+        <hr/>
+      `;
+      reviewList.appendChild(div);
+    });
+  }
+});
+</script>
 </body>
 </html>
