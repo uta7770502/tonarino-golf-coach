@@ -147,7 +147,7 @@
     favBtn.style.borderRadius = "6px";
     favBtn.style.cursor = "pointer";
     document.querySelector(".hero-right")?.appendChild(favBtn);
-
+(document.querySelector(".hero-right") || document.querySelector(".coach-hero"))?.appendChild(favBtn);
     favBtn.addEventListener("click", () => {
       let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
       const coachData = {
