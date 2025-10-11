@@ -113,22 +113,3 @@ document.addEventListener("DOMContentLoaded", () => {
       .join("<hr style='border:none;border-top:1px solid #ddd;'>");
   }
 });
-// --- お気に入り登録機能 ---
-function toggleFavorite(coach) {
-  let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-  const exists = favorites.find(f => f.id === coach.id);
-
-  if (exists) {
-    favorites = favorites.filter(f => f.id !== coach.id);
-  } else {
-    favorites.push(coach);
-  }
-
-  localStorage.setItem("favorites", JSON.stringify(favorites));
-  renderGrid(); // 状態更新のため再描画
-}
-
-// renderGrid() 内の ❤️ボタンに以下を追加
-// <button class="fav-btn" onclick="toggleFavorite(${JSON.stringify(c).replace(/"/g, '&quot;')})">❤️</button>
-
-// ※ 上記のように、ボタン生成時に onclick を設定してください
