@@ -64,5 +64,33 @@
       window.location.href = `coach.html?id=${id}`;
     });
   </script>
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const coachId = params.get("id");
+  const coachNameEl = document.querySelector("h2");
+  
+  if (!coachId) {
+    coachNameEl.textContent = "コーチ情報が見つかりません。";
+    return;
+  }
+
+  // コーチ一覧データ（coach.jsと同じ構成に合わせる）
+  const coaches = [
+    { id: 1, name: "佐藤 一郎", price30: "¥2,000", price60: "¥4,000" },
+    { id: 2, name: "高橋 コーチ", price30: "¥2,500", price60: "¥4,500" },
+    { id: 3, name: "田中 コーチ", price30: "¥3,000", price60: "¥5,000" },
+  ];
+
+  const coach = coaches.find(c => c.id == coachId);
+
+  if (coach) {
+    coachNameEl.textContent = `🏌️‍♂️ ${coach.name} のレッスン予約`;
+    document.querySelector("select").value = "30分 / " + coach.price30;
+  } else {
+    coachNameEl.textContent = "コーチ情報が見つかりません。";
+  }
+});
+</script>
 </body>
 </html>
