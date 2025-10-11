@@ -141,7 +141,54 @@
 
   <script src="./coaches.js"></script>
   <script src="./coach.js"></script>
+<script src="./coaches.js"></script>
+<script src="./coach.js"></script>
+
+<!-- ❤️ お気に入り登録 -->
 <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const favBtn = document.createElement("button");
+  favBtn.textContent = "🤍 お気に入り追加";
+  favBtn.style.marginTop = "10px";
+  favBtn.style.background = "#ffd95a";
+  favBtn.style.border = "none";
+  favBtn.style.padding = "6px 10px";
+  favBtn.style.borderRadius = "6px";
+  favBtn.style.cursor = "pointer";
+  document.querySelector(".hero-right")?.appendChild(favBtn);
+
+  favBtn.addEventListener("click", () => {
+    let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+
+    const coachData = {
+      id: new URLSearchParams(window.location.search).get("id") || "",
+      name: document.getElementById("pName")?.textContent || "名前不明",
+      photo: document.getElementById("pPhoto")?.src || "",
+      rating: document.querySelectorAll("#pStars .star")?.length || 5
+    };
+
+    const exists = favorites.some((f) => f.id === coachData.id);
+
+    if (exists) {
+      favorites = favorites.filter((f) => f.id !== coachData.id);
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+      favBtn.textContent = "🤍 お気に入り追加";
+      alert(`${coachData.name} をお気に入りから削除しました`);
+    } else {
+      favorites.push(coachData);
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+      favBtn.textContent = "❤️ 登録中";
+      alert(`${coachData.name} をお気に入りに追加しました`);
+    }
+  });
+});
+</script>
+
+<!-- ここから下は既存の予約・レビュー関連スクリプト -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const bookBtn = ...
+    <script>
 document.addEventListener("DOMContentLoaded", () => {
   const bookBtn = document.querySelector(".btn-primary"); // 予約ボタン
   const dateInput = document.getElementById("pDate");
