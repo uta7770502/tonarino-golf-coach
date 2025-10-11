@@ -38,14 +38,19 @@
   <a class="back-link mypage-link" href="./student-dashboard.html">マイページへ戻る</a>
 </div>
     <!-- ヒーロー -->
-    <section class="coach-hero">
-      <img id="pPhoto" alt="コーチ写真" />
-      <div class="hero-right">
-        <div class="coach-name" id="pName">コーチ名</div>
-        <div class="subline">
-          <span id="pTagline">得意クラブ：ー</span>
-          <span class="stars" id="pStars"></span>
-        </div>
+    <!-- ヒーロー -->
+<section class="coach-hero">
+  <div class="coach-hero-left">
+    <img id="pPhoto" alt="コーチ写真" />
+  </div>
+  <div class="coach-hero-right">
+    <h2 class="coach-name" id="pName">コーチ名</h2>
+    <p class="subline">
+      得意クラブ：<span id="pTagline"></span>
+      <span class="stars" id="pStars">★★★★★</span>
+    </p>
+  </div>
+</section>
 
         <div class="pill-prices">
           <div class="pill">
@@ -124,8 +129,8 @@
   </main>
 <!-- ✅ 固定ナビ（戻る＆マイページ） -->
 <div class="bottom-nav">
-  <a href="student.html" class="nav-btn back">← コーチ一覧</a>
-  <a href="student-dashboard.html" class="nav-btn home">🏠 マイページ</a>
+  <a href="student.html" class="nav-btn back">コーチ一覧</a>
+  <a href="student-dashboard.html" class="nav-btn home">マイページ</a>
 </div>
   <script src="./coaches.js"></script>
   <script src="./coach.js"></script>
