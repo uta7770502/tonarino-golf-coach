@@ -80,4 +80,54 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = "student-dashboard.html";
     });
   }
+    // =============================
+  // 📝 レビュー投稿機能
+  // =============================
+  const reviewForm = document.getElementById("reviewForm");
+  const reviewList = document.getElementById("reviewList");
+
+  function loadReviews() {
+    const allReviews = JSON.parse(localStorage.getItem("coachReviews")) || {};
+    const coachReviews = allReviews[c.id] || [];
+    if (coachReviews.length === 0) {
+      reviewList.innerHTML = "<p>まだレビューはありません。</p>";
+      return;
+    }
+    reviewList.innerHTML = coachReviews
+      .map(r => `
+        <div class="review-card">
+          <div class="review-header">
+            <strong>${r.name}</strong> <span>${"★".repeat(r.rating)}</span>
+          </div>
+          <p>${r.comment}</p>
+          <div class="review-date">${r.date}</div>
+        </div>
+      `).join("");
+  }
+
+  if (reviewForm) {
+    reviewForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = document.getElementById("reviewName").value;
+      const rating = parseInt(document.getElementById("reviewRating").value);
+      const comment = document.getElementById("reviewComment").value;
+      const newReview = {
+        name,
+        rating,
+        comment,
+        date: new Date().toLocaleDateString("ja-JP")
+      };
+
+      const allReviews = JSON.parse(localStorage.getItem("coachReviews")) || {};
+      if (!allReviews[c.id]) allReviews[c.id] = [];
+      allReviews[c.id].unshift(newReview); // 最新を上に
+      localStorage.setItem("coachReviews", JSON.stringify(allReviews));
+
+      reviewForm.reset();
+      loadReviews();
+      alert("レビューを投稿しました！");
+    });
+  }
+
+  loadReviews();
 });
