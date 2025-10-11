@@ -206,6 +206,30 @@ document.getElementById("sendMessageBtn")?.addEventListener("click", () => {
   document.getElementById("messageName").value = "";
   document.getElementById("messageText").value = "";
 });
+    // 💬 メッセージ履歴の表示処理
+document.addEventListener("DOMContentLoaded", () => {
+  const messageList = document.getElementById("messageList");
+  const coach = document.getElementById("pName")?.textContent || "未設定";
+
+  if (!messageList) return;
+
+  const messages = JSON.parse(localStorage.getItem("messages")) || [];
+  const filtered = messages.filter((m) => m.coach === coach);
+
+  if (filtered.length === 0) {
+    messageList.innerHTML = "<p>まだメッセージはありません。</p>";
+  } else {
+    messageList.innerHTML = filtered
+      .map(
+        (m) =>
+          `<div class="message-item">
+             <p><strong>${m.name}</strong> (${m.date})</p>
+             <p>${m.message}</p>
+           </div>`
+      )
+      .join("");
+  }
+});
     // ✅ 予約処理
     const bookBtn = document.querySelector(".btn-primary");
     const dateInput = document.getElementById("pDate");
