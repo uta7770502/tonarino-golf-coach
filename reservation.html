@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>レッスン予約フォーム | 隣のゴルフコーチ</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <h1>⛳ レッスン予約フォーム</h1>
+  </header>
+
+  <main class="form-container">
+    <h2 id="coachName">コーチ名を取得中...</h2>
+
+    <form id="reservationForm" class="reservation-form">
+      <label>お名前：</label>
+      <input type="text" id="studentName" required />
+
+      <label>メールアドレス：</label>
+      <input type="email" id="studentEmail" required />
+
+      <label>希望日時：</label>
+      <input type="datetime-local" id="lessonDate" required />
+
+      <label>レッスン時間：</label>
+      <select id="lessonPlan">
+        <option value="30分">30分 / ¥2,000</option>
+        <option value="60分">60分 / ¥4,000</option>
+        <option value="90分">90分 / ¥6,000</option>
+      </select>
+
+      <button type="submit" class="reserve-btn">予約を確定する</button>
+    </form>
+
+    <button id="backBtn" class="back-btn">← コーチ詳細へ戻る</button>
+  </main>
+
+  <script src="coaches.js"></script>
+  <script>
+    // URLのパラメータからコーチ情報を取得
+    const params = new URLSearchParams(window.location.search);
+    const id = parseInt(params.get("id"));
+    const coach = window.COACHES?.find(c => c.id === id);
+
+    const coachNameEl = document.getElementById("coachName");
+    if (coach) coachNameEl.textContent = `予約コーチ：${coach.name}`;
+    else coachNameEl.textContent = "コーチ情報が見つかりません。";
+
+    // 予約フォーム送信
+    document.getElementById("reservationForm").addEventListener("submit", e => {
+      e.preventDefault();
+      const name = document.getElementById("studentName").value;
+      const email = document.getElementById("studentEmail").value;
+      const date = document.getElementById("lessonDate").value;
+      const plan = document.getElementById("lessonPlan").value;
+      alert(`${coach?.name || "コーチ"} への予約を受け付けました！\n\nお名前: ${name}\n日時: ${date}\nプラン: ${plan}`);
+      window.location.href = `coach.html?id=${id}`;
+    });
+
+    // 戻るボタン
+    document.getElementById("backBtn").addEventListener("click", () => {
+      window.location.href = `coach.html?id=${id}`;
+    });
+  </script>
+</body>
+</html>
