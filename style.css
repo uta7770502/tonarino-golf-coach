@@ -1016,3 +1016,54 @@ html, body {
 #favoriteBtn:hover {
   background: #ffe066;
 }
+.form-container {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.reservation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.reservation-form label {
+  font-weight: 600;
+  color: #333;
+}
+
+.reservation-form input,
+.reservation-form select {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+.reserve-btn {
+  background: #4CAF50;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.reserve-btn:hover {
+  background: #45a049;
+}
+
+.back-btn {
+  background: #eee;
+  border: none;
+  color: #333;
+  border-radius: 6px;
+  margin-top: 20px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
