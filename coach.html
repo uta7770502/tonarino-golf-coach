@@ -14,8 +14,26 @@
     .stars{display:inline-flex;gap:2px;vertical-align:middle;margin-left:6px}
     .star{font-size:18px;color:#FFD95A}
     .subline{color:#0b6657c0;margin-top:6px}
-    .pill-prices{display:flex;gap:14px;margin:18px 0 8px}
-    .pill{background:#FFD95A;border-radius:14px;padding:12px 18px;font-weight:700}
+    .pill-prices {
+  display: flex;
+  gap: 8px; /* ← すこし間隔を詰める */
+}
+
+.pill {
+  background-color: #ffd95a;
+  padding: 6px 12px; /* ← 高さを短く */
+  border-radius: 8px;
+  text-align: center;
+  font-weight: bold;
+  color: #333;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  line-height: 1.2; /* ← 行間を詰める */
+}
+
+.pill p {
+  margin: 2px 0; /* ← テキストの上下間隔を減らす */
+  font-size: 14px; /* ← ほんの少し小さく */
+}
     .section-card{background:#fff;border-radius:18px;padding:18px;margin-top:18px;box-shadow:0 6px 20px rgba(0,0,0,.06)}
     .video-wrap{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden}
     .video-wrap iframe{position:absolute;inset:0;width:100%;height:100%}
