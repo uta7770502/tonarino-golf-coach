@@ -3,179 +3,177 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>生徒マイページ</title>
+  <title>マイページ | 隣のゴルフコーチ</title>
+  <link rel="stylesheet" href="style.css" />
 
   <style>
+    /* ===== ページ全体レイアウト（既存と共存OK） ===== */
     body {
-      font-family: "Helvetica Neue", Arial, sans-serif;
-      background-color: #e6f9f5;
+      font-family: "Noto Sans JP", sans-serif;
+      background-color: #dff7f3;
       margin: 0;
       padding: 0;
-    }
-
-    header {
-      background: #fff;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      padding: 12px 20px;
-      font-size: 18px;
-      font-weight: 700;
-      color: #055;
+      color: #0b6657;
     }
 
     .section-card {
       background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       margin: 16px;
       padding: 16px;
+      border-radius: 16px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
 
     h3 {
       margin-top: 0;
-      color: #055;
-    }
-
-    /* プロフィール部分 */
-    .profile-card {
       display: flex;
       align-items: center;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      margin: 16px;
-      padding: 16px;
-    }
-
-    .profile-card img {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      margin-right: 14px;
-      object-fit: cover;
-    }
-
-    .profile-info h2 {
-      margin: 0;
       font-size: 20px;
-      color: #055;
     }
 
-    .profile-info p {
-      margin: 2px 0;
-      color: #555;
-    }
-
-    /* お気に入りコーチを3列で */
+    /* ===== お気に入りコーチ 3列グリッド ===== */
     .favorite-coaches {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 16px;
-      justify-items: center;
-      margin-top: 10px;
+      margin-top: 16px;
     }
 
-    .coach {
+    @media (max-width: 720px) {
+      .favorite-coaches {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .coach-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px;
       background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      padding: 10px;
-      text-align: center;
-      width: 100%;
-      max-width: 130px;
+      border-radius: 16px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+      text-decoration: none;
+      color: #0b6657;
       transition: transform 0.2s ease;
     }
 
-    .coach:hover {
+    .coach-card:hover {
       transform: translateY(-3px);
     }
 
-    .coach img {
-      width: 60px;
-      height: 60px;
+    .coach-card img {
+      width: 92px;
+      height: 92px;
       border-radius: 50%;
       object-fit: cover;
-      margin-bottom: 6px;
+      margin-bottom: 12px;
     }
 
-    .coach-name {
-      font-size: 15px;
-      font-weight: 600;
-      margin: 4px 0;
-      color: #055;
+    .coach-card .name {
+      font-weight: 700;
+      font-size: 18px;
+      margin: 0 0 8px;
     }
 
-    .coach-actions {
-      margin-top: 6px;
+    .coach-card .stars {
+      margin: 0 0 8px;
+      letter-spacing: 0.2em;
     }
 
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: #ffdc5a;
+    .coach-card .detail {
+      background: #e6f3f1;
+      padding: 6px 12px;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+
+    /* ===== フッターナビ（既存と同等） ===== */
+    footer {
       display: flex;
       justify-content: space-around;
-      padding: 8px 0;
-      border-top: 1px solid #ddd;
+      background-color: #ffd95a;
+      padding: 10px 0;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
     }
 
-    .bottom-nav a {
-      color: #055;
+    footer a {
+      color: #0b6657;
       text-decoration: none;
-      font-weight: 600;
+      font-weight: bold;
     }
   </style>
 </head>
 
 <body>
-  <header>マイページ</header>
+  <header>
+    <h1 style="padding:12px; margin:0;">隣のゴルフコーチ</h1>
+  </header>
 
-  <section class="profile-card">
-    <img src="https://i.pravatar.cc/150?img=12" alt="生徒写真">
-    <div class="profile-info">
-      <h2>山田 太郎 さん</h2>
-      <p>yamada.taro@example.com</p>
+  <main>
+    <!-- ✅ レビュー投稿などの既存ブロックはここに残す -->
+    <section class="section-card">
+      <h3>⭐ レビュー投稿</h3>
+      <p>投稿済みレビュー一覧がここに表示されます。</p>
+    </section>
+
+    <!-- ✅ お気に入りコーチ（3列対応・undefined除外） -->
+    <section class="section-card">
+      <h3>⭐ お気に入りコーチ</h3>
+      <div id="favorite-coaches" class="favorite-coaches"></div>
+    </section>
+
+    <!-- ✅ 戻るボタン -->
+    <div style="text-align:center; margin:24px 0;">
+      <a href="index.html" class="btn-primary" style="
+        background:#ffd95a;
+        color:#0b6657;
+        padding:10px 20px;
+        border-radius:8px;
+        text-decoration:none;
+        font-weight:bold;">🏠 ホームに戻る</a>
     </div>
-  </section>
+  </main>
 
-  <section class="section-card">
-    <h3>⭐ お気に入りコーチ</h3>
-    <div class="favorite-coaches" id="favoriteList"></div>
-  </section>
-
-  <nav class="bottom-nav">
-    <a href="index.html">🏠 ホーム</a>
-    <a href="search.html">🔍 検索</a>
-    <a href="reservation.html">📅 予約</a>
-    <a href="student-dashboard.html">👤 マイページ</a>
-  </nav>
+  <footer>
+    <a href="index.html">ホーム</a>
+    <a href="search.html">検索</a>
+    <a href="booking.html">予約</a>
+    <a href="student-dashboard.html">マイページ</a>
+  </footer>
 
   <script>
-    // お気に入りコーチ（仮データ）
-    const favorites = JSON.parse(localStorage.getItem("favorites")) || [
-      { name: "佐藤一郎", photo: "https://i.pravatar.cc/150?img=3", rating: 5 },
-      { name: "佐々木優奈", photo: "https://i.pravatar.cc/150?img=8", rating: 5 },
-      { name: "石井未来", photo: "https://i.pravatar.cc/150?img=10", rating: 5 }
-    ];
+  document.addEventListener('DOMContentLoaded', () => {
+    const wrap = document.getElementById('favorite-coaches');
+    if (!wrap) return;
 
-    const list = document.getElementById("favoriteList");
+    // localStorage からお気に入りを取得
+    const raw = JSON.parse(localStorage.getItem('favorites') || '[]');
+    const items = raw.filter(c => c && c.id && c.name); // undefined除外
 
-    favorites.forEach((c) => {
-      if (!c.name || !c.photo) return;
-      const card = document.createElement("div");
-      card.classList.add("coach");
+    // お気に入りが無ければセクションを隠す
+    if (items.length === 0) {
+      wrap.closest('section').style.display = 'none';
+      return;
+    }
 
-      card.innerHTML = `
-        <img src="${c.photo}" alt="${c.name}">
-        <p class="coach-name">${c.name}</p>
-        <p>${"★".repeat(c.rating)}</p>
-        <div class="coach-actions">
-          <a href="coach.html" class="detail-btn">詳細</a>
-        </div>
+    // カード描画
+    wrap.innerHTML = items.map(c => {
+      const photo = c.photo || 'https://i.pravatar.cc/120';
+      const stars = '★'.repeat(c.rating || 5);
+      const link  = `coach.html?id=${encodeURIComponent(c.id)}`;
+      return `
+        <a class="coach-card" href="${link}">
+          <img src="${photo}" alt="${c.name}">
+          <p class="name">${c.name}</p>
+          <p class="stars">${stars}</p>
+          <span class="detail">詳細</span>
+        </a>
       `;
-      list.appendChild(card);
-    });
+    }).join('');
+  });
   </script>
 </body>
 </html>
