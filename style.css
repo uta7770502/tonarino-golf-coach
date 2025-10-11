@@ -1192,3 +1192,46 @@ html, body {
   object-fit: cover;
   margin-bottom: 6px;
 }
+/* --- コーチ詳細プロフィール --- */
+.coach-hero {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #e8f8f5;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.coach-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.coach-photo {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.coach-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.coach-name {
+  font-size: 26px;
+  font-weight: 700;
+  color: #0b6657;
+  margin: 0 0 4px 0;
+}
+
+.coach-tagline {
+  font-size: 16px;
+  color: #0b6657;
+  margin: 0;
+}
