@@ -319,6 +319,40 @@ document.addEventListener("DOMContentLoaded", () => {
           <button id="sendMsgBtn" style="margin-top:6px; background:#2196f3; color:#fff; border:none; padding:6px 10px; border-radius:4px;">送信</button>
         </div>
       `;
+      // 💬 メッセージ履歴の表示エリアを追加
+const msgHistory = document.createElement("div");
+msgHistory.id = "msgHistory";
+msgHistory.style.marginTop = "15px";
+msgHistory.style.background = "#fff";
+msgHistory.style.padding = "10px";
+msgHistory.style.borderRadius = "6px";
+msgHistory.style.boxShadow = "0 1px 3px rgba(0,0,0,0.1)";
+msgHistory.innerHTML = "<h4>📩 メッセージ履歴</h4><div id='messageList'></div>";
+bookingSection.insertAdjacentElement("beforeend", msgHistory);
+
+// 💬 履歴読み込み＆表示
+document.addEventListener("DOMContentLoaded", () => {
+  const list = document.getElementById("messageList");
+  if (!list) return;
+
+  const coach = document.getElementById("pName")?.textContent || "未設定";
+  const messages = JSON.parse(localStorage.getItem("messages")) || [];
+  const filtered = messages.filter((m) => m.coach === coach);
+
+  if (filtered.length === 0) {
+    list.innerHTML = "<p>まだメッセージはありません。</p>";
+  } else {
+    list.innerHTML = filtered
+      .map(
+        (m) =>
+          `<div style="margin-bottom:8px;padding:6px;border-bottom:1px solid #eee;">
+            <strong>${m.name}</strong> (${m.date})<br>
+            ${m.message}
+          </div>`
+      )
+      .join("");
+  }
+});
       msgForm.style.display = "none";
       bookingSection.insertAdjacentElement("afterend", msgForm);
 
