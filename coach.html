@@ -95,6 +95,33 @@
       <button class="btn-primary" id="pBook">予約を確定する</button>
       <p style="margin:10px 0 0;color:#6b7f85;font-size:14px;">※練習場利用料は別途現地払いとなります</p>
     </section>
+    <section class="review-section">
+  <h2>レビュー</h2>
+
+  <div id="reviewList" class="review-list">
+    <p>まだレビューはありません。</p>
+  </div>
+
+  <form id="reviewForm" class="review-form">
+    <h3>レビューを書く</h3>
+    <label>お名前：</label>
+    <input type="text" id="reviewName" required>
+
+    <label>評価：</label>
+    <select id="reviewRating">
+      <option value="5">★★★★★</option>
+      <option value="4">★★★★☆</option>
+      <option value="3">★★★☆☆</option>
+      <option value="2">★★☆☆☆</option>
+      <option value="1">★☆☆☆☆</option>
+    </select>
+
+    <label>コメント：</label>
+    <textarea id="reviewComment" rows="3" required></textarea>
+
+    <button type="submit" class="review-btn">投稿する</button>
+  </form>
+</section>
   </main>
 
   <script src="./coaches.js"></script>
