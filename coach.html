@@ -279,6 +279,71 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+      <!-- 💬 メッセージ送信フォーム -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const heroSection = document.querySelector(".hero-right");
+  if (!heroSection) return;
+
+  // ボタン追加
+  const msgBtn = document.createElement("button");
+  msgBtn.textContent = "💬 コーチにメッセージを送る";
+  msgBtn.style.marginTop = "10px";
+  msgBtn.style.background = "#4caf50";
+  msgBtn.style.color = "#fff";
+  msgBtn.style.border = "none";
+  msgBtn.style.padding = "8px 12px";
+  msgBtn.style.borderRadius = "6px";
+  msgBtn.style.cursor = "pointer";
+  heroSection.appendChild(msgBtn);
+
+  // フォーム生成
+  const msgForm = document.createElement("div");
+  msgForm.innerHTML = `
+    <div style="margin-top:10px; background:#f9f9f9; padding:10px; border-radius:6px;">
+      <label>お名前：</label><br>
+      <input type="text" id="msgName" style="width:100%; margin-bottom:6px;"><br>
+      <label>メッセージ：</label><br>
+      <textarea id="msgContent" rows="3" style="width:100%;"></textarea><br>
+      <button id="sendMsgBtn" style="margin-top:6px; background:#2196f3; color:#fff; border:none; padding:6px 10px; border-radius:4px;">送信</button>
+    </div>
+  `;
+  msgForm.style.display = "none";
+  heroSection.appendChild(msgForm);
+
+  msgBtn.addEventListener("click", () => {
+    msgForm.style.display = msgForm.style.display === "none" ? "block" : "none";
+  });
+
+  // 送信処理
+  msgForm.querySelector("#sendMsgBtn").addEventListener("click", () => {
+    const name = document.getElementById("msgName").value.trim();
+    const content = document.getElementById("msgContent").value.trim();
+    const coachId = new URLSearchParams(window.location.search).get("id") || "unknown";
+
+    if (!name || !content) {
+      alert("名前とメッセージを入力してください！");
+      return;
+    }
+
+    const message = {
+      coachId,
+      name,
+      content,
+      date: new Date().toLocaleString()
+    };
+
+    const allMessages = JSON.parse(localStorage.getItem("messages") || "[]");
+    allMessages.push(message);
+    localStorage.setItem("messages", JSON.stringify(allMessages));
+
+    alert("💬 メッセージを送信しました！");
+    document.getElementById("msgName").value = "";
+    document.getElementById("msgContent").value = "";
+    msgForm.style.display = "none";
+  });
+});
+</script>
 </script>
 </body>
 </html>
