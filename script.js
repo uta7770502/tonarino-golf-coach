@@ -131,6 +131,7 @@ console.log("🔍 入力値:", {
   area: areaSelect.value,
   club: clubSelect.value
 });
+  });
   // ✅ クリアボタン処理
 const clearBtn = document.getElementById("clearBtn");
 clearBtn.addEventListener("click", () => {
