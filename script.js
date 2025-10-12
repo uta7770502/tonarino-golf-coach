@@ -6,6 +6,9 @@ function initMap(){
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
   }).addTo(map);
+  // グローバルにマップを登録（検索処理から参照できるようにする）
+window.mapInstance = map;
+window.markers = []; // 全マーカーを格納
   window.mapInstance = map;
 
   // ピンとポップアップ
