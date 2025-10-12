@@ -12,25 +12,22 @@ window.markers = []; // 全マーカーを格納
   window.mapInstance = map;
 
   // ピンとポップアップ
-  window.COACHES.forEach(c => {
-    const marker = L.marker([c.lat, c.lng]).addTo(map);
-    const popupHtml = `
-      <div class="popup-card" data-id="${c.id}" style="cursor:pointer">
-        <img src="${c.img}" alt="${c.name}" />
-        <div>
-          <div class="popup-name">${c.name}</div>
-          <div class="small">${c.city}</div>
-        </div>
-      </div>`;
+window.markers = []; // ← 念のため初期化
 
-    marker.on('click', () => {
-      if (openedPopup) map.closePopup(openedPopup);
-      openedPopup = L.popup({ closeButton:false, autoPan:true })
-        .setLatLng([c.lat, c.lng])
-        .setContent(popupHtml)
-        .openOn(map);
-    });
-  });
+window.COACHES.forEach(c => {
+  const marker = L.marker([c.lat, c.lng]).addTo(map);
+  const popupHtml = `
+    <div class="popup-card" data-id="${c.id}">
+      <img src="${c.img}" alt="${c.name}">
+      <div>
+        <div class="popup-name">${c.name}</div>
+        <div class="small">${c.city}｜${c.club}</div>
+      </div>
+    </div>
+  `;
+  marker.bindPopup(popupHtml);
+  window.markers.push({ marker, coach: c });
+});
 
   // ポップアップをクリック → モーダル
   map.on('popupopen', (e) => {
