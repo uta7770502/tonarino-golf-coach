@@ -272,6 +272,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <p>${c.city} | ${c.club}</p>
       </div>
     `).join("");
+    document.querySelector("h2").textContent = `コーチ一覧（${filtered.length}名）`;
   }
 });
 </script>
