@@ -191,7 +191,27 @@
       <a href="student-dashboard.html">マイページ</a>
     </nav>
   </footer>
+</footer>
 
+<!-- ========================= -->
+<!-- 🔍 検索ボタン処理 -->
+<!-- ========================= -->
+<script>
+document.getElementById("searchBtn").addEventListener("click", () => {
+  const name = document.getElementById("searchName").value;
+  const area = document.getElementById("searchArea").value;
+  const club = document.getElementById("searchClub").value;
+
+  localStorage.setItem("searchConditions", JSON.stringify({ name, area, club }));
+  window.location.href = "./student.html";
+});
+</script>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="./coaches.js"></script>
+<script src="./script.js"></script>
+</body>
+</html>
   <!-- モーダルはそのまま -->
   <div id="coachModal" class="modal" aria-hidden="true">
     <div class="modal-content" role="dialog">
