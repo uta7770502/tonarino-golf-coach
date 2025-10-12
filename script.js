@@ -114,3 +114,61 @@ document.addEventListener("DOMContentLoaded", () => {
       .join("<hr style='border:none;border-top:1px solid #ddd;'>");
   }
 });
+// ===== 地図絞り込み検索機能 =====
+document.addEventListener("DOMContentLoaded", () => {
+  const searchBtn = document.getElementById("searchBtn");
+  const nameInput = document.getElementById("searchName");
+  const areaSelect = document.getElementById("searchArea");
+  const clubSelect = document.getElementById("searchClub");
+  const ratingSelect = document.getElementById("searchRating");
+
+  if (!searchBtn) return; // ページがstudent.htmlでない場合は無視
+
+  searchBtn.addEventListener("click", () => {
+    const nameVal = nameInput.value.trim();
+    const areaVal = areaSelect.value;
+    const clubVal = clubSelect.value;
+    const ratingVal = ratingSelect.value;
+
+    // コーチデータを絞り込み
+    let filtered = window.COACHES.filter(c => {
+      return (
+        (!nameVal || c.name.includes(nameVal)) &&
+        (!areaVal || c.city === areaVal) &&
+        (!clubVal || c.club.includes(clubVal))
+      );
+    });
+
+    // ソート
+    if (ratingVal === "high") filtered.sort((a, b) => b.id - a.id);
+    if (ratingVal === "low") filtered.sort((a, b) => a.id - b.id);
+
+    // 一覧更新
+    const grid = document.getElementById("coachGrid");
+    grid.innerHTML = filtered.map(c => `
+      <div class="card">
+        <div class="row">
+          <img src="${c.img}" alt="${c.name}">
+          <div>
+            <h4>${c.name}</h4>
+            <p>${c.city}｜${c.club}</p>
+          </div>
+        </div>
+      </div>
+    `).join("");
+
+    // 地図のピンを更新
+    if (window.mapInstance) {
+      // 既存マーカー削除
+      window.markers.forEach(obj => window.mapInstance.removeLayer(obj.marker));
+      window.markers = [];
+
+      // 新しいマーカー追加
+      filtered.forEach(c => {
+        const marker = L.marker([c.lat, c.lng]).addTo(window.mapInstance);
+        marker.bindPopup(`<b>${c.name}</b><br>${c.city}｜${c.club}`);
+        window.markers.push({ marker, coach: c });
+      });
+    }
+  });
+});
