@@ -21,3 +21,23 @@ window.COACHES = [
   {id:19, name:"岡本 翔",   city:"松山",     lat:33.8392, lng:132.7657, price:"¥3,700〜", club:"攻略",       img:"https://randomuser.me/api/portraits/men/29.jpg"},
   {id:20, name:"森田 麻衣", city:"那覇",     lat:26.2124, lng:127.6809, price:"¥3,600〜", club:"実践",       img:"https://randomuser.me/api/portraits/women/30.jpg"}
 ];
+// ==============================
+// 🔍 検索条件を localStorage から適用
+// ==============================
+document.addEventListener("DOMContentLoaded", () => {
+  const searchConditions = JSON.parse(localStorage.getItem("searchConditions"));
+  if (!searchConditions) return;
+
+  const { name, area, club } = searchConditions;
+  let filtered = window.COACHES;
+
+  if (name) filtered = filtered.filter(c => c.name.includes(name));
+  if (area) filtered = filtered.filter(c => c.city.includes(area));
+  if (club) filtered = filtered.filter(c => c.club.includes(club));
+
+  // コーチ一覧を再描画
+  renderCoaches(filtered);
+
+  // 使い終わったら削除
+  localStorage.removeItem("searchConditions");
+});
