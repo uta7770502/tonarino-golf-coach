@@ -41,3 +41,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // 使い終わったら削除
   localStorage.removeItem("searchConditions");
 });
+document.getElementById("searchBtn").addEventListener("click", () => {
+  const name = document.getElementById("searchName").value;
+  const area = document.getElementById("searchArea").value;
+  const club = document.getElementById("searchClub").value;
+
+  localStorage.setItem("searchConditions", JSON.stringify({ name, area, club }));
+  window.location.href = "coaches.html";
+});
