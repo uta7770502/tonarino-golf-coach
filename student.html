@@ -210,5 +210,25 @@ document.getElementById("searchBtn").addEventListener("click", () => {
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="./coaches.js"></script>
 <script src="./script.js"></script>
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  // Leaflet 地図の初期化
+  const map = L.map("map").setView([35.6895, 139.6917], 5); // 東京を中心に
+
+  // OpenStreetMap タイルを読み込み
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  // coaches.js からコーチ情報をピン表示
+  if (window.COACHES) {
+    window.COACHES.forEach((coach) => {
+      L.marker([coach.lat, coach.lng])
+        .addTo(map)
+        .bindPopup(`<strong>${coach.name}</strong><br>${coach.city}<br>${coach.club}`);
+    });
+  }
+});
+</script>
 </body>
 </html>
