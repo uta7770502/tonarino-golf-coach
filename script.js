@@ -131,6 +131,32 @@ console.log("🔍 入力値:", {
   area: areaSelect.value,
   club: clubSelect.value
 });
+  // ✅ クリアボタン処理
+const clearBtn = document.getElementById("clearBtn");
+clearBtn.addEventListener("click", () => {
+  // 入力・選択をリセット
+  nameInput.value = "";
+  areaSelect.value = "";
+  clubSelect.value = "";
+  if (ratingSelect) ratingSelect.value = "";
+
+  // 全コーチを再表示
+  renderCoaches(window.COACHES);
+  document.querySelector("h2").textContent = `コーチ一覧（${window.COACHES.length}名）`;
+
+  // 地図ピンも全件に戻す
+  if (window.mapInstance) {
+    window.markers.forEach(obj => {
+      if (obj.marker) window.mapInstance.removeLayer(obj.marker);
+    });
+    window.markers = [];
+    window.COACHES.forEach(c => {
+      const marker = L.marker([c.lat, c.lng]).addTo(window.mapInstance);
+      marker.bindPopup(`<b>${c.name}</b><br>${c.city}｜${c.club}`);
+      window.markers.push({ marker, coach: c });
+    });
+  }
+});
   const nameVal = nameInput.value.trim();
     const areaVal = areaSelect.value;
     const clubVal = clubSelect.value;
