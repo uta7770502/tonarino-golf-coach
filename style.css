@@ -1235,3 +1235,17 @@ html, body {
   color: #0b6657;
   margin: 0;
 }
+.coach-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  padding: 10px;
+}
+
+.coach-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  text-align: center;
+  padding: 12px;
+}
