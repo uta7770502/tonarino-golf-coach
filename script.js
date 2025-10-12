@@ -123,9 +123,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const ratingSelect = document.getElementById("searchRating");
 
   if (!searchBtn) return; // ページがstudent.htmlでない場合は無視
+searchBtn.addEventListener("click", () => {
+    console.log("✅ 検索ボタンが押されました");
 
-  searchBtn.addEventListener("click", () => {
-    const nameVal = nameInput.value.trim();
+console.log("🔍 入力値:", {
+  name: nameInput.value,
+  area: areaSelect.value,
+  club: clubSelect.value
+});
+  const nameVal = nameInput.value.trim();
     const areaVal = areaSelect.value;
     const clubVal = clubSelect.value;
     const ratingVal = ratingSelect.value;
