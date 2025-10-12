@@ -150,27 +150,6 @@
     <section>
       <h2>地図から探す</h2>
       <div id="map"></div>
-       </select>
-      <section class="search-section">
-  <input type="text" id="searchName" placeholder="コーチ名で検索">
-  <select id="searchArea">
-    <option value="">地域で絞り込み</option>
-    <option value="東京">東京</option>
-    <option value="神奈川">神奈川</option>
-    <option value="大阪">大阪</option>
-  </select>
-  <select id="searchClub">
-    <option value="">得意クラブで絞り込み</option>
-    <option value="ドライバー">ドライバー</option>
-    <option value="アイアン">アイアン</option>
-    <option value="アプローチ">アプローチ</option>
-  </select>
-  <select id="searchRating">
-    <option value="">評価順</option>
-    <option value="high">★高い順</option>
-    <option value="low">★低い順</option>
-  </select>
-  <button id="searchBtn">検索</button>
     </section>
 
     <section>
@@ -191,44 +170,25 @@
       <a href="student-dashboard.html">マイページ</a>
     </nav>
   </footer>
-</footer>
 
-<!-- ========================= -->
-<!-- 🔍 検索ボタン処理 -->
-<!-- ========================= -->
-<script>
-document.getElementById("searchBtn").addEventListener("click", () => {
-  const name = document.getElementById("searchName").value;
-  const area = document.getElementById("searchArea").value;
-  const club = document.getElementById("searchClub").value;
+  <!-- モーダルはそのまま -->
+  <div id="coachModal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog">
+      <button class="close-btn" id="modalClose">&times;</button>
+      <div class="modal-head">
+        <img id="mPhoto" alt="コーチ写真" />
+        <div><h3 id="mName"></h3></div>
+      </div>
+      <div class="m-body">
+        <p id="mClub" class="m-club"></p>
+        <p id="mPrice" class="m-price"></p>
+        <button id="moreBtn" class="interest-btn">このコーチが気になる</button>
+      </div>
+    </div>
+  </div>
 
-  localStorage.setItem("searchConditions", JSON.stringify({ name, area, club }));
-window.location.href = "./index.html";
-});
-</script>
-
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="./coaches.js"></script>
-<script src="./script.js"></script>
-  <script>
-document.addEventListener("DOMContentLoaded", () => {
-  // Leaflet 地図の初期化
-  const map = L.map("map").setView([35.6895, 139.6917], 5); // 東京を中心に
-
-  // OpenStreetMap タイルを読み込み
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
-  }).addTo(map);
-
-  // coaches.js からコーチ情報をピン表示
-  if (window.COACHES) {
-    window.COACHES.forEach((coach) => {
-      L.marker([coach.lat, coach.lng])
-        .addTo(map)
-        .bindPopup(`<strong>${coach.name}</strong><br>${coach.city}<br>${coach.club}`);
-    });
-  }
-});
-</script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="./coaches.js"></script>
+  <script src="./script.js"></script>
 </body>
 </html>
