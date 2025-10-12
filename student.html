@@ -205,51 +205,74 @@
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="./coaches.js"></script>
-  <script src="./script.js"></script>
-<script>
-// 検索ボタン処理
-searchBtn.addEventListener("click", () => {
-  const nameVal = nameInput.value.trim();
-  const areaVal = areaSelect.value;
-  const clubVal = clubSelect.value;
-  const ratingVal = ratingSelect.value;
+<script src="./coaches.js"></script>
+<script src="./script.js"></script>
 
-  // 絞り込み処理
-  let filtered = window.COACHES.filter(c => {
-    return (
-      (!nameVal || c.name.includes(nameVal)) &&
-      (!areaVal || c.city === areaVal) &&
-      (!clubVal || c.club.includes(clubVal))
-    );
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const searchBtn = document.getElementById("searchBtn");
+  const nameInput = document.getElementById("searchName");
+  const areaSelect = document.getElementById("searchArea");
+  const clubSelect = document.getElementById("searchClub");
+  const ratingSelect = document.getElementById("searchRating");
+  const grid = document.getElementById("coachGrid");
+
+  if (!searchBtn) {
+    console.error("❌ searchBtnが見つかりません");
+    return;
+  }
+
+  searchBtn.addEventListener("click", () => {
+    const nameVal = nameInput.value.trim();
+    const areaVal = areaSelect.value;
+    const clubVal = clubSelect.value;
+    const ratingVal = ratingSelect ? ratingSelect.value : "";
+
+    console.log("検索値:", nameVal, areaVal, clubVal, ratingVal);
+
+    let filtered = window.COACHES.filter(c => {
+      return (
+        (!nameVal || c.name.includes(nameVal)) &&
+        (!areaVal || c.city === areaVal) &&
+        (!clubVal || c.club.includes(clubVal))
+      );
+    });
+
+    // ソート
+    if (ratingVal === "high") filtered.sort((a, b) => b.id - a.id);
+    if (ratingVal === "low") filtered.sort((a, b) => a.id - b.id);
+
+    // 一覧再描画
+    grid.innerHTML = filtered.map(c => `
+      <div class="coach-card">
+        <img src="${c.img}" alt="${c.name}">
+        <h3>${c.name}</h3>
+        <p>${c.city} | ${c.club}</p>
+      </div>
+    `).join("");
+
+    // 地図ピン更新
+    if (window.mapInstance) {
+      window.markers.forEach(obj => window.mapInstance.removeLayer(obj.marker));
+      window.markers = [];
+      filtered.forEach(c => {
+        const marker = L.marker([c.lat, c.lng]).addTo(window.mapInstance);
+        marker.bindPopup(`<b>${c.name}</b><br>${c.city}｜${c.club}`);
+        window.markers.push({ marker, coach: c });
+      });
+    }
   });
 
-  // 評価順の仮ソート（idで代用）
-  if (ratingVal === "high") filtered.sort((a, b) => b.id - a.id);
-  if (ratingVal === "low") filtered.sort((a, b) => a.id - b.id);
-
-  // 一覧を再描画
-  renderCoaches(filtered);
-
-  // ✅ 地図マーカーの更新
-  if (window.mapInstance) {
-    // 既存マーカー削除
-    window.markers.forEach(obj => {
-      if (obj.marker) window.mapInstance.removeLayer(obj.marker);
-    });
-    window.markers = [];
-
-    // 新しいマーカー追加
-    filtered.forEach(c => {
-      const marker = L.marker([c.lat, c.lng]).addTo(window.mapInstance);
-      marker.bindPopup(`<b>${c.name}</b><br>${c.city}｜${c.club}`);
-      window.markers.push({ marker, coach: c });
-    });
+  // 初期表示
+  if (window.COACHES) {
+    grid.innerHTML = window.COACHES.map(c => `
+      <div class="coach-card">
+        <img src="${c.img}" alt="${c.name}">
+        <h3>${c.name}</h3>
+        <p>${c.city} | ${c.club}</p>
+      </div>
+    `).join("");
   }
-});
-
-// 初期表示（全コーチ）
-renderCoaches(window.COACHES);
 });
 </script>
 </body>
