@@ -284,6 +284,21 @@ document.querySelectorAll(".coach-card").forEach(card => {
         <p>${c.city} | ${c.club}</p>
       </div>
     `).join("");
+    // ✅ コーチカードクリックで詳細ページへ遷移
+setTimeout(() => {
+  document.querySelectorAll(".coach-card").forEach(card => {
+    card.addEventListener("click", () => {
+      const name = card.querySelector("h3").textContent.trim();
+      const coach = window.COACHES.find(c => c.name === name);
+      if (coach) {
+        console.log("✅ コーチ詳細へ:", coach.id);
+        window.location.href = `coach.html?id=${coach.id}`;
+      } else {
+        console.warn("⚠ コーチが見つかりません:", name);
+      }
+    });
+  });
+}, 200);
   }
 });
 </script>
