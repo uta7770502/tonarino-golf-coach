@@ -1235,3 +1235,20 @@ html, body {
   color: #0b6657;
   margin: 0;
 }
+.coach-extra {
+  margin-top: 4px;
+  font-size: 11px;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  color: #00695c;
+}
+
+.stars {
+  font-weight: bold;
+}
+
+.price {
+  color: #ff8f00;
+  font-weight: 600;
+}
