@@ -51,11 +51,11 @@
 
     /* コーチカードグリッド */
     .coach-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 16px;
-      padding-bottom: 80px;
-    }
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* ✅ スマホでも3列固定 */
+  gap: 10px; /* スマホ幅に合わせて隙間を少し狭く */
+  padding-bottom: 60px; /* 下の余白も少し軽く */
+}
 
     .coach-card {
       background: #fff;
