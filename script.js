@@ -117,64 +117,29 @@ document.addEventListener("DOMContentLoaded", () => {
 // ===== 地図絞り込み検索機能 =====
 document.addEventListener("DOMContentLoaded", () => {
   const searchBtn = document.getElementById("searchBtn");
+  const clearBtn = document.getElementById("clearBtn");
   const nameInput = document.getElementById("searchName");
   const areaSelect = document.getElementById("searchArea");
   const clubSelect = document.getElementById("searchClub");
   const ratingSelect = document.getElementById("searchRating");
 
-  if (!searchBtn) return; // ページがstudent.htmlでない場合は無視
-searchBtn.addEventListener("click", () => {
+  if (!searchBtn || !clearBtn) {
+    console.warn("❗検索ボタンまたはクリアボタンが見つかりません");
+    return;
+  }
+
+  // ✅ 検索ボタン処理
+  searchBtn.addEventListener("click", () => {
     console.log("✅ 検索ボタンが押されました");
 
-console.log("🔍 入力値:", {
-  name: nameInput.value,
-  area: areaSelect.value,
-  club: clubSelect.value
-});
-  });
-  // ✅ クリアボタン処理
-const clearBtn = document.getElementById("clearBtn");
-clearBtn.addEventListener("click", () => {
-  console.log("🧹 クリアボタンが押されました");
-
-  // 入力・選択をリセット
-  nameInput.value = "";
-  areaSelect.value = "";
-  clubSelect.value = "";
-  if (ratingSelect) ratingSelect.value = "";
-
-  // ✅ 全コーチ再表示（先に一覧を戻す）
-  if (typeof renderCoaches === "function") {
-    renderCoaches(window.COACHES);
-  }
-
-  // ✅ タイトルをリセット
-  const title = document.querySelector("h2");
-  if (title) title.textContent = `コーチ一覧（${window.COACHES.length}名）`;
-
-  // ✅ 地図ピンも全件に戻す
-  if (window.mapInstance && Array.isArray(window.markers)) {
-    window.markers.forEach(obj => {
-      if (obj.marker) window.mapInstance.removeLayer(obj.marker);
-    });
-    window.markers = [];
-
-    window.COACHES.forEach(c => {
-      const marker = L.marker([c.lat, c.lng]).addTo(window.mapInstance);
-      marker.bindPopup(`<b>${c.name}</b><br>${c.city}｜${c.club}`);
-      window.markers.push({ marker, coach: c });
-    });
-  }
-
-  console.log("✅ 一覧と地図をリセットしました");
-});
-});
-  const nameVal = nameInput.value.trim();
+    const nameVal = nameInput.value.trim();
     const areaVal = areaSelect.value;
     const clubVal = clubSelect.value;
-    const ratingVal = ratingSelect.value;
+    const ratingVal = ratingSelect ? ratingSelect.value : "";
 
-    // コーチデータを絞り込み
+    console.log("🔍 入力値:", { nameVal, areaVal, clubVal, ratingVal });
+
+    // 🔽 コーチデータ絞り込み
     let filtered = window.COACHES.filter(c => {
       return (
         (!nameVal || c.name.includes(nameVal)) &&
@@ -183,28 +148,29 @@ clearBtn.addEventListener("click", () => {
       );
     });
 
-    // ソート
+    // 🔽 仮のソート（例：ID昇降）
     if (ratingVal === "high") filtered.sort((a, b) => b.id - a.id);
     if (ratingVal === "low") filtered.sort((a, b) => a.id - b.id);
 
-    // 一覧更新
+    // ✅ 一覧を更新
     const grid = document.getElementById("coachGrid");
-    grid.innerHTML = filtered.map(c => `
-      <div class="card">
-        <div class="row">
+    grid.innerHTML = filtered
+      .map(
+        c => `
+        <div class="coach-card">
           <img src="${c.img}" alt="${c.name}">
-          <div>
-            <h4>${c.name}</h4>
-            <p>${c.city}｜${c.club}</p>
-          </div>
-        </div>
-      </div>
-    `).join("");
+          <h3>${c.name}</h3>
+          <p>${c.city}｜${c.club}</p>
+        </div>`
+      )
+      .join("");
 
-    // 地図のピンを更新
+    // ✅ 地図マーカー更新
     if (window.mapInstance) {
       // 既存マーカー削除
-      window.markers.forEach(obj => window.mapInstance.removeLayer(obj.marker));
+      window.markers.forEach(obj => {
+        if (obj.marker) window.mapInstance.removeLayer(obj.marker);
+      });
       window.markers = [];
 
       // 新しいマーカー追加
@@ -214,5 +180,51 @@ clearBtn.addEventListener("click", () => {
         window.markers.push({ marker, coach: c });
       });
     }
+
+    console.log("✅ 一覧と地図を更新しました");
+  });
+
+  // ✅ クリアボタン処理
+  clearBtn.addEventListener("click", () => {
+    console.log("🧹 クリアボタンが押されました");
+
+    // 入力をリセット
+    nameInput.value = "";
+    areaSelect.value = "";
+    clubSelect.value = "";
+    if (ratingSelect) ratingSelect.value = "";
+
+    // 一覧を全件に戻す
+    if (typeof renderCoaches === "function") {
+      renderCoaches(window.COACHES);
+    } else {
+      const grid = document.getElementById("coachGrid");
+      grid.innerHTML = window.COACHES
+        .map(
+          c => `
+          <div class="coach-card">
+            <img src="${c.img}" alt="${c.name}">
+            <h3>${c.name}</h3>
+            <p>${c.city}｜${c.club}</p>
+          </div>`
+        )
+        .join("");
+    }
+
+    // 地図ピンを全件に戻す
+    if (window.mapInstance) {
+      window.markers.forEach(obj => {
+        if (obj.marker) window.mapInstance.removeLayer(obj.marker);
+      });
+      window.markers = [];
+
+      window.COACHES.forEach(c => {
+        const marker = L.marker([c.lat, c.lng]).addTo(window.mapInstance);
+        marker.bindPopup(`<b>${c.name}</b><br>${c.city}｜${c.club}`);
+        window.markers.push({ marker, coach: c });
+      });
+    }
+
+    console.log("✅ 全件リセット完了（一覧＋地図）");
   });
 });
