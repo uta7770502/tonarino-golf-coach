@@ -211,20 +211,22 @@ document.addEventListener("DOMContentLoaded", () => {
         .join("");
     }
 
-    // 地図ピンを全件に戻す
-    if (window.mapInstance) {
-      window.markers.forEach(obj => {
-        if (obj.marker) window.mapInstance.removeLayer(obj.marker);
-      });
-      window.markers = [];
-
-      window.COACHES.forEach(c => {
-        const marker = L.marker([c.lat, c.lng]).addTo(window.mapInstance);
-        marker.bindPopup(`<b>${c.name}</b><br>${c.city}｜${c.club}`);
-        window.markers.push({ marker, coach: c });
-      });
-    }
-
-    console.log("✅ 全件リセット完了（一覧＋地図）");
+   // ✅ 地図ピンを全件に戻す
+if (window.mapInstance) {
+  // 既存マーカー削除
+  window.markers.forEach(obj => {
+    if (obj.marker) window.mapInstance.removeLayer(obj.marker);
   });
+  window.markers = [];
+
+  // 全コーチのマーカーを再追加
+  window.COACHES.forEach(c => {
+    const marker = L.marker([c.lat, c.lng]).addTo(window.mapInstance);
+    marker.bindPopup(`<b>${c.name}</b><br>${c.city}｜${c.club}`);
+    window.markers.push({ marker, coach: c });
+  });
+}
+
+console.log("✅ 全件リセット完了（一覧＋地図）");
+});
 });
