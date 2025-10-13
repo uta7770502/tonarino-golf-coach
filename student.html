@@ -251,6 +251,16 @@ document.addEventListener("DOMContentLoaded", () => {
         <p>${c.city} | ${c.club}</p>
       </div>
     `).join("");
+    // ✅ コーチカードクリックで詳細ページへ遷移
+document.querySelectorAll(".coach-card").forEach(card => {
+  card.addEventListener("click", () => {
+    const name = card.querySelector("h3").textContent.trim();
+    const coach = window.COACHES.find(c => c.name === name);
+    if (coach) {
+      window.location.href = `coach.html?id=${coach.id}`;
+    }
+  });
+});
     document.querySelector("h2").textContent = `コーチ一覧（${filtered.length}名）`;
 
     // 地図ピン更新
