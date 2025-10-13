@@ -154,16 +154,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ✅ 一覧を更新
     const grid = document.getElementById("coachGrid");
-    grid.innerHTML = filtered
-      .map(
-        c => `
-        <div class="coach-card">
-          <img src="${c.img}" alt="${c.name}">
-          <h3>${c.name}</h3>
-          <p>${c.city}｜${c.club}</p>
-        </div>`
-      )
-      .join("");
+  grid.innerHTML = filtered.map(c => `
+  <div class="coach-card">
+    <img src="${c.img}" alt="${c.name}">
+    <h3>${c.name}</h3>
+    <p>${c.city} | ${c.club}</p>
+    <div class="coach-extra">
+      <span class="stars">⭐️ ${c.rating || "4.5"}</span>
+      <span class="price">💰 ${c.price || "¥6,000 / 60分"}</span>
+    </div>
+  </div>
+`).join("");
 
     // ✅ 地図マーカー更新
     if (window.mapInstance) {
