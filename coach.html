@@ -1,474 +1,65 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>コーチ詳細 | コーチの詳細</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>コーチ詳細</title>
+  <link rel="stylesheet" href="style.css">
   <style>
-    .coach-page{max-width:960px;margin:24px auto;padding:16px}
-    .coach-hero{display:flex;gap:16px;align-items:center;background:#fff;border-radius:18px;padding:18px;box-shadow:0 6px 20px rgba(0,0,0,.08)}
-    .coach-hero img{width:92px;height:92px;border-radius:50%;object-fit:cover}
-    .coach-name{font-size:28px;font-weight:800;color:#0b6657;letter-spacing:.04em}
-    .stars{display:inline-flex;gap:2px;vertical-align:middle;margin-left:6px}
-    .star{font-size:18px;color:#FFD95A}
-    .subline{color:#0b6657c0;margin-top:6px}
-    .pill-prices{display:flex;gap:8px}
-    .pill{background-color:#ffd95a;padding:6px 12px;border-radius:8px;text-align:center;font-weight:bold;color:#333;box-shadow:0 2px 4px rgba(0,0,0,0.1);line-height:1.2}
-    .pill p{margin:2px 0;font-size:14px}
-    .section-card{background:#fff;border-radius:18px;padding:18px;margin-top:18px;box-shadow:0 6px 20px rgba(0,0,0,.06)}
-    .video-wrap{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden}
-    .video-wrap iframe{position:absolute;inset:0;width:100%;height:100%}
-    .book-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .book-grid input,.book-grid select{width:100%;padding:12px 14px;border:1px solid #e7ecee;border-radius:12px;font-size:16px}
-    .btn-primary{display:block;width:100%;text-align:center;background:#FFD95A;border:none;border-radius:14px;padding:16px 18px;font-weight:800;color:#0b6657;margin-top:14px}
-    .back-link{display:inline-block;margin:10px 0 0;color:#0b6657;text-decoration:underline}
-    @media (max-width:720px){.coach-hero{flex-direction:column;align-items:flex-start}}
+    .video-frame {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+    .no-video {
+      border: 2px dashed #a7f3d0;
+      background: #f0fdfa;
+      border-radius: 12px;
+      padding: 30px;
+      text-align: center;
+      color: #065f46;
+      font-weight: 600;
+      font-size: 15px;
+    }
   </style>
 </head>
-
-<body class="detail">
+<body>
   <header class="site-header">
-    <h1>隣のゴルフコーチ</h1>
+    <h1 id="coachName">コーチ詳細</h1>
   </header>
 
-  <main class="coach-page">
-    <div class="back-buttons">
-  <a class="back-link" href="./student.html">コーチ一覧に戻る</a>
-  <a class="back-link mypage-link" href="./student-dashboard.html">マイページへ戻る</a>
-</div>
-    <!-- ヒーロー -->
-<section class="coach-hero">
-  <div class="coach-info">
-    <div class="coach-photo-wrap">
-      <img id="pPhoto" alt="コーチ写真" class="coach-photo" />
-    </div>
-    <div class="coach-text">
-      <h2 class="coach-name" id="pName">コーチ名</h2>
-      <p class="coach-tagline">得意クラブ：<span id="pTagline"></span></p>
-      <p class="coach-rentals">貸出し可能クラブ：<span id="pRentals"></span></p>
-    </div>
-  </div>
-</section>
-        <div class="pill-prices">
-          <div class="pill">
-            <p>30分レッスン</p>
-            <p><span id="pPrice1">¥2,000</span></p>
-          </div>
-          <div class="pill">
-            <p>60分レッスン</p>
-            <p><span id="pPrice2">¥4,000</span></p>
-          </div>
-        </div>
-
-        <!-- ======== 動画エリア ======== -->
-<div class="video-wrap" style="margin-top: 16px;">
-  <iframe
-    id="pVideo"
-    src=""
-    title="スイング動画"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen
-    style="width: 100%; aspect-ratio: 16 / 9; border-radius: 12px;"
-  ></iframe>
-</div>
-<!-- ============================ -->
-      </div>
-    </section>
-
-    <!-- 予約 -->
-    <section class="section-card">
-      <h3 style="margin:0 0 8px;">予約</h3>
-      <div class="book-grid">
-        <input type="date" id="pDate">
-        <select id="pTime">
-          <option value="14:00-15:00">14:00 - 15:00</option>
-          <option value="16:00-17:00">16:00 - 17:00</option>
-          <option value="18:00-19:00">18:00 - 19:00</option>
-        </select>
-        <select id="pDuration">
-          <option value="60">60分</option>
-          <option value="90">90分</option>
-        <a id="reserveLink" class="btn btn-outline" style="display:block;text-align:center;margin-top:10px;padding:10px;border-radius:8px;background:#fff;border:1px solid #ccc;color:#0b6657;text-decoration:none;">
-  このコーチを予約する
-</a>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const reserveLink = document.getElementById("reserveLink");
-  const coachId = new URLSearchParams(window.location.search).get("id");
-  if (coachId) {
-    reserveLink.href = `reservation.html?id=${coachId}`;
-  }
-});
-</script>
-        </select>
-        <select id="pPay">
-          <option>VISA</option>
-          <option>Mastercard</option>
-          <option>PayPay</option>
-        </select>
-      </div>
-      <button class="btn-primary" id="pBook">予約を確定する</button>
-      <p style="margin:10px 0 0;color:#6b7f85;font-size:14px;">※練習場利用料は別途現地払いとなります</p>
-    </section>
-
-    <!-- レビュー -->
-    <section class="review-section">
-      <h2>レビュー</h2>
-      <div id="reviewList" class="review-list">
-        <p>まだレビューはありません。</p>
-      </div>
-
-      <form id="reviewForm" class="review-form">
-        <h3>レビューを書く</h3>
-        <label>お名前：</label>
-        <input type="text" id="reviewName" required>
-
-        <label>評価：</label>
-        <select id="reviewRating">
-          <option value="5">★★★★★</option>
-          <option value="4">★★★★☆</option>
-          <option value="3">★★★☆☆</option>
-          <option value="2">★★☆☆☆</option>
-          <option value="1">★☆☆☆☆</option>
-        </select>
-
-        <label>コメント：</label>
-        <textarea id="reviewComment" rows="3" required></textarea>
-
-        <button type="submit" class="review-btn">投稿する</button>
-      </form>
-    </section>
+  <main style="padding: 1rem;">
+    <div id="coachDetail"></div>
   </main>
-<!-- ✅ 固定ナビ（戻る＆マイページ） -->
-<div class="bottom-nav">
-  <a href="student.html" class="nav-btn back">コーチ一覧</a>
-  <a href="student-dashboard.html" class="nav-btn home">マイページ</a>
-</div>
-  <script src="./coaches.js"></script>
-  <script src="./coach.js"></script>
 
-  <!-- ✅ 全機能統合スクリプト -->
+  <script src="coaches.js"></script>
   <script>
-  document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(location.search);
+    const id = Number(params.get("id"));
+    const coach = (JSON.parse(localStorage.getItem("coaches")) || []).find(c => c.id === id);
+    const container = document.getElementById("coachDetail");
 
-    // ❤️ お気に入り
-    const favBtn = document.createElement("button");
-    favBtn.textContent = "🤍 お気に入り追加";
-    favBtn.style.marginTop = "10px";
-    favBtn.style.background = "#ffd95a";
-    favBtn.style.border = "none";
-    favBtn.style.padding = "6px 10px";
-    favBtn.style.borderRadius = "6px";
-    favBtn.style.cursor = "pointer";
-    document.querySelector(".hero-right")?.appendChild(favBtn);
-(document.querySelector(".hero-right") || document.querySelector(".coach-hero"))?.appendChild(favBtn);
-    favBtn.addEventListener("click", () => {
-      let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-      const coachData = {
-        id: new URLSearchParams(window.location.search).get("id") || "",
-        name: document.getElementById("pName")?.textContent || "名前不明",
-        photo: document.getElementById("pPhoto")?.src || "",
-        rating: document.querySelectorAll("#pStars .star")?.length || 5
-      };
-      const exists = favorites.some((f) => f.id === coachData.id);
-      if (exists) {
-        favorites = favorites.filter((f) => f.id !== coachData.id);
-        localStorage.setItem("favorites", JSON.stringify(favorites));
-        favBtn.textContent = "🤍 お気に入り追加";
-        alert(`${coachData.name} をお気に入りから削除しました`);
+    if (!coach) {
+      container.innerHTML = "<p>コーチ情報が見つかりません。</p>";
+    } else {
+      let videoHTML = "";
+      if (coach.videoUrl) {
+        const vid = new URL(coach.videoUrl).searchParams.get("v");
+        videoHTML = `<iframe class="video-frame" src="https://www.youtube.com/embed/${vid}" allowfullscreen></iframe>`;
       } else {
-        favorites.push(coachData);
-        localStorage.setItem("favorites", JSON.stringify(favorites));
-        favBtn.textContent = "❤️ 登録中";
-        alert(`${coachData.name} をお気に入りに追加しました`);
+        videoHTML = `<div class="no-video">🎬 コーチのスイング動画は準備中です</div>`;
       }
-    });
-// メッセージ送信処理
-document.getElementById("sendMessageBtn")?.addEventListener("click", () => {
-  const name = document.getElementById("messageName").value;
-  const message = document.getElementById("messageText").value;
-  const coach = document.getElementById("pName").textContent; // コーチ名取得
 
-  if (!name || !message) {
-    alert("お名前とメッセージを入力してください。");
-    return;
-  }
-
-  const messages = JSON.parse(localStorage.getItem("messages")) || [];
-  messages.push({
-    coach,
-    name,
-    message,
-    date: new Date().toLocaleString()
-  });
-  localStorage.setItem("messages", JSON.stringify(messages));
-
-  alert("📩 メッセージを送信しました！");
-  document.getElementById("messageName").value = "";
-  document.getElementById("messageText").value = "";
-});
-    // 💬 メッセージ履歴の表示処理
-document.addEventListener("DOMContentLoaded", () => {
-  const messageList = document.getElementById("messageList");
-  const coach = document.getElementById("pName")?.textContent || "未設定";
-
-  if (!messageList) return;
-
-  const messages = JSON.parse(localStorage.getItem("messages")) || [];
-  const filtered = messages.filter((m) => m.coach === coach);
-
-  if (filtered.length === 0) {
-    messageList.innerHTML = "<p>まだメッセージはありません。</p>";
-  } else {
-    messageList.innerHTML = filtered
-      .map(
-        (m) =>
-          `<div class="message-item">
-             <p><strong>${m.name}</strong> (${m.date})</p>
-             <p>${m.message}</p>
-           </div>`
-      )
-      .join("");
-  }
-});
-    // ✅ 予約処理
-    const bookBtn = document.querySelector(".btn-primary");
-    const dateInput = document.getElementById("pDate");
-    const timeSelect = document.getElementById("pTime");
-    const durationSelect = document.getElementById("pDuration");
-    const paySelect = document.getElementById("pPay");
-
-    if (bookBtn) {
-      bookBtn.addEventListener("click", () => {
-        const date = dateInput.value || "日付未選択";
-        const time = timeSelect.value;
-        const duration = durationSelect.value;
-        const pay = paySelect.value;
-        const coach = document.getElementById("pName")?.textContent || "不明なコーチ";
-
-        const booking = { date, time, duration, pay, coach };
-        let bookings = JSON.parse(localStorage.getItem("bookings") || "[]");
-        bookings.push(booking);
-        localStorage.setItem("bookings", JSON.stringify(bookings));
-
-        alert(`✅ 予約が完了しました！\n\nコーチ：${coach}\n日時：${date} ${time}\n時間：${duration}分\n支払い：${pay}`);
-      });
-    }
-
-    // ✅ レビュー
-    const reviewForm = document.getElementById("reviewForm");
-    const reviewList = document.getElementById("reviewList");
-    if (reviewForm) {
-      let reviews = JSON.parse(localStorage.getItem("reviews") || "[]");
-      renderReviews();
-
-      reviewForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const name = document.getElementById("reviewName").value || "匿名";
-        const rating = document.getElementById("reviewRating").value;
-        const comment = document.getElementById("reviewComment").value;
-        const newReview = { name, rating, comment, date: new Date().toLocaleDateString() };
-        reviews.push(newReview);
-        localStorage.setItem("reviews", JSON.stringify(reviews));
-        renderReviews();
-        reviewForm.reset();
-        alert("📘 レビューを投稿しました！");
-      });
-
-      function renderReviews() {
-        reviewList.innerHTML = "";
-        if (reviews.length === 0) {
-          reviewList.innerHTML = "<p>まだレビューはありません。</p>";
-          return;
-        }
-        reviews.slice().reverse().forEach((r) => {
-          const div = document.createElement("div");
-          div.classList.add("review-card");
-          div.innerHTML = `
-            <p><strong>${r.name}</strong> (${r.date})</p>
-            <p>評価：${"★".repeat(r.rating)}${"☆".repeat(5 - r.rating)}</p>
-            <p>${r.comment}</p>
-            <hr/>
-          `;
-          reviewList.appendChild(div);
-        });
-      }
-    }
-
-    // メッセージ送信
-    const bookingSection = document.querySelector(".section-card");
-    if (bookingSection) {
-      const msgBtn = document.createElement("button");
-      msgBtn.textContent = "コーチにメッセージを送る";
-      msgBtn.style.marginTop = "15px";
-      msgBtn.style.background = "#4caf50";
-      msgBtn.style.color = "#fff";
-      msgBtn.style.border = "none";
-      msgBtn.style.padding = "10px 14px";
-      msgBtn.style.borderRadius = "6px";
-      msgBtn.style.cursor = "pointer";
-      msgBtn.style.width = "100%";
-      bookingSection.insertAdjacentElement("afterend", msgBtn);
-
-      const msgForm = document.createElement("div");
-      msgForm.innerHTML = `
-        <div style="margin-top:10px; background:#f9f9f9; padding:10px; border-radius:6px;">
-          <label>お名前：</label><br>
-          <input type="text" id="msgName" style="width:100%; margin-bottom:6px;"><br>
-          <label>メッセージ：</label><br>
-          <textarea id="msgContent" rows="3" style="width:100%;"></textarea><br>
-          <button id="sendMsgBtn" style="margin-top:6px; background:#2196f3; color:#fff; border:none; padding:6px 10px; border-radius:4px;">送信</button>
-        </div>
+      container.innerHTML = `
+        <img src="${coach.photo}" style="width:100%;border-radius:10px;">
+        <h2>${coach.name}</h2>
+        <p>${coach.speciality}</p>
+        <p>貸し出しクラブ：${coach.rentals}</p>
+        <p>30分 ¥${coach.price30}〜</p>
+        ${videoHTML}
       `;
-      // 💬 メッセージ履歴の表示エリアを追加
-const msgHistory = document.createElement("div");
-msgHistory.id = "msgHistory";
-msgHistory.style.marginTop = "15px";
-msgHistory.style.background = "#fff";
-msgHistory.style.padding = "10px";
-msgHistory.style.borderRadius = "6px";
-msgHistory.style.boxShadow = "0 1px 3px rgba(0,0,0,0.1)";
-msgHistory.innerHTML = "<h4>📩 メッセージ履歴</h4><div id='messageList'></div>";
-bookingSection.insertAdjacentElement("beforeend", msgHistory);
-
-// 💬 履歴読み込み＆表示
-document.addEventListener("DOMContentLoaded", () => {
-  const list = document.getElementById("messageList");
-  if (!list) return;
-
-  const coach = document.getElementById("pName")?.textContent || "未設定";
-  const messages = JSON.parse(localStorage.getItem("messages")) || [];
-  const filtered = messages.filter((m) => m.coach === coach);
-
-  if (filtered.length === 0) {
-    list.innerHTML = "<p>まだメッセージはありません。</p>";
-  } else {
-    list.innerHTML = filtered
-      .map(
-        (m) =>
-          `<div style="margin-bottom:8px;padding:6px;border-bottom:1px solid #eee;">
-            <strong>${m.name}</strong> (${m.date})<br>
-            ${m.message}
-          </div>`
-      )
-      .join("");
-  }
-});
-      msgForm.style.display = "none";
-      bookingSection.insertAdjacentElement("afterend", msgForm);
-
-      msgBtn.addEventListener("click", () => {
-        msgForm.style.display = msgForm.style.display === "none" ? "block" : "none";
-      });
-
-      msgForm.querySelector("#sendMsgBtn").addEventListener("click", () => {
-        const name = document.getElementById("msgName").value.trim();
-        const content = document.getElementById("msgContent").value.trim();
-        const coachId = new URLSearchParams(window.location.search).get("id") || "unknown";
-
-        if (!name || !content) {
-          alert("名前とメッセージを入力してください！");
-          return;
-        }
-
-        const message = { coachId, name, content, date: new Date().toLocaleString() };
-        const allMessages = JSON.parse(localStorage.getItem("messages") || "[]");
-        allMessages.push(message);
-        localStorage.setItem("messages", JSON.stringify(allMessages));
-
-        alert("💬 メッセージを送信しました！");
-        document.getElementById("msgName").value = "";
-        document.getElementById("msgContent").value = "";
-        msgForm.style.display = "none";
-      });
     }
-  });
   </script>
-<!-- メッセージなど他の script が終わったあとに必ずこれ -->
-<script src="./coaches.js"></script>
-<script src="./coach.js"></script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  // URLパラメータからコーチIDを取得（例：?id=1）
-  const params = new URLSearchParams(window.location.search);
-  const coachId = params.get("id");
-
-  // localStorageに保存されている管理ページデータを取得
-  const saved = JSON.parse(localStorage.getItem("coachProfile"));
-
-  // 通常のCOACHES配列を取得（既存のcoaches.js）
-  const coach = window.COACHES.find(c => c.id == coachId);
-
-  // localStorageに同一コーチ名があれば優先して反映
-  if (saved && saved.name === coach.name) {
-    document.getElementById("pName").textContent = saved.name;
-    document.getElementById("pTagline").textContent = saved.speciality;
-    document.getElementById("pRentals").textContent = saved.rentals;
-    document.getElementById("pPrice1").textContent = `¥${saved.price30}〜`;
-    document.getElementById("pPrice2").textContent = `¥${saved.price60}〜`;
-    document.getElementById("pBio").textContent = saved.intro || coach.bio;
-
-    // タグリスト更新（得意クラブ）
-    const tagContainer = document.getElementById("pTags");
-    if (tagContainer) {
-      tagContainer.innerHTML = "";
-      saved.speciality.split(/[・,、\s]+/).forEach(tag => {
-        if (tag.trim()) {
-          const span = document.createElement("span");
-          span.textContent = "#" + tag.trim();
-          tagContainer.appendChild(span);
-        }
-      });
-    }
-  } else {
-    // 通常通りcoaches.jsのデータを表示
-    if (coach) {
-      document.getElementById("pName").textContent = coach.name;
-      document.getElementById("pTagline").textContent = coach.club;
-      document.getElementById("pRentals").textContent = coach.rentals.join("、");
-      document.getElementById("pPrice1").textContent = coach.price;
-      document.getElementById("pBio").textContent = coach.city;
-    }
-  }
-});
-  <script>
-window.addEventListener("load", () => {
-  const saved = JSON.parse(localStorage.getItem("coachData"));
-  const videoWrap = document.querySelector(".video-wrap");
-  const videoFrame = document.getElementById("pVideo");
-
-  // 🎬 動画URLが登録されている場合
-  if (saved && saved.videoUrl && saved.videoUrl.trim() !== "") {
-    const embedUrl = saved.videoUrl.replace("watch?v=", "embed/");
-    if (videoFrame) {
-      videoFrame.src = embedUrl;
-      videoFrame.style.display = "block";
-    }
-  }
-  // 📭 動画URLが空 or 無効な場合
-  else {
-    if (videoFrame) videoFrame.style.display = "none";
-    if (videoWrap) {
-      videoWrap.innerHTML = `
-        <div style="
-          background-color:#f0fdfa;
-          border:2px dashed #a7f3d0;
-          border-radius:12px;
-          padding:30px;
-          text-align:center;
-          color:#065f46;
-          font-weight:600;
-          font-size:15px;
-        ">
-          🎥 コーチのスイング動画は準備中です！
-        </div>
-      `;
-    }
-  }
-});
-</script>
 </body>
 </html>
