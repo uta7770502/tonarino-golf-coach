@@ -1252,3 +1252,13 @@ html, body {
   color: #ff8f00;
   font-weight: 600;
 }
+.coach-tagline,
+.coach-rentals {
+  margin: 4px 0;
+  color: #444;
+  font-size: 14px;
+}
+.coach-rentals span {
+  color: #004d40;
+  font-weight: 500;
+}
