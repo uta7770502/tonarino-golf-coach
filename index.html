@@ -1,90 +1,96 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>隣のゴルフコーチ</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>コーチ一覧 | 隣のゴルフコーチ</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
-  body {
-    margin: 0;
-    padding: 0;
-    background: #b2f1eb;
-  }
-
-  main {
-    margin: 0;
-    padding: 0;
-  }
-
-  .hero-illustration {
-  text-align: center;
-}
-
-.hero-illustration img {
-  width: 120px; /* 今のサイズを維持 */
-  height: auto;
-  margin-top: 50px; /* ← これで下に移動（数値で微調整） */
-}
-
-  .button-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px; /* ボタンの間隔を維持 */
-  margin-top: 50px; /* ← 小さいほど上に上がる（例: 20px〜60pxで微調整） */
-}
-
-  * {
-    box-sizing: border-box;
-  }
-
-  html, body {
-    height: auto;
-    overflow-x: hidden;
-  }
-</style>
+    .coach-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1rem;
+      padding: 1rem;
+    }
+    .coach-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+    .coach-card:hover {
+      transform: scale(1.03);
+    }
+    .coach-card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .coach-card .badge {
+      display: inline-block;
+      background: #2ecc71;
+      color: white;
+      font-size: 0.8em;
+      padding: 2px 6px;
+      border-radius: 5px;
+      margin-top: 5px;
+    }
+  </style>
 </head>
 <body>
   <header class="site-header">
-    <h1>隣のゴルフコーチ</h1>
+    <h1>コーチ一覧</h1>
   </header>
 
-  <main class="home-select">
-    <div class="hero-illustration">
-      <img src="IMG_6801.png" alt="地図とピンのイラスト">
-    </div>
+  <main>
+    <section class="coach-list" id="coachList"></section>
+  </main>
 
-    <div class="button-container">
-    <a href="login.html?type=student" class="main-btn student-btn">生徒になる</a>
-    <a href="login.html?type=coach" class="main-btn coach-btn">コーチになる</a>
-  </div>
-</main>
-
-  <footer class="site-footer">
-    <p>© 2025 Tonarino Golf Coach</p>
+  <footer class="footer-nav">
+    <nav>
+      <a href="index.html" class="active">ホーム</a>
+      <a href="student.html">地図で探す</a>
+      <a href="coach-dashboard.html">コーチ管理</a>
+    </nav>
   </footer>
 
-  <!--
+  <script src="coaches.js"></script>
   <script>
-  // 生徒になる・コーチになるボタンを確実に動作させる
-  document.querySelectorAll(".card-btn").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      const href = btn.getAttribute("href");
-      if (href) {
-        // 生徒ボタンは student.html に、コーチボタンは coach-dashboard.html に飛ばす
-        if (href.includes("student")) {
-          window.location.href = "student.html";
-        } else if (href.includes("coach")) {
-          window.location.href = "coach-dashboard.html";
-        } else {
-          window.location.href = href;
+    const coaches = JSON.parse(localStorage.getItem("coaches")) || [];
+    const list = document.getElementById("coachList");
+
+    if (coaches.length === 0) {
+      list.innerHTML = "<p>コーチ情報がまだ登録されていません。</p>";
+    } else {
+      coaches.forEach(coach => {
+        // YouTube サムネイル取得
+        let thumbnail = coach.photo;
+        if (coach.videoUrl.includes("youtube.com/watch")) {
+          const videoId = new URL(coach.videoUrl).searchParams.get("v");
+          thumbnail = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
         }
-      }
-    });
-  });
-</script>
--->
+
+        // 動画バッジ
+        const badge = coach.videoUrl ? '<span class="badge">🎥 動画あり</span>' : "";
+
+        // カード生成
+        const card = document.createElement("div");
+        card.className = "coach-card";
+        card.innerHTML = `
+          <img src="${thumbnail}" alt="${coach.name}">
+          <h3>${coach.name}</h3>
+          <p>${coach.prefecture}</p>
+          ${badge}
+          <p>${coach.speciality}</p>
+          <p>30分 ¥${coach.price30}</p>
+        `;
+        card.addEventListener("click", () => {
+          window.location.href = \`coach.html?id=${coach.id}\`;
+        });
+        list.appendChild(card);
+      });
+    }
+  </script>
 </body>
 </html>
