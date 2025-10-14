@@ -440,15 +440,16 @@ window.addEventListener("load", () => {
   const videoWrap = document.querySelector(".video-wrap");
   const videoFrame = document.getElementById("pVideo");
 
+  // 🎬 動画URLが登録されている場合
   if (saved && saved.videoUrl && saved.videoUrl.trim() !== "") {
-    // 🎬 URLがある場合 → 埋め込み
     const embedUrl = saved.videoUrl.replace("watch?v=", "embed/");
     if (videoFrame) {
       videoFrame.src = embedUrl;
       videoFrame.style.display = "block";
     }
-  } else {
-    // 📭 URLがない場合 → メッセージ表示
+  }
+  // 📭 動画URLが空 or 無効な場合
+  else {
     if (videoFrame) videoFrame.style.display = "none";
     if (videoWrap) {
       videoWrap.innerHTML = `
