@@ -1,4 +1,4 @@
-/// coaches.js
+// coaches.js
 const coaches = [
   {
     id: 1,
@@ -36,7 +36,18 @@ const coaches = [
     photo: "https://i.pravatar.cc/150?img=3",
     videoUrl: "https://www.youtube.com/watch?v=ysz5S6PUM-U"
   },
-  // --- 以下、仮データで20名ぶん ---
+  {
+    id: 4,
+    name: "伊藤 健",
+    prefecture: "愛知県",
+    speciality: "バンカー",
+    rentals: "サンドウェッジ, ピッチングウェッジ",
+    price30: 2000,
+    price60: 4000,
+    price90: 5000,
+    photo: "https://i.pravatar.cc/150?img=4",
+    videoUrl: ""
+  }
 ];
 
 localStorage.setItem("coaches", JSON.stringify(coaches));
