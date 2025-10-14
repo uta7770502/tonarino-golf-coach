@@ -61,15 +61,10 @@
           </div>
         </div>
 
-        <div class="video-wrap">
-          <iframe id="pVideo"
-            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-            title="スイング動画"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-          </iframe>
-        </div>
+        <div class="video-section">
+  <iframe id="coachVideo" width="100%" height="200" 
+    src="" frameborder="0" allowfullscreen></iframe>
+     </div>
       </div>
     </section>
 
@@ -430,6 +425,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 });
+  <script>
+window.addEventListener("load", () => {
+  const saved = JSON.parse(localStorage.getItem("coachProfile"));
+  if (saved && saved.videoUrl) {
+    const videoFrame = document.getElementById("pVideo");
+    const embedUrl = saved.videoUrl.replace("watch?v=", "embed/");
+    videoFrame.src = embedUrl;
+  }
+});
+</script>
 </script>
 </body>
 </html>
