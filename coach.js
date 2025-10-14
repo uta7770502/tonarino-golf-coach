@@ -21,36 +21,39 @@ document.addEventListener("DOMContentLoaded", () => {
   const el = id => document.getElementById(id);
 
   // 画像
-  if (el("pPhoto")) el("pPhoto").src = c.img;
+  if (el("pPhoto") && c.img) el("pPhoto").src = c.img;
 
   // 名前
-  if (el("pName")) el("pName").textContent = c.name;
+  if (el("pName")) el("pName").textContent = c.name || "コーチ名不明";
 
   // 得意クラブ
   if (el("pTagline")) {
-    el("pTagline").textContent = c.club ? c.club : "未登録";
+    el("pTagline").textContent = c.club
+      ? `得意クラブ：${c.club}`
+      : "得意クラブ：未登録";
   }
 
   // 貸出可能クラブ
   if (el("pRentals")) {
     el("pRentals").textContent =
-      c.rentals && c.rentals.length > 0
-        ? c.rentals.join("、")
-        : "なし";
+      Array.isArray(c.rentals) && c.rentals.length > 0
+        ? `貸出し可能クラブ：${c.rentals.join("、")}`
+        : "貸出し可能クラブ：なし";
   }
 
   console.log("✅ コーチ詳細読み込み完了:", c.name);
-});
-  // 🔗 「コーチ一覧に戻る」リンクを設定
+
+  // 🔗 「コーチ一覧に戻る」リンク設定
   const backLink = document.querySelector(".back-link");
   if (backLink) {
     backLink.addEventListener("click", (e) => {
       e.preventDefault();
-      window.location.href = "./student.html"; // ← コーチ一覧ページ
+      window.location.href = "./student.html"; // ← 一覧ページ
     });
   }
-});
-  }
 
-  loadReviews();
+  // 📋 レビュー機能を読み込み
+  if (typeof loadReviews === "function") {
+    loadReviews();
+  }
 });
