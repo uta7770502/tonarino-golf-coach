@@ -6,7 +6,107 @@
   <title>コーチ管理 | 隣のゴルフコーチ</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* ===== 編集フォームを中央に配置 ===== */
+    .edit-form {
+      display: none;
+      width: 90%;
+      max-width: 480px;
+      margin: 25px auto;
+      background: #ffffff;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: left;
+    }
+
+    .edit-form label {
+      display: block;
+      font-weight: bold;
+      margin-top: 10px;
+      color: #333;
+    }
+
+    .edit-form input,
+    .edit-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    .edit-form button {
+      width: 48%;
+      padding: 10px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    #saveBtn {
+      background: #007f73;
+      color: white;
+    }
+
+    #cancelBtn {
+      background: #ccc;
+      color: #333;
+    }
+
+    .edit-btn {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      background: #007f73;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .profile-card {
+      text-align: center;
+      background: #f8fffc;
+      border-radius: 12px;
+      padding: 15px;
+      margin: 10px auto;
+      width: 95%;
+      max-width: 500px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .profile-card img {
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+    }
+
+    .tags span {
+      background: #b2f2e9;
+      padding: 5px 10px;
+      border-radius: 20px;
+      margin: 3px;
+      display: inline-block;
+      color: #004c3f;
+      font-weight: 500;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  </style>
 </head>
+
 <body class="coach-dashboard">
   <header class="site-header">
     <h1>コーチ管理</h1>
@@ -15,7 +115,7 @@
   <main>
     <!-- プロフィール -->
     <section class="profile-card">
-      <img src="https://i.pravatar.cc/150?img=3" alt="コーチ写真" class="profile-img" id="profileImg">
+      <img src="https://i.pravatar.cc/150?img=3" alt="コーチ写真" id="profileImg">
       <div class="profile-info">
         <h2 id="coachName">佐藤 コーチ</h2>
         <p id="coachBio">ドライバー・飛距離アップが得意です！</p>
@@ -25,24 +125,21 @@
         </div>
         <p id="rentalClubs">貸出クラブ：ドライバー、フェアウェイウッド、パター</p>
       </div>
-      <!-- 編集フォーム -->
-      <div id="editForm" class="edit-form" style="display:none;">
-        <label>名前：<input type="text" id="editName" value="佐藤 コーチ"></label><br>
-        <label>得意クラブ：
-          <input type="text" id="editSpeciality" value="ドライバー・アプローチ">
-        </label><br>
-        <label>貸し出せるクラブ：
-          <input type="text" id="editRentals" value="ドライバー, フェアウェイウッド, パター">
-        </label><br>
-        <label>紹介文：
-          <textarea id="editIntro">ドライバー・飛距離アップが得意です！</textarea>
-        </label><br>
-        <label>30分料金：<input type="number" id="edit30" value="2000"></label><br>
-        <label>60分料金：<input type="number" id="edit60" value="3000"></label><br>
-        <label>90分料金：<input type="number" id="edit90" value="5000"></label><br>
-      </div>
       <button id="editBtn" class="edit-btn">編集する</button>
     </section>
+
+    <!-- ✅ 編集フォーム（カードの外・中央に配置） -->
+    <div id="editForm" class="edit-form">
+      <label>名前：<input type="text" id="editName" value="佐藤 コーチ"></label>
+      <label>得意クラブ：<input type="text" id="editSpeciality" value="ドライバー・アプローチ"></label>
+      <label>貸し出せるクラブ：<input type="text" id="editRentals" value="ドライバー, フェアウェイウッド, パター"></label>
+      <label>紹介文：<textarea id="editIntro">ドライバー・飛距離アップが得意です！</textarea></label>
+      <label>30分料金：<input type="number" id="edit30" value="2000"></label>
+      <label>60分料金：<input type="number" id="edit60" value="3000"></label>
+      <label>90分料金：<input type="number" id="edit90" value="5000"></label>
+      <button id="saveBtn">保存</button>
+      <button id="cancelBtn">キャンセル</button>
+    </div>
 
     <!-- 料金設定 -->
     <section class="section-card">
@@ -52,40 +149,6 @@
         <p id="price60">60分 ¥3,000〜</p>
         <p id="price90">90分 ¥5,000〜</p>
       </div>
-    </section>
-
-    <!-- スケジュール -->
-    <section class="section-card">
-      <h3>スケジュール</h3>
-      <ul id="scheduleItems"></ul>
-      <div id="addSchedule">
-        <input type="date" id="dateInput">
-        <input type="time" id="startInput">
-        <input type="time" id="endInput">
-        <input type="text" id="studentInput" placeholder="生徒名">
-        <button id="addBtn">＋ 追加</button>
-      </div>
-    </section>
-
-    <!-- 売上管理 -->
-    <section class="section-card">
-      <h3>今月の売上</h3>
-      <div id="sales-container">
-        <p>30分レッスン：<input type="number" id="sales30" value="0"> 回</p>
-        <p>60分レッスン：<input type="number" id="sales60" value="0"> 回</p>
-        <p>90分レッスン：<input type="number" id="sales90" value="0"> 回</p>
-        <button id="calcSalesBtn">売上計算</button>
-      </div>
-      <div id="sales-result">
-        <p>売上合計：<strong id="salesTotal">¥0</strong></p>
-        <p>入金予定日：<strong id="salesDate">-</strong></p>
-      </div>
-    </section>
-
-    <!-- 売上推移 -->
-    <section class="section-card">
-      <h3>売上推移</h3>
-      <canvas id="salesChart" width="400" height="200"></canvas>
     </section>
   </main>
 
