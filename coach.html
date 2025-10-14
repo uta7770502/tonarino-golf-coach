@@ -428,10 +428,32 @@ document.addEventListener("DOMContentLoaded", () => {
   <script>
 window.addEventListener("load", () => {
   const saved = JSON.parse(localStorage.getItem("coachProfile"));
+  const videoWrap = document.querySelector(".video-wrap");
+
   if (saved && saved.videoUrl) {
     const videoFrame = document.getElementById("pVideo");
-    const embedUrl = saved.videoUrl.replace("watch?v=", "embed/");
-    videoFrame.src = embedUrl;
+    if (videoFrame) {
+      const embedUrl = saved.videoUrl.replace("watch?v=", "embed/");
+      videoFrame.src = embedUrl;
+    }
+  } else {
+    // 動画がない場合はメッセージを表示
+    if (videoWrap) {
+      videoWrap.innerHTML = `
+        <div style="
+          background-color: #f0fdfa;
+          border: 2px dashed #a7f3d0;
+          border-radius: 12px;
+          padding: 30px;
+          text-align: center;
+          color: #065f46;
+          font-weight: 600;
+          font-size: 15px;
+        ">
+          🎥 コーチのスイング動画は準備中です！
+        </div>
+      `;
+    }
   }
 });
 </script>
