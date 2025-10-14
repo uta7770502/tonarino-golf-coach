@@ -1577,4 +1577,53 @@ html, body {
   .club-card {
     flex: 1 1 100%;
   }
+/* 横並びカード全体 */
+.club-card-row.fixed-two {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: nowrap; /* ← これでスマホでも横並び固定 */
+}
+
+/* 各カード */
+.club-card {
+  flex: 0 0 48%;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  padding: 12px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* タイトル */
+.club-card h4 {
+  font-size: 15px;
+  color: #007a5c;
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+/* タグデザイン */
+.club-tags span {
+  display: inline-block;
+  background-color: #bdf3dd;
+  color: #00452f;
+  padding: 6px 10px;
+  border-radius: 12px;
+  margin: 3px 3px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* カードのホバーアニメーション */
+.club-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
 }
