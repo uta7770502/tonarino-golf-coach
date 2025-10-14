@@ -1384,3 +1384,35 @@ html, body {
   background: #ddd;
   color: #333;
 }
+/* コンパクト料金レイアウト */
+.compact-price {
+  padding: 10px 15px;
+}
+
+.price-list {
+  list-style: none;
+  padding: 0;
+  margin: 5px 0 0 0;
+}
+
+.price-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid #d9ede9;
+  font-size: 15px;
+  color: #004c3f;
+}
+
+.price-list li:last-child {
+  border-bottom: none;
+}
+
+.price-list span {
+  font-weight: 500;
+}
+
+.price-list strong {
+  font-weight: 600;
+  color: #00372a;
+}
