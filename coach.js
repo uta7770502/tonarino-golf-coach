@@ -41,6 +41,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   console.log("✅ コーチ詳細読み込み完了:", c.name);
 });
+  // 🔗 「コーチ一覧に戻る」リンクを設定
+  const backLink = document.querySelector(".back-link");
+  if (backLink) {
+    backLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      window.location.href = "./student.html"; // ← コーチ一覧ページ
+    });
+  }
+});
   }
 
   loadReviews();
