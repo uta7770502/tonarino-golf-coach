@@ -341,7 +341,7 @@ localStorage.setItem("coachProfile", JSON.stringify(coachData));
       $("#price60").textContent = `60分 ¥${saved.price60}〜`;
       $("#price90").textContent = `90分 ¥${saved.price90}〜`;
       $("#rentalClubs").textContent = "貸出クラブ：" + saved.rentals;
-
+　　　$("#editVideo").value = saved.videoUrl || "";
       const tagsEl = $("#specialityTags");
       tagsEl.innerHTML = "";
       saved.speciality.split(/[・,、\s]+/).forEach(tag => {
