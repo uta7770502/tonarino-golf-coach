@@ -436,32 +436,31 @@ document.addEventListener("DOMContentLoaded", () => {
 });
   <script>
 window.addEventListener("load", () => {
-  const saved = JSON.parse(localStorage.getItem("coachProfile"));
+  const saved = JSON.parse(localStorage.getItem("coachData"));
   const videoWrap = document.querySelector(".video-wrap");
   const videoFrame = document.getElementById("pVideo");
 
   if (saved && saved.videoUrl && saved.videoUrl.trim() !== "") {
-    // URLがある場合はiframeに埋め込み
+    // 🎬 URLがある場合 → 埋め込み
     const embedUrl = saved.videoUrl.replace("watch?v=", "embed/");
     if (videoFrame) {
       videoFrame.src = embedUrl;
       videoFrame.style.display = "block";
     }
   } else {
-    // URLがない場合はiframeを非表示にしてメッセージ表示
+    // 📭 URLがない場合 → メッセージ表示
     if (videoFrame) videoFrame.style.display = "none";
-
     if (videoWrap) {
       videoWrap.innerHTML = `
         <div style="
-          background-color: #f0fdfa;
-          border: 2px dashed #a7f3d0;
-          border-radius: 12px;
-          padding: 30px;
-          text-align: center;
-          color: #065f46;
-          font-weight: 600;
-          font-size: 15px;
+          background-color:#f0fdfa;
+          border:2px dashed #a7f3d0;
+          border-radius:12px;
+          padding:30px;
+          text-align:center;
+          color:#065f46;
+          font-weight:600;
+          font-size:15px;
         ">
           🎥 コーチのスイング動画は準備中です！
         </div>
