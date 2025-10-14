@@ -1431,18 +1431,9 @@ html, body {
   display: inline-block;
   background-color: #bdf3dd;
   color: #00452f;
-  padding: 4px 8px;
-  border-radius: 6px;
-  margin: 2px;
+  padding: 5px 10px;
+  border-radius: 12px;
+  margin: 3px 4px 0 0;
   font-size: 13px;
-}
-
-.club-rentals span {
-  display: inline-block;
-  background-color: #f3f3f3;
-  color: #444;
-  padding: 4px 8px;
-  border-radius: 6px;
-  margin: 2px;
-  font-size: 13px;
+  font-weight: 500;
 }
