@@ -133,18 +133,33 @@
       <button id="editBtn" class="edit-btn">編集する</button>
     </section>
 
-    <!-- 編集フォーム（カードの外に配置） -->
-    <div id="editForm" class="edit-form">
-      <label>名前：<input type="text" id="editName" value="佐藤 コーチ"></label>
-      <label>得意クラブ：<input type="text" id="editSpeciality" value="ドライバー・アプローチ"></label>
-      <label>貸し出せるクラブ：<input type="text" id="editRentals" value="ドライバー, フェアウェイウッド, パター"></label>
-      <label>紹介文：<textarea id="editIntro">ドライバー・飛距離アップが得意です！</textarea></label>
-      <label>30分料金：<input type="number" id="edit30" value="2000"></label>
-      <label>60分料金：<input type="number" id="edit60" value="3000"></label>
-      <label>90分料金：<input type="number" id="edit90" value="5000"></label>
-      <button id="saveBtn">保存</button>
-      <button id="cancelBtn">キャンセル</button>
-    </div>
+    <!-- 編集フォーム -->
+<div id="editForm" class="edit-form" style="display:none;">
+  <label>名前：<input type="text" id="editName" value="佐藤 コーチ"></label><br>
+
+  <label>得意クラブ：</label>
+  <div class="tag-input" id="specialityInputArea">
+    <div class="tag-list" id="specialityTagsEdit"></div>
+    <input type="text" id="specialityInput" placeholder="クラブ名を入力してEnter">
+  </div><br>
+
+  <label>貸し出せるクラブ：</label>
+  <div class="tag-input" id="rentalInputArea">
+    <div class="tag-list" id="rentalTagsEdit"></div>
+    <input type="text" id="rentalInput" placeholder="クラブ名を入力してEnter">
+  </div><br>
+
+  <label>紹介文：
+    <textarea id="editIntro">ドライバー・飛距離アップが得意です！</textarea>
+  </label><br>
+
+  <label>30分料金：<input type="number" id="edit30" value="2000"></label><br>
+  <label>60分料金：<input type="number" id="edit60" value="3000"></label><br>
+  <label>90分料金：<input type="number" id="edit90" value="5000"></label><br>
+
+  <button id="saveBtn">保存</button>
+  <button id="cancelBtn">キャンセル</button>
+</div>
 
     <!-- 料金設定 -->
 <section class="section-card compact-price">
