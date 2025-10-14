@@ -1676,3 +1676,60 @@ html, body {
   transform: translateY(-3px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
+/* ===================================== */
+/* クラブカード横並びデザイン           */
+/* ===================================== */
+.profile-info .club-card-wrapper {
+  display: flex !important;
+  justify-content: center;
+  align-items: stretch;
+  gap: 10px;
+  flex-wrap: nowrap !important;
+  margin-top: 15px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.profile-info .club-card {
+  flex: 0 0 48%;
+  background-color: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.profile-info .club-card h4 {
+  font-size: 15px;
+  color: #007a5c;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.profile-info .club-tags span {
+  display: inline-block;
+  background-color: #bdf3dd;
+  color: #00452f;
+  padding: 6px 10px;
+  border-radius: 12px;
+  margin: 3px;
+  font-size: 13px;
+}
+
+@media (max-width: 480px) {
+  .profile-info .club-card-wrapper {
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+  }
+  .profile-info .club-card {
+    flex: 0 0 48% !important;
+  }
+}
