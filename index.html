@@ -3,84 +3,88 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>隣のゴルフコーチ | コーチ一覧</title>
+  <title>隣のゴルフコーチ</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    .coach-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 1rem;
-      padding: 1rem;
-    }
-    .coach-card {
-      background: #fff;
-      border-radius: 10px;
-      text-align: center;
-      padding: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-    .coach-card:hover {
-      transform: scale(1.03);
-    }
-    .coach-card img {
-      width: 100%;
-      border-radius: 10px;
-    }
-    .badge {
-      display: inline-block;
-      background: #2ecc71;
-      color: white;
-      font-size: 0.8em;
-      padding: 2px 6px;
-      border-radius: 5px;
-      margin-top: 4px;
-    }
-  </style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: #b2f1eb;
+  }
+
+  main {
+    margin: 0;
+    padding: 0;
+  }
+
+  .hero-illustration {
+  text-align: center;
+}
+
+.hero-illustration img {
+  width: 120px; /* 今のサイズを維持 */
+  height: auto;
+  margin-top: 50px; /* ← これで下に移動（数値で微調整） */
+}
+
+  .button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* ボタンの間隔を維持 */
+  margin-top: 50px; /* ← 小さいほど上に上がる（例: 20px〜60pxで微調整） */
+}
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    height: auto;
+    overflow-x: hidden;
+  }
+</style>
 </head>
 <body>
   <header class="site-header">
-    <h1>コーチ一覧</h1>
+    <h1>隣のゴルフコーチ</h1>
   </header>
 
-  <main>
-    <section id="coachList" class="coach-list"></section>
-  </main>
+  <main class="home-select">
+    <div class="hero-illustration">
+      <img src="IMG_6801.png" alt="地図とピンのイラスト">
+    </div>
 
-  <footer class="footer-nav">
-    <a href="index.html" class="active">ホーム</a>
-    <a href="map.html">地図検索</a>
-    <a href="coach-dashboard.html">管理</a>
+    <div class="button-container">
+    <a href="login.html?type=student" class="main-btn student-btn">生徒になる</a>
+    <a href="login.html?type=coach" class="main-btn coach-btn">コーチになる</a>
+  </div>
+</main>
+
+  <footer class="site-footer">
+    <p>© 2025 Tonarino Golf Coach</p>
   </footer>
 
-  <script src="coaches.js"></script>
+  <!--
   <script>
-    const list = document.getElementById("coachList");
-    const coaches = JSON.parse(localStorage.getItem("coaches")) || [];
-
-    coaches.forEach(coach => {
-      let thumb = coach.photo;
-      let badge = "";
-      if (coach.videoUrl.includes("youtube.com/watch")) {
-        const id = new URL(coach.videoUrl).searchParams.get("v");
-        thumb = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
-        badge = '<span class="badge">🎥 動画あり</span>';
+  // 生徒になる・コーチになるボタンを確実に動作させる
+  document.querySelectorAll(".card-btn").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const href = btn.getAttribute("href");
+      if (href) {
+        // 生徒ボタンは student.html に、コーチボタンは coach-dashboard.html に飛ばす
+        if (href.includes("student")) {
+          window.location.href = "student.html";
+        } else if (href.includes("coach")) {
+          window.location.href = "coach-dashboard.html";
+        } else {
+          window.location.href = href;
+        }
       }
-
-      const div = document.createElement("div");
-      div.className = "coach-card";
-      div.innerHTML = `
-        <img src="${thumb}" alt="${coach.name}">
-        <h3>${coach.name}</h3>
-        ${badge}
-        <p>${coach.speciality}</p>
-      `;
-      div.addEventListener("click", () => {
-        location.href = \`coach.html?id=${coach.id}\`;
-      });
-      list.appendChild(div);
     });
-  </script>
+  });
+</script>
+-->
 </body>
 </html>
