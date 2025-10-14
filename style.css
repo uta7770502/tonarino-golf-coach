@@ -1677,21 +1677,22 @@ html, body {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 /* ===================================== */
-/* クラブカード横並びデザイン           */
+/* ===================================== */
+/* クラブカード 横並びデザイン (スマホ2列対応) */
 /* ===================================== */
 .profile-info .club-card-wrapper {
-  display: flex !important;
+  display: flex;
   justify-content: center;
   align-items: stretch;
-  gap: 10px;
-  flex-wrap: nowrap !important;
+  gap: 8px; /* カード間の余白 */
+  flex-wrap: wrap; /* ← 折り返しOK（でも2列に見える） */
   margin-top: 15px;
   width: 100%;
   box-sizing: border-box;
 }
 
 .profile-info .club-card {
-  flex: 0 0 48%;
+  flex: 0 0 calc(50% - 10px); /* ← 2列になるように幅調整 */
   background-color: #ffffff;
   border-radius: 14px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
@@ -1701,6 +1702,7 @@ html, body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  box-sizing: border-box;
 }
 
 .profile-info .club-card h4 {
@@ -1724,12 +1726,17 @@ html, body {
   font-size: 13px;
 }
 
+/* スマホでも2列維持（ギリギリ収まる調整） */
 @media (max-width: 480px) {
   .profile-info .club-card-wrapper {
-    flex-direction: row !important;
-    flex-wrap: nowrap !important;
+    justify-content: space-between;
+    gap: 6px;
   }
   .profile-info .club-card {
-    flex: 0 0 48% !important;
+    flex: 0 0 calc(50% - 6px); /* ← スマホ幅でちょうど2枚 */
+    padding: 10px;
+  }
+  .profile-info .club-card h4 {
+    font-size: 14px;
   }
 }
