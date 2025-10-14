@@ -22,6 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
   if (el("pPhoto")) el("pPhoto").src = c.img || "https://via.placeholder.com/150";
   if (el("pName")) el("pName").textContent = c.name || "コーチ名";
   if (el("pTagline")) el("pTagline").textContent = c.club ? `得意クラブ：${c.club}` : "";
+ const rentalsEl = document.getElementById("mRentals");
+rentalsEl.textContent = c.rentals && c.rentals.length
+  ? `貸出し可能クラブ：${c.rentals.join("、")}`
+  : "";
   if (el("p60")) el("p60").textContent = c.price60 || "30分 ¥2,000";
   if (el("p90")) el("p90").textContent = c.price90 || "60分 ¥4,000";
   if (el("pStars")) el("pStars").innerHTML = "★".repeat(c.stars || 5);
