@@ -134,31 +134,7 @@ if (cancelBtn && editForm) {
 }
 if (saveBtn && editForm) {
   saveBtn.addEventListener("click", () => {
-    const name = $("#editName").value;
-    const speciality = $("#editSpeciality").value;
-    const rentals = $("#editRentals").value;
-    const intro = $("#editIntro").value;
-
-    // 表示へ反映
-    $("#coachName").textContent = name;
-    $("#coachBio").textContent = intro;
-
-    // タグ部分を更新（得意クラブ）
-    const tagsDiv = document.querySelector(".tags");
-    tagsDiv.innerHTML = "";
-    speciality.split(/[・,、\s]+/).forEach(tag => {
-      if (tag.trim()) {
-        const span = document.createElement("span");
-        span.textContent = `#${tag.trim()}`;
-        tagsDiv.appendChild(span);
-      }
-    });
-
-    // ローカルストレージに保存
-    const coachData = { name, speciality, rentals, intro };
-    localStorage.setItem("coachProfile", JSON.stringify(coachData));
-
-    alert("プロフィールを保存しました。");
+    // 必要ならここで入力値を保存する処理を書く
     editForm.style.display = "none";
   });
 }
