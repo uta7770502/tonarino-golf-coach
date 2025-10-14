@@ -386,5 +386,50 @@ document.addEventListener("DOMContentLoaded", () => {
 <!-- メッセージなど他の script が終わったあとに必ずこれ -->
 <script src="./coaches.js"></script>
 <script src="./coach.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // URLパラメータからコーチIDを取得（例：?id=1）
+  const params = new URLSearchParams(window.location.search);
+  const coachId = params.get("id");
+
+  // localStorageに保存されている管理ページデータを取得
+  const saved = JSON.parse(localStorage.getItem("coachProfile"));
+
+  // 通常のCOACHES配列を取得（既存のcoaches.js）
+  const coach = window.COACHES.find(c => c.id == coachId);
+
+  // localStorageに同一コーチ名があれば優先して反映
+  if (saved && saved.name === coach.name) {
+    document.getElementById("pName").textContent = saved.name;
+    document.getElementById("pTagline").textContent = saved.speciality;
+    document.getElementById("pRentals").textContent = saved.rentals;
+    document.getElementById("pPrice1").textContent = `¥${saved.price30}〜`;
+    document.getElementById("pPrice2").textContent = `¥${saved.price60}〜`;
+    document.getElementById("pBio").textContent = saved.intro || coach.bio;
+
+    // タグリスト更新（得意クラブ）
+    const tagContainer = document.getElementById("pTags");
+    if (tagContainer) {
+      tagContainer.innerHTML = "";
+      saved.speciality.split(/[・,、\s]+/).forEach(tag => {
+        if (tag.trim()) {
+          const span = document.createElement("span");
+          span.textContent = "#" + tag.trim();
+          tagContainer.appendChild(span);
+        }
+      });
+    }
+  } else {
+    // 通常通りcoaches.jsのデータを表示
+    if (coach) {
+      document.getElementById("pName").textContent = coach.name;
+      document.getElementById("pTagline").textContent = coach.club;
+      document.getElementById("pRentals").textContent = coach.rentals.join("、");
+      document.getElementById("pPrice1").textContent = coach.price;
+      document.getElementById("pBio").textContent = coach.city;
+    }
+  }
+});
+</script>
 </body>
 </html>
