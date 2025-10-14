@@ -429,15 +429,19 @@ document.addEventListener("DOMContentLoaded", () => {
 window.addEventListener("load", () => {
   const saved = JSON.parse(localStorage.getItem("coachProfile"));
   const videoWrap = document.querySelector(".video-wrap");
+  const videoFrame = document.getElementById("pVideo");
 
-  if (saved && saved.videoUrl) {
-    const videoFrame = document.getElementById("pVideo");
+  if (saved && saved.videoUrl && saved.videoUrl.trim() !== "") {
+    // URLがある場合はiframeに埋め込み
+    const embedUrl = saved.videoUrl.replace("watch?v=", "embed/");
     if (videoFrame) {
-      const embedUrl = saved.videoUrl.replace("watch?v=", "embed/");
       videoFrame.src = embedUrl;
+      videoFrame.style.display = "block";
     }
   } else {
-    // 動画がない場合はメッセージを表示
+    // URLがない場合はiframeを非表示にしてメッセージ表示
+    if (videoFrame) videoFrame.style.display = "none";
+
     if (videoWrap) {
       videoWrap.innerHTML = `
         <div style="
