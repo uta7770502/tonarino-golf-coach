@@ -226,7 +226,57 @@
   const editForm = $("#editForm");
   const saveBtn = $("#saveBtn");
   const cancelBtn = $("#cancelBtn");
+// ------------------------------
+// タグ入力機能（共通関数）
+// ------------------------------
+function setupTagInput(inputId, listId) {
+  const input = document.getElementById(inputId);
+  const list = document.getElementById(listId);
+  const tags = [];
 
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && input.value.trim() !== "") {
+      e.preventDefault();
+      const text = input.value.trim();
+      if (!tags.includes(text)) {
+        tags.push(text);
+        renderTags();
+      }
+      input.value = "";
+    }
+  });
+
+  function renderTags() {
+    list.innerHTML = "";
+    tags.forEach((tag, index) => {
+      const span = document.createElement("span");
+      span.className = "tag";
+      span.textContent = tag;
+      const removeBtn = document.createElement("button");
+      removeBtn.textContent = "×";
+      removeBtn.className = "remove-tag";
+      removeBtn.onclick = () => {
+        tags.splice(index, 1);
+        renderTags();
+      };
+      span.appendChild(removeBtn);
+      list.appendChild(span);
+    });
+  }
+
+  return {
+    getTags: () => tags,
+    setTags: (arr) => {
+      tags.length = 0;
+      tags.push(...arr);
+      renderTags();
+    },
+  };
+}
+
+// タグ入力のセットアップ
+const specialityTagsEditor = setupTagInput("specialityInput", "specialityTagsEdit");
+const rentalTagsEditor = setupTagInput("rentalInput", "rentalTagsEdit");
   if (editBtn && editForm) {
     editBtn.addEventListener("click", () => { editForm.style.display = "block"; });
   }
