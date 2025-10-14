@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>コーチ管理 | 隣のゴルフコーチ</title>
   <link rel="stylesheet" href="style.css" />
-  <!-- Chart.js 読み込み -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="coach-dashboard">
@@ -16,28 +15,15 @@
   <main>
     <!-- プロフィール -->
     <section class="profile-card">
-      <img src="https://i.pravatar.cc/150?img=3" alt="コーチ写真" class="profile-img">
+      <img src="https://i.pravatar.cc/150?img=3" alt="コーチ写真" class="profile-img" id="profileImg">
       <div class="profile-info">
         <h2 id="coachName">佐藤 コーチ</h2>
         <p id="coachBio">ドライバー・飛距離アップが得意です！</p>
-        <div class="tags">
+        <div class="tags" id="specialityTags">
           <span>#ドライバー</span>
           <span>#アプローチ</span>
         </div>
-      </div>
-    </section>
-
-    <!-- スタジオ管理 -->
-    <section class="section-card">
-      <h3>スタジオ管理</h3>
-      <div class="schedule-days">
-        <span class="ok">月</span>
-        <span class="ok">火</span>
-        <span class="ok">水</span>
-        <span class="ok">木</span>
-        <span class="ng">金</span>
-        <span class="ok">土</span>
-        <span class="ok">日</span>
+        <p id="rentalClubs">貸出クラブ：ドライバー、フェアウェイウッド、パター</p>
       </div>
     </section>
 
@@ -54,8 +40,15 @@
       <!-- 編集フォーム -->
       <div id="editForm" class="edit-form" style="display:none;">
         <label>名前：<input type="text" id="editName" value="佐藤 コーチ"></label><br>
-        <label>得意クラブ：<input type="text" id="editSpeciality" value="ドライバー・アプローチ"></label><br>
-        <label>紹介文：<textarea id="editIntro">ドライバー・飛距離アップが得意です！</textarea></label><br>
+        <label>得意クラブ：
+          <input type="text" id="editSpeciality" value="ドライバー・アプローチ">
+        </label><br>
+        <label>貸し出せるクラブ：
+          <input type="text" id="editRentals" value="ドライバー, フェアウェイウッド, パター">
+        </label><br>
+        <label>紹介文：
+          <textarea id="editIntro">ドライバー・飛距離アップが得意です！</textarea>
+        </label><br>
         <label>30分料金：<input type="number" id="edit30" value="2000"></label><br>
         <label>60分料金：<input type="number" id="edit60" value="3000"></label><br>
         <label>90分料金：<input type="number" id="edit90" value="5000"></label><br>
@@ -68,7 +61,6 @@
     <section class="section-card">
       <h3>スケジュール</h3>
       <ul id="scheduleItems"></ul>
-
       <div id="addSchedule">
         <input type="date" id="dateInput">
         <input type="time" id="startInput">
@@ -110,165 +102,82 @@
   </footer>
 
   <!-- ===================== -->
-<!-- JS処理（Chart.jsを先に読み込み） -->
-<!-- ===================== -->
+  <!-- JS処理 -->
+  <!-- ===================== -->
+  <script>
+  const $ = (sel) => document.querySelector(sel);
 
-<!-- Chart.js を先にロード（defer なし＝ここで即実行） -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+  // 編集フォーム制御
+  const editBtn = $("#editBtn");
+  const editForm = $("#editForm");
+  const saveBtn = $("#saveBtn");
+  const cancelBtn = $("#cancelBtn");
 
-<script>
-// ------------- 小さなユーティリティ -------------
-const $ = (sel) => document.querySelector(sel);
-
-// ------------- 料金編集フォーム -------------
-const editBtn    = $("#editBtn");
-const editForm   = $("#editForm");
-const saveBtn    = $("#saveBtn");
-const cancelBtn  = $("#cancelBtn");
-
-if (editBtn && editForm) {
-  editBtn.addEventListener("click", () => { editForm.style.display = "block"; });
-}
-if (cancelBtn && editForm) {
-  cancelBtn.addEventListener("click", () => { editForm.style.display = "none"; });
-}
-if (saveBtn && editForm) {
-  saveBtn.addEventListener("click", () => {
-    // 必要ならここで入力値を保存する処理を書く
-    editForm.style.display = "none";
-  });
-}
-
-// ------------- スケジュール管理 -------------
-const addBtn = $("#addBtn");
-const listEl = $("#scheduleItems");
-
-function renderSchedules() {
-  if (!listEl) return;
-  listEl.innerHTML = "";
-  const schedules = JSON.parse(localStorage.getItem("schedules")) || [];
-  schedules.forEach((s, index) => {
-    const li = document.createElement("li");
-    li.textContent = `${s.date} ${s.start}〜${s.end} ${s.student}`;
-    const delBtn = document.createElement("button");
-    delBtn.textContent = "🗑️";
-    delBtn.style.marginLeft = "8px";
-    delBtn.addEventListener("click", () => {
-      schedules.splice(index, 1);
-      localStorage.setItem("schedules", JSON.stringify(schedules));
-      renderSchedules();
-    });
-    li.appendChild(delBtn);
-    listEl.appendChild(li);
-  });
-}
-
-if (addBtn) {
-  addBtn.addEventListener("click", () => {
-    const date    = $("#dateInput")?.value || "";
-    const start   = $("#startInput")?.value || "";
-    const end     = $("#endInput")?.value || "";
-    const student = $("#studentInput")?.value || "";
-    if (!date || !start || !end || !student) {
-      alert("すべての項目を入力してください。");
-      return;
-    }
-    const schedules = JSON.parse(localStorage.getItem("schedules")) || [];
-    schedules.push({ date, start, end, student });
-    localStorage.setItem("schedules", JSON.stringify(schedules));
-    // 入力クリア
-    $("#dateInput").value = "";
-    $("#startInput").value = "";
-    $("#endInput").value = "";
-    $("#studentInput").value = "";
-    renderSchedules();
-  });
-}
-renderSchedules();
-
-// ------------- 売上 + グラフ -------------
-const calcSalesBtn = $("#calcSalesBtn");
-const totalEl = $("#salesTotal");
-const dateEl  = $("#salesDate");
-
-function updateSalesHistory(total) {
-  try {
-    const now = new Date();
-    const key = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}`;
-    const history = JSON.parse(localStorage.getItem("salesHistory")) || {};
-    history[key] = total;
-    localStorage.setItem("salesHistory", JSON.stringify(history));
-    drawSalesChart(history);
-  } catch (e) {
-    console.error(e);
+  if (editBtn && editForm) {
+    editBtn.addEventListener("click", () => { editForm.style.display = "block"; });
   }
-}
+  if (cancelBtn && editForm) {
+    cancelBtn.addEventListener("click", () => { editForm.style.display = "none"; });
+  }
 
-function drawSalesChart(historyObj) {
-  const canvas = $("#salesChart");
-  if (!canvas || typeof Chart === "undefined") return;
-  const ctx = canvas.getContext("2d");
-  const months = Object.keys(historyObj || {});
-  const totals = months.map(m => historyObj[m]);
+  if (saveBtn && editForm) {
+    saveBtn.addEventListener("click", () => {
+      const name = $("#editName").value;
+      const speciality = $("#editSpeciality").value;
+      const rentals = $("#editRentals").value;
+      const intro = $("#editIntro").value;
+      const price30 = $("#edit30").value;
+      const price60 = $("#edit60").value;
+      const price90 = $("#edit90").value;
 
-  // データが無ければ「空データ」で表示（真っ白に見える問題を回避）
-  const labels = months.length ? months : ["データなし"];
-  const data   = months.length ? totals : [0];
+      $("#coachName").textContent = name;
+      $("#coachBio").textContent = intro;
+      $("#price30").textContent = `30分 ¥${price30}〜`;
+      $("#price60").textContent = `60分 ¥${price60}〜`;
+      $("#price90").textContent = `90分 ¥${price90}〜`;
 
-  // 再描画時の破棄
-  if (window.salesChart) window.salesChart.destroy();
-
-  window.salesChart = new Chart(ctx, {
-    type: "bar",
-    data: {
-      labels,
-      datasets: [{
-        label: "売上合計 (円)",
-        data,
-        backgroundColor: "#4CAF50",
-        borderRadius: 6
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: { legend: { display: false }},
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: { callback: v => "¥" + Number(v).toLocaleString() }
+      const tagsEl = $("#specialityTags");
+      tagsEl.innerHTML = "";
+      speciality.split(/[・,、\s]+/).forEach(tag => {
+        if (tag.trim()) {
+          const span = document.createElement("span");
+          span.textContent = "#" + tag.trim();
+          tagsEl.appendChild(span);
         }
-      }
+      });
+
+      $("#rentalClubs").textContent = "貸出クラブ：" + rentals;
+
+      const coachData = { name, speciality, rentals, intro, price30, price60, price90 };
+      localStorage.setItem("coachProfile", JSON.stringify(coachData));
+
+      alert("プロフィールを保存しました。");
+      editForm.style.display = "none";
+    });
+  }
+
+  // 自動復元
+  window.addEventListener("load", () => {
+    const saved = JSON.parse(localStorage.getItem("coachProfile"));
+    if (saved) {
+      $("#coachName").textContent = saved.name;
+      $("#coachBio").textContent = saved.intro;
+      $("#price30").textContent = `30分 ¥${saved.price30}〜`;
+      $("#price60").textContent = `60分 ¥${saved.price60}〜`;
+      $("#price90").textContent = `90分 ¥${saved.price90}〜`;
+      $("#rentalClubs").textContent = "貸出クラブ：" + saved.rentals;
+
+      const tagsEl = $("#specialityTags");
+      tagsEl.innerHTML = "";
+      saved.speciality.split(/[・,、\s]+/).forEach(tag => {
+        if (tag.trim()) {
+          const span = document.createElement("span");
+          span.textContent = "#" + tag.trim();
+          tagsEl.appendChild(span);
+        }
+      });
     }
   });
-}
-
-if (calcSalesBtn && totalEl && dateEl) {
-  calcSalesBtn.addEventListener("click", () => {
-    const n30 = Number($("#n30")?.value || 0);
-    const n60 = Number($("#n60")?.value || 0);
-    const n90 = Number($("#n90")?.value || 0);
-    const total = n30*2000 + n60*3000 + n90*5000;
-
-    totalEl.textContent = "¥" + total.toLocaleString();
-
-    const d = new Date();
-    d.setDate(d.getDate() + 7); // 入金予想 = 本日+7日
-    const pay = `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,"0")}/${String(d.getDate()).padStart(2,"0")}`;
-    dateEl.textContent = pay;
-
-    updateSalesHistory(total);
-  });
-}
-
-// 初期描画（Chart.js読み込み後 / 画面ロード後）
-window.addEventListener("load", () => {
-  try {
-    const history = JSON.parse(localStorage.getItem("salesHistory")) || {};
-    drawSalesChart(history);
-  } catch (e) {
-    console.error(e);
-  }
-});
-</script>
+  </script>
 </body>
 </html>
