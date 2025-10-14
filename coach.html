@@ -38,12 +38,16 @@
   <a class="back-link mypage-link" href="./student-dashboard.html">マイページへ戻る</a>
 </div>
     <!-- ヒーロー -->
-<section class="coach-hero" style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-  <img id="pPhoto" alt="コーチ写真" style="width:100px;height:100px;border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,0.1);" />
-  <div style="flex:1;min-width:200px;">
-    <h2 id="pName" style="font-size:22px;color:#004d40;margin:0 0 4px;">コーチ名</h2>
-    <p style="font-size:14px;color:#333;margin:2px 0;">得意クラブ：<span id="pTagline"></span></p>
-    <p style="font-size:14px;color:#333;margin:2px 0;">貸出し可能クラブ：<span id="pRentals"></span></p>
+<section class="coach-hero">
+  <div class="coach-info">
+    <div class="coach-photo-wrap">
+      <img id="pPhoto" alt="コーチ写真" class="coach-photo" />
+    </div>
+    <div class="coach-text">
+      <h2 class="coach-name" id="pName">コーチ名</h2>
+      <p class="coach-tagline">得意クラブ：<span id="pTagline"></span></p>
+      <p class="coach-rentals">貸出し可能クラブ：<span id="pRentals"></span></p>
+    </div>
   </div>
 </section>
         <div class="pill-prices">
