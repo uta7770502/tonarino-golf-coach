@@ -1627,3 +1627,52 @@ html, body {
   transform: translateY(-3px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
 }
+/* カードを横並び固定 */
+.club-card-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 10px;
+  flex-wrap: nowrap; /* ← スマホでも横並び */
+  margin-top: 15px;
+}
+
+/* 各カード */
+.club-card {
+  flex: 0 0 48%;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  text-align: center;
+  transition: 0.2s;
+}
+
+/* カードタイトル */
+.club-card h4 {
+  font-size: 15px;
+  color: #007a5c;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+/* タグデザイン */
+.club-tags span {
+  display: inline-block;
+  background-color: #bdf3dd;
+  color: #00452f;
+  padding: 6px 10px;
+  border-radius: 12px;
+  margin: 3px;
+  font-size: 13px;
+}
+
+/* ホバー効果 */
+.club-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
