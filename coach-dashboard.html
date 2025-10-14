@@ -295,7 +295,7 @@ const rentalTagsEditor = setupTagInput("rentalInput", "rentalTagsEdit");
       const price30 = $("#edit30").value;
       const price60 = $("#edit60").value;
       const price90 = $("#edit90").value;
-
+　　　const videoUrl = $("#editVideo").value;
       $("#coachName").textContent = name;
       $("#coachBio").textContent = intro;
       $("#price30").textContent = `30分 ¥${price30}〜`;
@@ -314,8 +314,17 @@ const rentalTagsEditor = setupTagInput("rentalInput", "rentalTagsEdit");
 
       $("#rentalClubs").textContent = "貸出クラブ：" + rentals;
 
-      const coachData = { name, speciality, rentals, intro, price30, price60, price90 };
-      localStorage.setItem("coachProfile", JSON.stringify(coachData));
+      const coachData = { 
+  name, 
+  speciality, 
+  rentals, 
+  intro, 
+  price30, 
+  price60, 
+  price90, 
+  videoUrl   // ← 追加
+};
+localStorage.setItem("coachProfile", JSON.stringify(coachData));
 
       alert("プロフィールを保存しました。");
       editForm.style.display = "none";
