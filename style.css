@@ -1447,3 +1447,36 @@ html, body {
   font-size: 13px;
   font-weight: 500;
 }
+.club-row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.club-section {
+  flex: 1 1 calc(50% - 10px);
+  background-color: #f9fffb;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.club-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #005e49;
+  margin-bottom: 4px;
+}
+
+.club-tags span {
+  display: inline-block;
+  background-color: #bdf3dd;
+  color: #00452f;
+  padding: 5px 10px;
+  border-radius: 12px;
+  margin: 3px 4px 0 0;
+  font-size: 13px;
+  font-weight: 500;
+}
