@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>コーチ一覧 | 隣のゴルフコーチ</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>隣のゴルフコーチ | コーチ一覧</title>
+  <link rel="stylesheet" href="style.css">
   <style>
     .coach-list {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
       gap: 1rem;
       padding: 1rem;
     }
     .coach-card {
       background: #fff;
       border-radius: 10px;
-      padding: 10px;
       text-align: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      cursor: pointer;
       transition: transform 0.2s;
     }
     .coach-card:hover {
@@ -27,14 +28,14 @@
       width: 100%;
       border-radius: 10px;
     }
-    .coach-card .badge {
+    .badge {
       display: inline-block;
       background: #2ecc71;
       color: white;
       font-size: 0.8em;
       padding: 2px 6px;
       border-radius: 5px;
-      margin-top: 5px;
+      margin-top: 4px;
     }
   </style>
 </head>
@@ -44,53 +45,42 @@
   </header>
 
   <main>
-    <section class="coach-list" id="coachList"></section>
+    <section id="coachList" class="coach-list"></section>
   </main>
 
   <footer class="footer-nav">
-    <nav>
-      <a href="index.html" class="active">ホーム</a>
-      <a href="student.html">地図で探す</a>
-      <a href="coach-dashboard.html">コーチ管理</a>
-    </nav>
+    <a href="index.html" class="active">ホーム</a>
+    <a href="map.html">地図検索</a>
+    <a href="coach-dashboard.html">管理</a>
   </footer>
 
   <script src="coaches.js"></script>
   <script>
-    const coaches = JSON.parse(localStorage.getItem("coaches")) || [];
     const list = document.getElementById("coachList");
+    const coaches = JSON.parse(localStorage.getItem("coaches")) || [];
 
-    if (coaches.length === 0) {
-      list.innerHTML = "<p>コーチ情報がまだ登録されていません。</p>";
-    } else {
-      coaches.forEach(coach => {
-        // YouTube サムネイル取得
-        let thumbnail = coach.photo;
-        if (coach.videoUrl.includes("youtube.com/watch")) {
-          const videoId = new URL(coach.videoUrl).searchParams.get("v");
-          thumbnail = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-        }
+    coaches.forEach(coach => {
+      let thumb = coach.photo;
+      let badge = "";
+      if (coach.videoUrl.includes("youtube.com/watch")) {
+        const id = new URL(coach.videoUrl).searchParams.get("v");
+        thumb = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+        badge = '<span class="badge">🎥 動画あり</span>';
+      }
 
-        // 動画バッジ
-        const badge = coach.videoUrl ? '<span class="badge">🎥 動画あり</span>' : "";
-
-        // カード生成
-        const card = document.createElement("div");
-        card.className = "coach-card";
-        card.innerHTML = `
-          <img src="${thumbnail}" alt="${coach.name}">
-          <h3>${coach.name}</h3>
-          <p>${coach.prefecture}</p>
-          ${badge}
-          <p>${coach.speciality}</p>
-          <p>30分 ¥${coach.price30}</p>
-        `;
-        card.addEventListener("click", () => {
-          window.location.href = \`coach.html?id=${coach.id}\`;
-        });
-        list.appendChild(card);
+      const div = document.createElement("div");
+      div.className = "coach-card";
+      div.innerHTML = `
+        <img src="${thumb}" alt="${coach.name}">
+        <h3>${coach.name}</h3>
+        ${badge}
+        <p>${coach.speciality}</p>
+      `;
+      div.addEventListener("click", () => {
+        location.href = \`coach.html?id=${coach.id}\`;
       });
-    }
+      list.appendChild(div);
+    });
   </script>
 </body>
 </html>
