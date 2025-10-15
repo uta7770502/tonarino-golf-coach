@@ -1880,3 +1880,14 @@ html, body {
   position: relative;
   top: -100px; /* 上に100px移動 */
 }
+/* トップページの地図アイコン画像 */
+.top-main img {
+  position: relative;
+  top: 50px; /* 画像を下に50px移動 */
+}
+
+/* 生徒・コーチボタンを上に50px移動 */
+.top-buttons {
+  position: relative;
+  top: -50px; /* 全体を上に50px移動 */
+}
