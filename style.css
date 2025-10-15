@@ -1847,12 +1847,6 @@ html, body {
     font-size: 14px;
     padding: 7px 10px;
   }
-}
-  /* === お気に入り一覧の下の全要素を上に50px詰める === */
-#content-below-favorites {
-  position: relative;
-  top: -50px; /* 上方向に移動 */
-}
 /* トップページ画像調整 */
 .top-main img {
   position: relative;
