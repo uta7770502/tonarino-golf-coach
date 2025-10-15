@@ -1783,3 +1783,68 @@ html, body {
   flex: 1;
   min-width: 100px;
 }
+/* === 上部スペース完全最適化 === */
+
+/* 検索ボックスエリア */
+#search-box {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  padding: 0;
+}
+
+/* 黄色「ルール一覧」ボタン */
+#latest-rules button {
+  margin: 4px auto;
+  padding: 8px 18px;
+  font-size: 15px;
+  width: 78%;
+}
+
+/* お気に入り一覧ボタン */
+#favorites-entry {
+  margin-top: 4px;
+  margin-bottom: 2px;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  border: none;
+  width: 80%;
+  text-align: center;
+}
+
+/* 人気のキーワード */
+#popular-keywords {
+  margin-top: 4px;
+  margin-bottom: 2px;
+  padding: 0;
+}
+
+/* キーワード群をタイトに敷き詰め */
+#keyword-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px; /* ボタン間のスペース最小限 */
+  padding: 0 4px;
+}
+
+#keyword-container button {
+  background-color: #f4f4f4;
+  border: none;
+  border-radius: 18px;
+  padding: 6px 10px;
+  font-size: 13.5px;
+  color: #444;
+  white-space: nowrap;
+}
+
+/* スマホ画面用の最終微調整 */
+@media screen and (max-width: 480px) {
+  header {
+    padding: 16px 10px 10px;
+  }
+  #search-box input {
+    font-size: 14px;
+    padding: 7px 10px;
+  }
+}
