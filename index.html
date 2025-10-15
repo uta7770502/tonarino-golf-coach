@@ -43,6 +43,35 @@
     height: auto;
     overflow-x: hidden;
   }
+    /* ▼ 追記部分（ここから） ▼ */
+
+/* ページ全体をスマホ画面で中央寄せ */
+main.home-select {
+  min-height: 100vh; /* 画面全体の高さを確保 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 縦方向の中央寄せ */
+  align-items: center;
+}
+
+/* PNG画像（下に少し移動） */
+.hero-illustration img {
+  width: 150px; /* 必要に応じてサイズ調整 */
+  position: relative;
+  top: 50px; /* 下に移動（大きいほど下がる） */
+}
+
+/* 生徒になる／コーチになるボタン（上に移動） */
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* ボタン間の距離を維持 */
+  position: relative;
+  top: -50px; /* 上方向に移動（数値を増やすとさらに上へ） */
+}
+
+/* ▲ 追記部分（ここまで） ▲ */
 </style>
 </head>
 <body>
